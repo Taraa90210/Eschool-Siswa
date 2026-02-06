@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/utils/api.dart';
@@ -428,34 +429,31 @@ class _TransactionsScreenState extends State<TransactionsScreen>
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      _getFullImageUrl(
+                    child: CachedNetworkImage(
+                      imageUrl: _getFullImageUrl(
                           proofImageUrl), // Menggunakan helper function
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).colorScheme.primary,
-                                ),
+                      placeholder: (context, url) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.primary,
                               ),
-                              SizedBox(height: 12),
-                              Text(
-                                'Memuat gambar...',
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontSize: 12,
-                                ),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              'Memuat gambar...',
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 12,
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
+                            ),
+                          ],
+                        ),
+                      ),
+                      errorWidget: (context, url, error) {
                         return Container(
                           color: Colors.grey.shade100,
                           child: Center(

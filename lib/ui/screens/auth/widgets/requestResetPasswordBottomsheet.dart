@@ -366,7 +366,7 @@ class _RequestResetPasswordBottomsheetState
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isFocused ? _primaryRed : Colors.grey[300]!,
+          color: isFocused ? _primaryRed : Colors.grey[300] ?? Colors.grey,
           width: isFocused ? 2.0 : 1.0,
         ),
         boxShadow: isFocused
@@ -469,50 +469,50 @@ class _RequestResetPasswordBottomsheetState
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-        color: isSelected ? _primaryRed : Colors.grey[300]!,
-        width: isSelected ? 2.0 : 1.0,
+            color: isSelected ? _primaryRed : Colors.grey[300] ?? Colors.grey,
+            width: isSelected ? 2.0 : 1.0,
           ),
           boxShadow: isSelected
-          ? [
-          BoxShadow(
-            color: _primaryRed.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          )
-            ]
-          : [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          )
-            ],
+              ? [
+                  BoxShadow(
+                    color: _primaryRed.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  )
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
+                  )
+                ],
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
           child: Row(
-        children: [
-          Icon(
-            Icons.calendar_today_rounded,
-            color: isSelected ? _primaryRed : Colors.grey[400],
-            size: 22,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-          dateOfBirth == null
-              ? Utils.getTranslatedLabel(dateOfBirthKey)
-              : _formatDateOfBirth(),
-          style: TextStyle(
-            fontSize: 16,
-            color: isSelected ? _textDark : Colors.grey[400],
-          ),
-          overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
+            children: [
+              Icon(
+                Icons.calendar_today_rounded,
+                color: isSelected ? _primaryRed : Colors.grey[400],
+                size: 22,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  dateOfBirth == null
+                      ? Utils.getTranslatedLabel(dateOfBirthKey)
+                      : _formatDateOfBirth(),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isSelected ? _textDark : Colors.grey[400],
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
         ),
       ),

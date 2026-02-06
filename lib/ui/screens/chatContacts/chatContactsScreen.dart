@@ -3,6 +3,7 @@ import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/socketSettingCubit.dart';
 import 'package:eschool/cubits/userChatHistoryCubit.dart';
 import 'package:eschool/data/models/chatContact.dart';
+import 'package:eschool/data/models/chatUser.dart';
 import 'package:eschool/data/models/chatUserRole.dart';
 import 'package:eschool/ui/screens/chat/chatScreen.dart';
 // import 'package:eschool/ui/widgets/customAppbar.dart';
@@ -15,6 +16,7 @@ import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:get/get.dart';
 
 class ChatContactsScreen extends StatefulWidget {
@@ -137,11 +139,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                   );
                 }
 
-                return Center(
-                  child: CustomCircularProgressIndicator(
-                    indicatorColor: Theme.of(context).colorScheme.primary,
-                  ),
-                );
+                return _buildLoadingSkeleton();
               },
             ),
           ),
@@ -183,6 +181,50 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
 
           return const SizedBox.shrink();
         },
+      ),
+    );
+  }
+
+  Widget _buildLoadingSkeleton() {
+    final dummyContacts = List.generate(
+      8,
+      (index) => ChatContact(
+        id: index,
+        senderId: 0,
+        receiverId: 0,
+        createdAt: DateTime.now().toIso8601String(),
+        updatedAt: DateTime.now().toIso8601String(),
+        unreadCount: 0,
+        lastMessage: 'This is a long dummy message for skeleton loading state.',
+        user: ChatUser(
+          id: index,
+          firstName: 'First',
+          lastName: 'Last',
+          image: '',
+          fullName: 'Full Name Load',
+          schoolNames: '',
+          role: ChatUserRole.teacher,
+          classTeachers: [],
+          subjectTeachers: [],
+        ),
+      ),
+    );
+
+    return Skeletonizer(
+      enabled: true,
+      child: ListView.builder(
+        padding: EdgeInsets.only(
+          right: Utils.screenContentHorizontalPadding,
+          left: Utils.screenContentHorizontalPadding,
+          bottom: Utils.screenContentHorizontalPadding * 2.5,
+          top: Utils.getScrollViewTopPadding(
+            context: context,
+            appBarHeightPercentage: Utils.appBarSmallerHeightPercentage,
+          ),
+        ),
+        itemCount: dummyContacts.length,
+        itemBuilder: (context, index) =>
+            _buildChatContact(dummyContacts[index]),
       ),
     );
   }

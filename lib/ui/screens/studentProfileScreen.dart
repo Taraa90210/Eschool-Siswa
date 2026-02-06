@@ -33,19 +33,20 @@ class StudentProfileScreen extends StatefulWidget {
         builder: (context) {
           final arguments = Get.arguments;
           int? childId;
-          
+
           // Handle dari notifikasi (Map) atau navigasi normal (int?)
           if (arguments is int) {
             childId = arguments;
-          } else if (arguments is Map<String, dynamic> && arguments['childId'] != null) {
-            childId = arguments['childId'] is int 
-                ? arguments['childId'] 
+          } else if (arguments is Map<String, dynamic> &&
+              arguments['childId'] != null) {
+            childId = arguments['childId'] is int
+                ? arguments['childId']
                 : int.tryParse(arguments['childId'].toString());
           } else {
             // Fallback: null (akan menggunakan student yang login)
             childId = null;
           }
-          
+
           return StudentProfileScreen(childId: childId);
         },
       ),

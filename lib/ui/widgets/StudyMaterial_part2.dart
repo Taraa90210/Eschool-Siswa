@@ -1,6 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 // Import sesuai struktur project kamu
@@ -59,20 +58,6 @@ class StudyMaterialWithDownloadButtonContainer2 extends StatelessWidget {
     return Icons.insert_drive_file;
   }
 
-  Future<File?> _downloadImageToCache(String url) async {
-    if (url.isEmpty) return null;
-    try {
-      // Tambah headers jika backend butuh auth, contoh:
-      // return await DefaultCacheManager().getSingleFile(
-      //   url,
-      //   headers: {'Authorization': 'Bearer ${Utils.authToken}'},
-      // );
-      return await DefaultCacheManager().getSingleFile(url);
-    } catch (_) {
-      return null;
-    }
-  }
-
   void _downloadFile(BuildContext context, StudyMaterial m) {
     Utils.openDownloadBottomsheet(
       context: context,
@@ -94,11 +79,14 @@ class StudyMaterialWithDownloadButtonContainer2 extends StatelessWidget {
     }
 
     int startIndex = 0;
-    if (gallery != null) {
-      if (initialIndex != null &&
-          initialIndex! >= 0 &&
-          initialIndex! < gallery!.length) {
-        final current = gallery![initialIndex!];
+    final safeGallery = gallery;
+    final safeIndex = initialIndex;
+
+    if (safeGallery != null) {
+      if (safeIndex != null &&
+          safeIndex >= 0 &&
+          safeIndex < safeGallery.length) {
+        final current = safeGallery[safeIndex];
         startIndex = candidates.indexWhere(
           (e) => e.fileUrl == current.fileUrl && e.fileName == current.fileName,
         );
@@ -196,35 +184,25 @@ class StudyMaterialWithDownloadButtonContainer2 extends StatelessWidget {
           child: isImage
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: FutureBuilder<File?>(
-                    future: _downloadImageToCache(fileUrl),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const AspectRatio(
-                          aspectRatio: 1, // biar tetap kotak
-                          child: Center(
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                        );
-                      }
-                      if (snapshot.hasError || snapshot.data == null) {
-                        return AspectRatio(
-                          aspectRatio: 1,
-                          child: Icon(
-                            Icons.broken_image,
-                            size: 30,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
-                          ),
-                        );
-                      }
-                      return Image.file(
-                        snapshot.data!,
-                        width: double.infinity,
-                        fit: BoxFit.cover, // isi penuh parent
-                      );
-                    },
+                  child: CachedNetworkImage(
+                    imageUrl: fileUrl,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const AspectRatio(
+                      aspectRatio: 1,
+                      child: Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => AspectRatio(
+                      aspectRatio: 1,
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 30,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
+                      ),
+                    ),
                   ),
                 )
               : Padding(
@@ -265,15 +243,6 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   late final PageController _pageController;
   late int _index;
 
-  Future<File?> _cached(String url) async {
-    if (url.isEmpty) return null;
-    try {
-      return await DefaultCacheManager().getSingleFile(url);
-    } catch (_) {
-      return null;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -306,27 +275,29 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                 final url = item.fileUrl ?? "";
 
                 return Center(
-                  child: FutureBuilder<File?>(
-                    future: _cached(url),
-                    builder: (context, snap) {
-                      if (snap.connectionState == ConnectionState.waiting) {
-                        return const SizedBox(
-                          width: 72,
-                          height: 72,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        );
-                      }
-                      if (snap.hasError || snap.data == null) {
-                        return const Icon(Icons.broken_image,
-                            color: Colors.white, size: 48);
-                      }
-                      return InteractiveViewer(
-                        minScale: 1,
-                        maxScale: 4,
-                        panEnabled: true,
-                        child: Image.file(snap.data!),
-                      );
-                    },
+                  child: CachedNetworkImage(
+                    imageUrl: url,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) => const SizedBox(
+                      width: 72,
+                      height: 72,
+                      child: Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const Icon(
+                        Icons.broken_image,
+                        color: Colors.white,
+                        size: 48),
+                    imageBuilder: (context, imageProvider) => InteractiveViewer(
+                      minScale: 1,
+                      maxScale: 4,
+                      panEnabled: true,
+                      child: Image(
+                        image: imageProvider,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                 );
               },

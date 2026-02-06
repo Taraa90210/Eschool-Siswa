@@ -16,6 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:eschool/ui/styles/colors.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SubjectAttendanceContainer extends StatefulWidget {
   final int? childId;
@@ -121,28 +122,16 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                             child: InteractiveViewer(
                               minScale: 0.5,
                               maxScale: 2.5,
-                              child: Image.network(
-                                imageUrl,
+                              child: CachedNetworkImage(
+                                imageUrl: imageUrl,
                                 fit: BoxFit.contain,
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.white),
-                                    ),
-                                  );
-                                },
-                                errorBuilder: (context, error, stackTrace) {
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) {
                                   return Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -369,7 +358,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                     .withOpacity(0.8),
                                 onPrimary: Colors.white,
                                 surface: surfaceColor,
-                                onSurface: Colors.grey[800]!,
+                                onSurface: Colors.grey[800] ?? Colors.grey,
                               ),
                               dialogBackgroundColor: Colors.transparent,
                               textButtonTheme: TextButtonThemeData(
@@ -484,7 +473,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                           child: SingleChildScrollView(
                                             physics:
                                                 const ClampingScrollPhysics(),
-                                            child: child!,
+                                            child: child,
                                           ),
                                         ),
                                       ],
@@ -1202,7 +1191,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                       Theme.of(context).colorScheme.primary,
                                   onPrimary: Colors.white,
                                   surface: surfaceColor,
-                                  onSurface: Colors.grey[800]!,
+                                  onSurface: Colors.grey[800] ?? Colors.grey,
                                 ),
                                 dialogBackgroundColor: Colors.transparent,
                                 textButtonTheme: TextButtonThemeData(

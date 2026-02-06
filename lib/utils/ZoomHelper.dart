@@ -1,5 +1,6 @@
 import 'dart:ui'; // untuk ImageFilter.blur
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 void showBlurZoomImagePreview(
   BuildContext context, {
@@ -99,11 +100,12 @@ class _ZoomableImageState extends State<_ZoomableImage> {
       maxScale: 4.0,
       panEnabled: true,
       clipBehavior: Clip.none,
-      child: Image.network(
-        widget.imageUrl,
+      child: CachedNetworkImage(
+        imageUrl: widget.imageUrl,
         fit: BoxFit.contain,
-        // Ganti dengan CachedNetworkImage kalau mau cache + placeholder:
-        // CachedNetworkImage(imageUrl: widget.imageUrl, fit: BoxFit.contain)
+        placeholder: (context, url) =>
+            Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => Icon(Icons.error),
       ),
     );
   }

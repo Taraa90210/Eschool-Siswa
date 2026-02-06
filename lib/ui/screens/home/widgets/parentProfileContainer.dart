@@ -11,6 +11,7 @@ import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class GuardianProfileContainer extends StatefulWidget {
   const GuardianProfileContainer({Key? key}) : super(key: key);
@@ -553,11 +554,10 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                                               'profileImage', // sama dengan Hero kecil
                                         );
                                       },
-                                      child: Image.network(
-                                        image,
+                                      child: CachedNetworkImage(
+                                        imageUrl: image,
                                         fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
+                                        errorWidget: (context, url, error) {
                                           return Container(
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
@@ -584,10 +584,7 @@ class _GuardianProfileContainerState extends State<GuardianProfileContainer>
                                             ),
                                           );
                                         },
-                                        loadingBuilder:
-                                            (context, child, loadingProgress) {
-                                          if (loadingProgress == null)
-                                            return child;
+                                        placeholder: (context, url) {
                                           return ShimmerLoadingContainer(
                                             child: Container(
                                               decoration: BoxDecoration(

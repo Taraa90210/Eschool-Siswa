@@ -59,24 +59,28 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     // Then fetch my extracurriculars
     context.read<MyExtracurricularCubit>().fetchMyExtracurriculars();
     // Also fetch all my extracurricular statuses for button status checking
-    context.read<AllMyExtracurricularStatusCubit>().fetchAllMyExtracurricularStatuses();
+    context
+        .read<AllMyExtracurricularStatusCubit>()
+        .fetchAllMyExtracurricularStatuses();
   }
 
   Future<void> _onRefresh() async {
     // Clear search when refreshing
     _searchController.clear();
-    
+
     // Fetch data based on current tab
     if (_currentTabIndex == 0) {
       // All Extracurriculars tab
       context.read<ExtracurricularCubit>().fetchExtracurriculars();
       // Also refresh status for button updates
-      context.read<AllMyExtracurricularStatusCubit>().fetchAllMyExtracurricularStatuses();
+      context
+          .read<AllMyExtracurricularStatusCubit>()
+          .fetchAllMyExtracurricularStatuses();
     } else {
       // My Extracurriculars tab
       context.read<MyExtracurricularCubit>().fetchMyExtracurriculars();
     }
-    
+
     // Wait a bit for the API call to complete
     await Future.delayed(const Duration(milliseconds: 1000));
   }
@@ -86,8 +90,10 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     // Prioritize fetching my extracurriculars first to show updated status
     context.read<MyExtracurricularCubit>().fetchMyExtracurriculars();
     // Also immediately fetch all statuses to update button states
-    context.read<AllMyExtracurricularStatusCubit>().fetchAllMyExtracurricularStatuses();
-    
+    context
+        .read<AllMyExtracurricularStatusCubit>()
+        .fetchAllMyExtracurricularStatuses();
+
     // Delay fetching all extracurriculars to avoid overwhelming the API
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
@@ -95,7 +101,6 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
       }
     });
   }
-
 
   void _onSearchChanged(String query) {
     if (_currentTabIndex == 0) {
@@ -307,9 +312,11 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     // Check if student has already joined/requested this extracurricular
     // Use AllMyExtracurricularStatusCubit for accurate status checking (includes all statuses)
     StudentExtracurricular? joinedStatus;
-    final allStatusState = context.watch<AllMyExtracurricularStatusCubit>().state;
+    final allStatusState =
+        context.watch<AllMyExtracurricularStatusCubit>().state;
     if (allStatusState is AllMyExtracurricularStatusFetchSuccess) {
-      joinedStatus = allStatusState.getStatusByExtracurricularId(extracurricular.id ?? 0);
+      joinedStatus =
+          allStatusState.getStatusByExtracurricularId(extracurricular.id ?? 0);
     }
 
     // Modern color scheme - Student theme (Bright Red)
@@ -602,9 +609,9 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                               Color(0xFF388E3C), // Deep green
                             ]
                           : [
-                              Colors.grey[400]!,
-                              Colors.grey[500]!,
-                              Colors.grey[600]!,
+                              Colors.grey[400] ?? Colors.grey,
+                              Colors.grey[500] ?? Colors.grey,
+                              Colors.grey[600] ?? Colors.grey,
                             ],
                     ),
                     borderRadius: BorderRadius.circular(16),
@@ -1204,13 +1211,14 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     );
   }
 
-  Widget _buildInstructorNameWidget(Extracurricular extracurricular, Map<String, Color> colorScheme) {
+  Widget _buildInstructorNameWidget(
+      Extracurricular extracurricular, Map<String, Color> colorScheme) {
     // Use BlocBuilder to listen for ExtracurricularCubit state changes
     // This ensures coach names update when All Extracurriculars data is loaded
     return BlocBuilder<ExtracurricularCubit, ExtracurricularState>(
       builder: (context, state) {
         String displayName = _getInstructorNameSimple(extracurricular);
-        
+
         return Text(
           displayName,
           style: TextStyle(
@@ -1230,16 +1238,17 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     if (extracurricular.instructor?.isNotEmpty == true) {
       return extracurricular.instructor!;
     }
-    
+
     // For My Extracurricular cards, try to get coach name from All Extracurriculars data
     if (extracurricular.coachId != null) {
-      final coachName = _getCoachNameFromAllExtracurriculars(extracurricular.coachId!);
+      final coachName =
+          _getCoachNameFromAllExtracurriculars(extracurricular.coachId!);
       if (coachName != null) {
         return coachName;
       }
       return 'Pembimbing (ID: ${extracurricular.coachId})';
     }
-    
+
     return 'Tidak ada pembimbing';
   }
 
@@ -1248,7 +1257,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     final extracurricularState = context.read<ExtracurricularCubit>().state;
     if (extracurricularState is ExtracurricularFetchSuccess) {
       for (final extracurricular in extracurricularState.extracurriculars) {
-        if (extracurricular.coachId == coachId && 
+        if (extracurricular.coachId == coachId &&
             extracurricular.instructor?.isNotEmpty == true) {
           return extracurricular.instructor;
         }
@@ -1256,7 +1265,6 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     }
     return null;
   }
-
 
   Widget _buildInfoItem({
     required IconData icon,
@@ -1310,7 +1318,6 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
       ),
     );
   }
-
 
   Widget _buildShimmerLoading() {
     return ListView.builder(
@@ -1569,7 +1576,8 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
           if (state.extracurriculars.isEmpty) {
             return RefreshIndicator(
               onRefresh: _onRefresh,
-              child: const NoDataContainer(titleKey: 'Tidak ada ekstrakurikuler'),
+              child:
+                  const NoDataContainer(titleKey: 'Tidak ada ekstrakurikuler'),
             );
           }
 
@@ -1603,7 +1611,9 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
             child: ErrorContainer(
               errorMessageCode: state.errorMessage,
               onTapRetry: () {
-                context.read<MyExtracurricularCubit>().fetchMyExtracurriculars();
+                context
+                    .read<MyExtracurricularCubit>()
+                    .fetchMyExtracurriculars();
               },
             ),
           );

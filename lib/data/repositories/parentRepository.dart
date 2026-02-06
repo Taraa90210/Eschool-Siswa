@@ -26,7 +26,6 @@ class ParentRepository {
 
       //If there is not electvie subjects key in result means no elective subjects
       //in given class
-
       final electiveSubjects =
           ((result['data']['elective_subject'] ?? []) as List).map(
         (e) {

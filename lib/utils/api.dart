@@ -191,6 +191,10 @@ class Api {
   static String verifyPaymentStatus =
       "${databaseUrl}parent/fees/payment-status";
 
+  // Xendit payment gateway endpoints (DEMO - will be implemented in backend)
+  static String createXenditInvoice = "${databaseUrl}parent/fees/xendit/create";
+  static String getXenditStatus = "${databaseUrl}parent/fees/xendit/status";
+
   // Fitur tambahan Eschool - Galang
 
   static String getSubjectAttendanceParent =

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
@@ -379,116 +380,57 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen>
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(18),
-                                child: Image.network(
-                                  proofImage,
+                                child: CachedNetworkImage(
+                                  imageUrl: proofImage,
                                   fit: BoxFit.cover,
                                   width: double.infinity,
                                   height: 240,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Container(
-                                      height: 240,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            primaryColor.withOpacity(0.1),
-                                            primaryColor.withOpacity(0.05),
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.circular(18),
+                                  placeholder: (context, url) => Container(
+                                    height: 240,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          primaryColor.withOpacity(0.1),
+                                          primaryColor.withOpacity(0.05),
+                                        ],
                                       ),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CircularProgressIndicator(
-                                              value: loadingProgress
-                                                          .expectedTotalBytes !=
-                                                      null
-                                                  ? loadingProgress
-                                                          .cumulativeBytesLoaded /
-                                                      loadingProgress
-                                                          .expectedTotalBytes!
-                                                  : null,
-                                              color:
-                                                  primaryColor.withOpacity(0.8),
-                                              strokeWidth: 3,
-                                            ),
-                                            SizedBox(height: 16),
-                                            Text(
-                                              Utils.getTranslatedLabel(
-                                                  loadingImageKey),
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 14,
-                                                color: primaryColor
-                                                    .withOpacity(0.8),
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    ),
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                primaryColor),
                                       ),
-                                    );
-                                  },
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      height: 240,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Colors.red.shade50,
-                                            Colors.red,
-                                          ],
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                    height: 240,
+                                    color: Colors.grey.shade100,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.broken_image_rounded,
+                                          size: 64,
+                                          color: primaryColor.withOpacity(0.3),
                                         ),
-                                        borderRadius: BorderRadius.circular(18),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.all(16),
-                                              decoration: BoxDecoration(
-                                                color: Colors.red.shade100,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Icon(
-                                                Icons.error_outline_rounded,
-                                                size: 40,
-                                                color: Colors.red.shade600,
-                                              ),
-                                            ),
-                                            SizedBox(height: 16),
-                                            Text(
-                                              Utils.getTranslatedLabel(
-                                                  failedToLoadImageKey),
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.red.shade700,
-                                              ),
-                                            ),
-                                            SizedBox(height: 8),
-                                            Text(
-                                              Utils.getTranslatedLabel(
-                                                  tapToRetryKey),
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                color: Colors.red.shade600,
-                                              ),
-                                            ),
-                                          ],
+                                        const SizedBox(height: 12),
+                                        Text(
+                                          Utils.getTranslatedLabel(
+                                              failedToLoadImageKey),
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.grey.shade600,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
 

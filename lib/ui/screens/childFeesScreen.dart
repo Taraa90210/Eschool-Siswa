@@ -3,11 +3,8 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:eschool/cubits/childFeeDetailsCubit.dart';
-import 'package:eschool/cubits/paymentMethodCubit.dart';
-import 'package:eschool/cubits/paymentSubmissionCubit.dart';
 import 'package:eschool/cubits/paymentTransactionsCubit.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/data/repositories/paymentSubmissionRepository.dart';
 // import 'package:eschool/data/repositories/paymentRepository.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
@@ -21,14 +18,17 @@ import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
-import 'package:eschool/ui/screens/paymentScreen.dart';
-import 'package:eschool/ui/screens/installmentPaymentScreen.dart';
+import 'package:eschool/ui/screens/xenditOnlyPaymentScreen.dart';
+import 'package:eschool/ui/screens/xenditInstallmentPaymentScreen.dart';
+import 'package:eschool/cubits/xenditInvoiceCubit.dart';
+import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -1104,19 +1104,11 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => PaymentMethodCubit(),
-            ),
-            BlocProvider(
-              create: (context) => PaymentSubmissionCubit(
-                context.read<
-                    PaymentSubmissionRepository>(), // Use existing repository from context
-              ),
-            ),
-          ],
-          child: InstallmentPaymentScreen(
+        builder: (context) => BlocProvider(
+          create: (_) => XenditInvoiceCubit(
+            XenditRepository(),
+          ),
+          child: XenditInstallmentPaymentScreen(
             feeDetails: feeDetails,
             child: widget.child,
           ),
@@ -1520,7 +1512,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
     for (var fee in fees) {
       final feeRemaining = fee.remainingFeeAmountToPay();
       final isPaid = fee.getFeePaymentStatus() == paidKey || feeRemaining == 0;
-      
+
       // Check if there are pending payments in payment history
       bool hasPendingPayment = false;
       final bill = fee.bills?.isNotEmpty == true ? fee.bills!.first : null;
@@ -1529,22 +1521,21 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         final recentPendingPayment = bill.paymentHistory
             .where((payment) => payment.status?.toLowerCase() == 'pending')
             .isNotEmpty;
-        
+
         // Also check if the fee has been partially paid but still has remaining amount
         final hasPartialPayment = fee.getPaidAmount() > 0 && feeRemaining > 0;
-        
+
         hasPendingPayment = recentPendingPayment && hasPartialPayment;
       }
-      
+
       // Alternative: Check if fee status indicates it's under review
       final feeStatus = fee.getFeePaymentStatus();
-      final isUnderReview = feeStatus == 'menunggu konfirmasi admin' || 
-                            feeStatus == 'waiting for admin confirmation' ||
-                            feeStatus == 'payment under review';
-      
+      final isUnderReview = feeStatus == 'menunggu konfirmasi admin' ||
+          feeStatus == 'waiting for admin confirmation' ||
+          feeStatus == 'payment under review';
+
       hasPendingPayment = hasPendingPayment || isUnderReview;
-      
-      
+
       if (isPaid) {
         paidFees++;
         paidAmount += fee.getPaidAmount();
@@ -1705,7 +1696,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
@@ -1714,9 +1708,9 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          
+
                           SizedBox(width: 12),
-                          
+
                           // Content dengan alignment yang tepat
                           Expanded(
                             child: Column(
@@ -1739,7 +1733,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                     height: 1,
                                   ),
                                 ),
@@ -1816,9 +1811,9 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
               color: color,
             ),
           ),
-          
+
           SizedBox(width: 12),
-          
+
           // Content
           Expanded(
             child: Column(
@@ -1862,7 +1857,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -2084,10 +2078,16 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PaymentScreen(
-                              selectedFees: selectedFeesData,
-                              totalAmount: _getTotalSelectedAmount(state.fees),
-                              child: widget.child,
+                            builder: (context) => BlocProvider(
+                              create: (_) => XenditInvoiceCubit(
+                                XenditRepository(),
+                              ),
+                              child: XenditOnlyPaymentScreen(
+                                selectedFees: selectedFeesData,
+                                totalAmount:
+                                    _getTotalSelectedAmount(state.fees),
+                                child: widget.child,
+                              ),
                             ),
                           ),
                         );
@@ -2687,33 +2687,30 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      _getFullImageUrl(proofImageUrl),
+                    child: CachedNetworkImage(
+                      imageUrl: _getFullImageUrl(proofImageUrl),
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).colorScheme.primary,
-                                ),
+                      placeholder: (context, url) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.primary,
                               ),
-                              SizedBox(height: 12),
-                              Text(
-                                'Memuat gambar...',
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontSize: 12,
-                                ),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              'Memuat gambar...',
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 12,
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
+                            ),
+                          ],
+                        ),
+                      ),
+                      errorWidget: (context, url, error) {
                         return Container(
                           color: Colors.grey.shade100,
                           child: Center(

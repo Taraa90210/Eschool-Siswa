@@ -5,13 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
+
+import 'package:eschool/cubits/paymentSubmissionCubit.dart';
+import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
-import 'package:eschool/cubits/paymentSubmissionCubit.dart';
+import 'package:eschool/data/models/xenditInvoice.dart';
+import 'package:eschool/ui/screens/xenditPaymentScreen.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+// Payment type enum
+enum PaymentType { manual, xendit }
 
 class PaymentScreen extends StatefulWidget {
   final List<ChildFeeDetails> selectedFees;
@@ -33,6 +41,9 @@ class _PaymentScreenState extends State<PaymentScreen>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late AnimationController _uploadController;
+
+  // Payment type selection
+  PaymentType selectedPaymentType = PaymentType.manual;
 
   PaymentMethod? selectedPaymentMethod;
   File? selectedProofFile;
@@ -419,35 +430,32 @@ class _PaymentScreenState extends State<PaymentScreen>
                 child: method.hasImage
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          method.fullImageUrl!,
+                        child: CachedNetworkImage(
+                          imageUrl: method.fullImageUrl!,
                           width: 48,
                           height: 48,
                           fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Container(
-                              width: 48,
-                              height: 48,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                child: SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Theme.of(context).colorScheme.primary,
-                                    ),
-                                    strokeWidth: 2,
+                          placeholder: (context, url) => Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).colorScheme.primary,
                                   ),
+                                  strokeWidth: 2,
                                 ),
                               ),
-                            );
-                          },
-                          errorBuilder: (context, error, stackTrace) {
+                            ),
+                          ),
+                          errorWidget: (context, url, error) {
                             return Container(
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
@@ -694,6 +702,140 @@ class _PaymentScreenState extends State<PaymentScreen>
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildPaymentTypeSelector() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 24),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.payment,
+                color: Theme.of(context).colorScheme.primary,
+                size: 20,
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Pilih Metode Pembayaran',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: _buildPaymentTypeOption(
+                  type: PaymentType.xendit,
+                  icon: Icons.account_balance_wallet,
+                  title: 'Bayar Otomatis',
+                  subtitle: 'Via Xendit (VA, E-wallet, QRIS)',
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: _buildPaymentTypeOption(
+                  type: PaymentType.manual,
+                  icon: Icons.upload_file,
+                  title: 'Upload Bukti',
+                  subtitle: 'Transfer manual + upload',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPaymentTypeOption({
+    required PaymentType type,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+  }) {
+    final isSelected = selectedPaymentType == type;
+    return InkWell(
+      onTap: () {
+        setState(() {
+          selectedPaymentType = type;
+          // Reset selections when changing payment type
+          if (type == PaymentType.xendit) {
+            selectedProofFile = null;
+            uploadError = null;
+          }
+        });
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+              : Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary
+                : Colors.grey.shade300,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : Colors.grey.shade600,
+              size: 32,
+            ),
+            SizedBox(height: 8),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: isSelected
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.grey.shade800,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey.shade600,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1075,7 +1217,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               repeat: true,
             ),
             SizedBox(height: 20),
-            
+
             // Title
             Text(
               title,
@@ -1087,7 +1229,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8),
-            
+
             // Message
             Text(
               message,
@@ -1098,7 +1240,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 24),
-            
+
             // Payment Details Card
             Container(
               width: double.infinity,
@@ -1135,7 +1277,8 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               ),
@@ -1146,7 +1289,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               ),
             ),
             SizedBox(height: 16),
-            
+
             // Info Box
             Container(
               padding: EdgeInsets.all(12),
@@ -1178,7 +1321,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               ),
             ),
             SizedBox(height: 24),
-            
+
             // Button
             SizedBox(
               width: double.infinity,
@@ -1228,14 +1371,18 @@ class _PaymentScreenState extends State<PaymentScreen>
 
             if (state.paymentMethod == 'single') {
               final fee = widget.selectedFees.first;
-              
+
               // Build payment details - exclude transaction ID completely
               paymentDetails = {};
-              
-              paymentDetails[Utils.getTranslatedLabel(feesKey)] = fee.name ?? unknownFee;
-              paymentDetails[Utils.getTranslatedLabel(amountKey)] = _formatCurrency(fee.remainingFeeAmountToPay());
-              paymentDetails[Utils.getTranslatedLabel(paymentMethodKey)] = selectedPaymentMethod!.name ?? unknownPaymentMethod;
-              paymentDetails[Utils.getTranslatedLabel(statusKey)] = Utils.getTranslatedLabel(pendingKey).toUpperCase();
+
+              paymentDetails[Utils.getTranslatedLabel(feesKey)] =
+                  fee.name ?? unknownFee;
+              paymentDetails[Utils.getTranslatedLabel(amountKey)] =
+                  _formatCurrency(fee.remainingFeeAmountToPay());
+              paymentDetails[Utils.getTranslatedLabel(paymentMethodKey)] =
+                  selectedPaymentMethod!.name ?? unknownPaymentMethod;
+              paymentDetails[Utils.getTranslatedLabel(statusKey)] =
+                  Utils.getTranslatedLabel(pendingKey).toUpperCase();
 
               _showSuccessDialog(
                 title: Utils.getTranslatedLabel(paymentSuccessTitleKey),
@@ -1245,11 +1392,14 @@ class _PaymentScreenState extends State<PaymentScreen>
             } else {
               // Build bulk payment details - exclude transaction ID completely
               paymentDetails = {};
-              
+
               paymentDetails[totalFeesLabel] = '${widget.selectedFees.length}';
-              paymentDetails[Utils.getTranslatedLabel(amountKey)] = _formatCurrency(widget.totalAmount);
-              paymentDetails[Utils.getTranslatedLabel(paymentMethodKey)] = selectedPaymentMethod!.name ?? unknownPaymentMethod;
-              paymentDetails[Utils.getTranslatedLabel(statusKey)] = Utils.getTranslatedLabel(pendingKey).toUpperCase();
+              paymentDetails[Utils.getTranslatedLabel(amountKey)] =
+                  _formatCurrency(widget.totalAmount);
+              paymentDetails[Utils.getTranslatedLabel(paymentMethodKey)] =
+                  selectedPaymentMethod!.name ?? unknownPaymentMethod;
+              paymentDetails[Utils.getTranslatedLabel(statusKey)] =
+                  Utils.getTranslatedLabel(pendingKey).toUpperCase();
 
               _showSuccessDialog(
                 title: bulkPaymentSubmittedSuccessfully,
@@ -1334,15 +1484,16 @@ class _PaymentScreenState extends State<PaymentScreen>
 
                       // Payment methods section
                       _buildPaymentMethodsSection(paymentMethods),
-                      
+
                       SizedBox(height: 24),
-                      
+
                       // Button as part of content (not floating)
                       SafeArea(
                         child: BlocBuilder<PaymentSubmissionCubit,
                             PaymentSubmissionState>(
                           builder: (context, state) {
-                            final isSubmitting = state is PaymentSubmissionInProgress;
+                            final isSubmitting =
+                                state is PaymentSubmissionInProgress;
                             final canProceed = _canProceedPayment();
                             final isEnabled = canProceed && !isSubmitting;
 
@@ -1353,7 +1504,9 @@ class _PaymentScreenState extends State<PaymentScreen>
                                 if (!isEnabled && !isSubmitting)
                                   Animate(
                                     effects: [
-                                      FadeEffect(duration: Duration(milliseconds: 300)),
+                                      FadeEffect(
+                                          duration:
+                                              Duration(milliseconds: 300)),
                                       SlideEffect(
                                         begin: Offset(0, -0.2),
                                         duration: Duration(milliseconds: 300),
@@ -1361,12 +1514,14 @@ class _PaymentScreenState extends State<PaymentScreen>
                                     ],
                                     child: Container(
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
                                       margin: EdgeInsets.only(bottom: 12),
                                       decoration: BoxDecoration(
                                         color: Colors.orange.shade50,
                                         borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: Colors.orange.shade200),
+                                        border: Border.all(
+                                            color: Colors.orange.shade200),
                                       ),
                                       child: Row(
                                         children: [
@@ -1396,32 +1551,43 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   duration: Duration(milliseconds: 300),
                                   curve: Curves.easeInOut,
                                   child: ElevatedButton(
-                                    onPressed: isEnabled ? _processPayment : null,
+                                    onPressed:
+                                        isEnabled ? _processPayment : null,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: isEnabled
-                                          ? Theme.of(context).colorScheme.primary
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
                                           : Colors.grey.shade400,
                                       foregroundColor: Colors.white,
-                                      disabledBackgroundColor: Colors.grey.shade400,
+                                      disabledBackgroundColor:
+                                          Colors.grey.shade400,
                                       disabledForegroundColor: Colors.white70,
-                                      padding: EdgeInsets.symmetric(vertical: 16),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 16),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(16),
                                       ),
                                       elevation: isEnabled ? 8 : 2,
                                       shadowColor: isEnabled
-                                          ? Theme.of(context).colorScheme.primary.withOpacity(0.3)
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(0.3)
                                           : Colors.transparent,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         if (isSubmitting) ...[
                                           SizedBox(
                                             width: 20,
                                             height: 20,
                                             child: CircularProgressIndicator(
-                                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Colors.white),
                                               strokeWidth: 2,
                                             ),
                                           ),
@@ -1435,7 +1601,9 @@ class _PaymentScreenState extends State<PaymentScreen>
                                           ),
                                         ] else ...[
                                           Icon(
-                                            isEnabled ? Icons.payment_rounded : Icons.lock_outline,
+                                            isEnabled
+                                                ? Icons.payment_rounded
+                                                : Icons.lock_outline,
                                             size: 20,
                                           ),
                                           SizedBox(width: 8),

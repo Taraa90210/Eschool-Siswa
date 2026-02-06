@@ -1,0 +1,279 @@
+import 'package:eschool/data/models/xenditInvoice.dart';
+import 'package:eschool/utils/api.dart';
+import 'package:eschool/data/repositories/xenditDirectRepository.dart';
+
+class XenditRepository {
+  // MODE CONFIGURATION:
+  // - _isDemoMode = true: Use HTML mockup (no internet needed)
+  // - _isDemoMode = false + _useDirectXendit = true: Use real Xendit API (testing)
+  // - _isDemoMode = false + _useDirectXendit = false: Use backend API (production)
+  final bool _isDemoMode = false;
+  final bool _useDirectXendit = true; // Set to false when backend is ready
+
+  /// Create Xendit invoice
+  ///
+  /// DEMO: Returns mock invoice data
+  /// PRODUCTION: Will call backend API to create real Xendit invoice
+  Future<XenditInvoice> createInvoice({
+    required int schoolId,
+    required int studentId,
+    required double amount,
+    required String email,
+    required String description,
+    required List<int> feeIds,
+  }) async {
+    // Use direct Xendit API (for testing without backend)
+    if (_useDirectXendit && !_isDemoMode) {
+      final directRepo = XenditDirectRepository();
+      return await directRepo.createInvoice(
+        email: email,
+        amount: amount,
+        description: description,
+      );
+    }
+
+    // Use HTML mockup demo
+    if (_isDemoMode) {
+      // DEMO: Simulate API delay
+      await Future.delayed(Duration(seconds: 2));
+
+      // DEMO: Return mock invoice
+      return _createMockInvoice(
+        amount: amount,
+        email: email,
+        description: description,
+      );
+    }
+
+    // PRODUCTION CODE (akan diaktifkan nanti):
+    try {
+      final result = await Api.post(
+        url: Api.createXenditInvoice,
+        body: {
+          'school_id': schoolId,
+          'student_id': studentId,
+          'amount': amount,
+          'email': email,
+          'description': description,
+          'fee_ids': feeIds,
+        },
+        useAuthToken: true,
+      );
+
+      // Backend returns invoice data directly in response (not nested in 'data')
+      // Response format: { error: false, message: "...", invoice_id: "...", invoice_url: "...", ... }
+      if (result['error'] == false) {
+        return XenditInvoice.fromBackendResponse(result);
+      } else {
+        throw ApiException(result['message'] ?? 'Failed to create invoice');
+      }
+    } catch (e) {
+      throw ApiException(e.toString());
+    }
+  }
+
+  /// Get invoice status
+  ///
+  /// DEMO: Returns mock status
+  /// PRODUCTION: Will call backend API to get real invoice status
+  Future<XenditInvoice> getInvoiceStatus(String invoiceId) async {
+    // Use direct Xendit API (for testing without backend)
+    if (_useDirectXendit && !_isDemoMode) {
+      final directRepo = XenditDirectRepository();
+      return await directRepo.getInvoiceStatus(invoiceId);
+    }
+
+    // Use HTML mockup demo
+    if (_isDemoMode) {
+      // DEMO: Simulate API delay
+      await Future.delayed(Duration(seconds: 1));
+
+      // DEMO: Return mock invoice with updated status
+      return _createMockInvoice(
+        amount: 500000,
+        email: 'demo@example.com',
+        description: 'Demo Payment',
+        status: 'paid', // Simulate successful payment
+      );
+    }
+
+    // PRODUCTION CODE:
+    try {
+      final result = await Api.get(
+        url: '${Api.getXenditStatus}/$invoiceId',
+        useAuthToken: true,
+      );
+
+      // Backend returns: { error: false, data: { id: "...", status: "...", ... } }
+      if (result['error'] == false) {
+        return XenditInvoice.fromJson(result['data']);
+      } else {
+        throw ApiException(result['message'] ?? 'Failed to get invoice status');
+      }
+    } catch (e) {
+      throw ApiException(e.toString());
+    }
+  }
+
+  // ========== DEMO HELPER METHODS ==========
+
+  XenditInvoice _createMockInvoice({
+    required double amount,
+    required String email,
+    required String description,
+    String status = 'pending',
+  }) {
+    final now = DateTime.now();
+    final expiryDate = now.add(Duration(hours: 24));
+
+    return XenditInvoice(
+      id: 'demo_invoice_${now.millisecondsSinceEpoch}',
+      externalId: 'SCHOOL_DEMO_${now.millisecondsSinceEpoch}',
+      status: status,
+      amount: amount,
+      // DEMO: Use HTML mockup for demo payment interface
+      // This creates a realistic demo payment page without needing real Xendit API
+      invoiceUrl: _getDemoPaymentPageUrl(amount, description),
+      expiryDate: expiryDate,
+      payerEmail: email,
+      description: description,
+      createdAt: now,
+      paidAt: status == 'paid' ? now : null,
+    );
+  }
+
+  // Generate demo payment page HTML
+  String _getDemoPaymentPageUrl(double amount, String description) {
+    final formattedAmount =
+        'Rp ${amount.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}';
+
+    final html = '''
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .logo { font-size: 24px; font-weight: bold; color: #1570EF; margin-bottom: 8px; }
+        .amount { font-size: 32px; font-weight: bold; color: #333; margin: 16px 0; }
+        .description { color: #666; font-size: 14px; }
+        .payment-methods {
+            margin-top: 24px;
+        }
+        .method-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .method-btn {
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .method-btn:hover {
+            border-color: #1570EF;
+            background: #f8faff;
+        }
+        .method-name {
+            font-weight: 500;
+            color: #333;
+        }
+        .demo-badge {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 12px;
+            background: #EFF6FF;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #1E40AF;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">XENDIT</div>
+            <div class="amount">$formattedAmount</div>
+            <div class="description">$description</div>
+        </div>
+        
+        <div class="payment-methods">
+            <div class="method-title">Pilih Metode Pembayaran</div>
+            
+            <button class="method-btn" onclick="simulatePayment('E-Wallet')">
+                <span class="method-name">💳 E-Wallet (DANA, OVO, LinkAja)</span>
+                <span>›</span>
+            </button>
+            
+            <button class="method-btn" onclick="simulatePayment('Virtual Account')">
+                <span class="method-name">🏦 Virtual Account (BCA, Mandiri, BNI)</span>
+                <span>›</span>
+            </button>
+            
+            <button class="method-btn" onclick="simulatePayment('Retail')">
+                <span class="method-name">🛒 Retail (Alfamart, Indomaret)</span>
+                <span>›</span>
+            </button>
+            
+            <button class="method-btn" onclick="simulatePayment('QRIS')">
+                <span class="method-name">📱 QRIS</span>
+                <span>›</span>
+            </button>
+        </div>
+        
+        <div class="demo-badge">🎭 DEMO MODE</div>
+        <div class="info">
+            Ini adalah tampilan demo. Di production, Anda akan diarahkan ke halaman pembayaran Xendit yang sebenarnya.
+        </div>
+    </div>
+    
+    <script>
+        function simulatePayment(method) {
+            alert('Demo Mode: Pembayaran via ' + method + ' akan diproses.\\n\\nDi production, Anda akan diarahkan ke halaman pembayaran ' + method + '.');
+        }
+    </script>
+</body>
+</html>
+    ''';
+
+    // Convert HTML to data URL
+    return 'data:text/html;charset=utf-8,${Uri.encodeComponent(html)}';
+  }
+}

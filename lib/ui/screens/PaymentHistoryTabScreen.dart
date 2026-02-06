@@ -14,6 +14,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class PaymentHistoryTabScreen extends StatefulWidget {
   final Student child;
@@ -798,28 +799,24 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
                       border: Border.all(color: Colors.grey.shade300)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      _getFullImageUrl(proofImageUrl),
+                    child: CachedNetworkImage(
+                      imageUrl: _getFullImageUrl(proofImageUrl),
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Theme.of(context).colorScheme.primary)),
-                              const SizedBox(height: 12),
-                              Text('Memuat gambar...',
-                                  style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 12)),
-                            ],
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
+                      placeholder: (context, url) => Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).colorScheme.primary)),
+                            const SizedBox(height: 12),
+                            Text('Memuat gambar...',
+                                style: TextStyle(
+                                    color: Colors.grey.shade600, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                      errorWidget: (context, url, error) {
                         return Container(
                           color: Colors.grey.shade100,
                           child: Center(

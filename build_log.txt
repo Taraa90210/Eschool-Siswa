@@ -1,0 +1,51 @@
+Running Gradle task 'assembleDebug'...                          
+../../../AppData/Local/Pub/Cache/hosted/pub.dev/skeletonizer-1.4.3/lib/src/painting/skeletonizer_painting_context.dart:106:7: Error: The non-abstract class 'SkeletonizerCanvas' is missing implementations for these members:
+ - Canvas.clipRSuperellipse
+ - Canvas.drawRSuperellipse
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+class SkeletonizerCanvas implements Canvas {
+      ^^^^^^^^^^^^^^^^^^
+org-dartlang-sdk:///flutter/lib/ui/painting.dart:5967:8: Context: 'Canvas.clipRSuperellipse' is defined here.
+  void clipRSuperellipse(RSuperellipse rsuperellipse, {bool doAntiAlias = true});
+       ^^^^^^^^^^^^^^^^^
+org-dartlang-sdk:///flutter/lib/ui/painting.dart:6097:8: Context: 'Canvas.drawRSuperellipse' is defined here.
+  void drawRSuperellipse(RSuperellipse rsuperellipse, Paint paint);
+       ^^^^^^^^^^^^^^^^^
+../../../AppData/Local/Pub/Cache/hosted/pub.dev/skeletonizer-1.4.3/lib/src/painting/uniting_painting_context.dart:8:7: Error: The non-abstract class 'UnitingCanvas' is missing implementations for these members:
+ - Canvas.clipRSuperellipse
+ - Canvas.drawRSuperellipse
+Try to either
+ - provide an implementation,
+ - inherit an implementation from a superclass or mixin,
+ - mark the class as abstract, or
+ - provide a 'noSuchMethod' implementation.
+class UnitingCanvas implements Canvas {
+      ^^^^^^^^^^^^^
+org-dartlang-sdk:///flutter/lib/ui/painting.dart:5967:8: Context: 'Canvas.clipRSuperellipse' is defined here.
+  void clipRSuperellipse(RSuperellipse rsuperellipse, {bool doAntiAlias = true});
+       ^^^^^^^^^^^^^^^^^
+org-dartlang-sdk:///flutter/lib/ui/painting.dart:6097:8: Context: 'Canvas.drawRSuperellipse' is defined here.
+  void drawRSuperellipse(RSuperellipse rsuperellipse, Paint paint);
+       ^^^^^^^^^^^^^^^^^
+Target kernel_snapshot_program failed: Exception
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileFlutterBuildDebug'.
+> Process 'command 'C:\Users\LENOVO LOQ I7\flutter\bin\flutter.bat'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 8s
+Running Gradle task 'assembleDebug'...                              9.2s
+Gradle task assembleDebug failed with exit code 1

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:eschool/ui/widgets/svgButton.dart';
 // import 'package:flutter_svg/svg.dart';
 import 'package:eschool/utils/labelKeys.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class LeavesDetailScreen extends StatefulWidget {
   final Leave leave;
@@ -112,20 +113,18 @@ class _LeavesDetailScreenState extends State<LeavesDetailScreen> {
         height: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey[300]!),
+          border: Border.all(color: Colors.grey[300] ?? Colors.grey),
         ),
         child: isImage && detail.fileUrl != null
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  detail.fileUrl!,
+                child: CachedNetworkImage(
+                  imageUrl: detail.fileUrl!,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
+                  errorWidget: (context, url, error) =>
                       _buildFileTypeIcon(detail),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(child: CircularProgressIndicator());
-                  },
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
                 ),
               )
             : _buildFileTypeIcon(detail),
@@ -215,11 +214,14 @@ class _LeavesDetailScreenState extends State<LeavesDetailScreen> {
                 maxWidth: MediaQuery.of(context).size.width,
               ),
               child: isImage && detail.fileUrl != null
-                  ? Image.network(
-                      detail.fileUrl!,
+                  ? CachedNetworkImage(
+                      imageUrl: detail.fileUrl!,
                       fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) =>
-                          Center(child: Text(Utils.getTranslatedLabel(error_loading_imageKey))),
+                      errorWidget: (context, url, error) => Center(
+                          child: Text(Utils.getTranslatedLabel(
+                              error_loading_imageKey))),
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
                     )
                   : Center(
                       child: Text(Utils.getTranslatedLabel(

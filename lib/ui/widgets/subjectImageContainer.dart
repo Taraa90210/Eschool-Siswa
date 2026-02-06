@@ -32,7 +32,7 @@ class SubjectImageContainer extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: border,
-          image: (subject.image ?? "" ).isEmpty || subject.hasSvgImage()
+          image: (subject.image ?? "").isEmpty || subject.hasSvgImage()
               ? null
               : DecorationImage(
                   fit: BoxFit.cover,
@@ -45,7 +45,7 @@ class SubjectImageContainer extends StatelessWidget {
         width: width,
         child: (subject.image ?? "").isEmpty
             ? SubjectCodeContainer(
-              subjectCode: subject.code ?? "",
+                subjectCode: subject.code ?? "",
               )
             : subject.hasSvgImage()
                 ? Padding(
@@ -53,7 +53,12 @@ class SubjectImageContainer extends StatelessWidget {
                       horizontal: width * (0.25),
                       vertical: height * 0.25,
                     ),
-                    child: SvgPicture.network(subject.image ??""),
+                    child: SvgPicture.network(
+                      subject.image ?? "",
+                      placeholderBuilder: (context) => const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
                   )
                 : const SizedBox(),
       ),

@@ -9,9 +9,9 @@ import 'package:eschool/utils/labelKeys.dart';
 // const String baseUrl = "https://eschoolbeta.lucia.id";
 
 const String baseUrl = "https://esbeta.deanry.my.id";
-
+// const String baseUrl = "https://eschool.bagus-hidayat.my.id";
 //TEST: https://eschoolsaas.thewrteam.in
-//Producttion : https://eschool-saas.wrteam.me
+//Production: https://eschool-saas.wrteam.me
 const String databaseUrl = "$baseUrl/api/";
 
 //Socket url

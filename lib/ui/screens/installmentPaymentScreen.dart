@@ -15,6 +15,7 @@ import 'package:eschool/cubits/paymentMethodCubit.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class InstallmentPaymentScreen extends StatefulWidget {
   final ChildFeeDetails feeDetails;
@@ -447,7 +448,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
 
   String _getButtonHintMessage() {
     final amount = _parseAmount(_amountController.text);
-    
+
     // Check conditions in priority order
     if (_amountController.text.isEmpty || amount <= 0 || amountError != null) {
       return hintEnterAmount;
@@ -558,7 +559,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                       SizedBox(height: 20),
                       _buildPaymentMethodSection(),
                       SizedBox(height: 24),
-                      
+
                       // Button as part of content (not floating)
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 0),
@@ -1019,49 +1020,43 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                               ? ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(12),
-                                                  child: Image.network(
-                                                    method.imageUrl!,
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: method.imageUrl!,
                                                     width: 48,
                                                     height: 48,
                                                     fit: BoxFit.cover,
-                                                    loadingBuilder: (context,
-                                                        child,
-                                                        loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) return child;
-                                                      return Container(
-                                                        width: 48,
-                                                        height: 48,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors
-                                                              .grey.shade100,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(12),
-                                                        ),
-                                                        child: Center(
-                                                          child: SizedBox(
-                                                            width: 20,
-                                                            height: 20,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              valueColor:
-                                                                  AlwaysStoppedAnimation<
-                                                                      Color>(
-                                                                Theme.of(
-                                                                        context)
-                                                                    .colorScheme
-                                                                    .primary,
-                                                              ),
-                                                              strokeWidth: 2,
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Container(
+                                                      width: 48,
+                                                      height: 48,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade100,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      child: Center(
+                                                        child: SizedBox(
+                                                          width: 20,
+                                                          height: 20,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            valueColor:
+                                                                AlwaysStoppedAnimation<
+                                                                    Color>(
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary,
                                                             ),
+                                                            strokeWidth: 2,
                                                           ),
                                                         ),
-                                                      );
-                                                    },
-                                                    errorBuilder: (context,
-                                                        error, stackTrace) {
+                                                      ),
+                                                    ),
+                                                    errorWidget:
+                                                        (context, url, error) {
                                                       return Container(
                                                         decoration:
                                                             BoxDecoration(
@@ -1687,7 +1682,8 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
                             strokeWidth: 2,
                           ),
                         ),
@@ -1701,7 +1697,9 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                         ),
                       ] else ...[
                         Icon(
-                          isEnabled ? Icons.payment_rounded : Icons.lock_outline,
+                          isEnabled
+                              ? Icons.payment_rounded
+                              : Icons.lock_outline,
                           size: 20,
                         ),
                         SizedBox(width: 8),
@@ -1728,15 +1726,19 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
     final amount = _parseAmount(_amountController.text);
     // Always use translation key for consistent language
     final message = Utils.getTranslatedLabel(paymentSuccessMsgKey);
-    
+
     // Build payment details - exclude transaction ID completely
     final paymentDetails = <String, String>{};
-    
-    paymentDetails[Utils.getTranslatedLabel(feesKey)] = widget.feeDetails.name ?? unknownFee;
-    paymentDetails[Utils.getTranslatedLabel(amountKey)] = _formatCurrency(amount);
-    paymentDetails[Utils.getTranslatedLabel(paymentMethodKey)] = selectedPaymentMethod?.name ?? 'Unknown';
-    paymentDetails[Utils.getTranslatedLabel(statusKey)] = Utils.getTranslatedLabel(pendingKey).toUpperCase();
-    
+
+    paymentDetails[Utils.getTranslatedLabel(feesKey)] =
+        widget.feeDetails.name ?? unknownFee;
+    paymentDetails[Utils.getTranslatedLabel(amountKey)] =
+        _formatCurrency(amount);
+    paymentDetails[Utils.getTranslatedLabel(paymentMethodKey)] =
+        selectedPaymentMethod?.name ?? 'Unknown';
+    paymentDetails[Utils.getTranslatedLabel(statusKey)] =
+        Utils.getTranslatedLabel(pendingKey).toUpperCase();
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -1757,7 +1759,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
               repeat: true,
             ),
             SizedBox(height: 20),
-            
+
             // Title
             Text(
               Utils.getTranslatedLabel(paymentSuccessTitleKey),
@@ -1769,7 +1771,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8),
-            
+
             // Message
             Text(
               message,
@@ -1780,7 +1782,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 24),
-            
+
             // Payment Details Card
             Container(
               width: double.infinity,
@@ -1817,7 +1819,8 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.secondary,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               ),
@@ -1828,7 +1831,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
               ),
             ),
             SizedBox(height: 16),
-            
+
             // Info Box
             Container(
               padding: EdgeInsets.all(12),
@@ -1860,7 +1863,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
               ),
             ),
             SizedBox(height: 24),
-            
+
             // Button
             SizedBox(
               width: double.infinity,

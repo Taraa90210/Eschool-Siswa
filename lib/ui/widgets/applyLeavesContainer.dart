@@ -13,6 +13,7 @@ import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/data/repositories/leavesRepository.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ApplyLeavesContainer extends StatefulWidget {
   final int? childId;
@@ -57,46 +58,44 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
     if (isUpdate) {
       final databinding = widget.data!;
       _reasonController.text = databinding.reason ?? "";
-      
+
       // Ambil detail yang BUKAN file untuk tipe izin, sort by ID descending (terbaru)
       final nonFileDetails = databinding.leaveDetail
           .where((detail) => !detail.isFile)
           .toList()
         ..sort((a, b) => b.id.compareTo(a.id));
-      
+
       // Ambil tipe dari leaveDetail dengan ID tertinggi (terbaru)
       String? leaveTypeFromData;
-      
+
       if (nonFileDetails.isNotEmpty) {
         leaveTypeFromData = nonFileDetails.first.type;
       } else if (databinding.type.isNotEmpty) {
         leaveTypeFromData = databinding.type;
       }
-      
+
       if (leaveTypeFromData != null && leaveTypeFromData.isNotEmpty) {
         final typeValue = leaveTypeFromData.toLowerCase();
-        _selectedLeaveType = typeValue == "sick" 
-            ? LeaveType.sick 
-            : LeaveType.leave;
+        _selectedLeaveType =
+            typeValue == "sick" ? LeaveType.sick : LeaveType.leave;
       }
-      
+
       // Ambil file dari property fileDetail ATAU dari leaveDetail yang isFile = true
       LeaveDetail? fileDetail;
-      
+
       // Prioritas 1: Cek property fileDetail (ini yang utama dari API)
       if (databinding.fileDetail.isNotEmpty) {
         fileDetail = databinding.fileDetail.first;
-      } 
+      }
       // Prioritas 2: Cek leaveDetail yang isFile = true (backup)
       else {
-        final fileDetailsFromLeave = databinding.leaveDetail
-            .where((detail) => detail.isFile)
-            .toList();
+        final fileDetailsFromLeave =
+            databinding.leaveDetail.where((detail) => detail.isFile).toList();
         if (fileDetailsFromLeave.isNotEmpty) {
           fileDetail = fileDetailsFromLeave.first;
         }
       }
-      
+
       // Set file jika ada
       if (fileDetail != null && fileDetail.fileUrl != null) {
         _selectedFile = fileDetail.fileUrl;
@@ -428,28 +427,16 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
                             },
                             child: InteractiveViewer(
                               maxScale: 2.5,
-                              child: Image.network(
-                                imageUrl,
+                              child: CachedNetworkImage(
+                                imageUrl: imageUrl,
                                 fit: BoxFit.contain,
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.white),
-                                    ),
-                                  );
-                                },
-                                errorBuilder: (context, error, stackTrace) {
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) {
                                   return Center(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -534,7 +521,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
     final icon = _iconFromName(displayName);
     final isImage = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp']
         .any((ext) => displayName.toLowerCase().endsWith(ext));
-    
+
     final subtitle = _selectedIsRemote
         ? '${_typeFromName(displayName)} • File lama'
         : _typeFromName(displayName);

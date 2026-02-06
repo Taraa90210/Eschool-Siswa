@@ -34,7 +34,7 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
   late DateTime focusedDay = DateTime.now();
   late List<Holiday> holidays = [];
   PageController? calendarPageController;
-  
+
   // Map to track expanded state for each holiday description
   Map<int, bool> expandedStates = {};
 
@@ -208,11 +208,15 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
                                     ),
                                     children: [
                                       TextSpan(
-                                        text: _getDisplayText(holidays[index].description, index),
+                                        text: _getDisplayText(
+                                            holidays[index].description, index),
                                       ),
-                                      if (_shouldShowReadMore(holidays[index].description, index))
+                                      if (_shouldShowReadMore(
+                                          holidays[index].description, index))
                                         TextSpan(
-                                          text: expandedStates[index] == true ? '' : '...',
+                                          text: expandedStates[index] == true
+                                              ? ''
+                                              : '...',
                                           style: TextStyle(
                                             color: Colors.black54,
                                             fontWeight: FontWeight.w500,
@@ -221,21 +225,25 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
                                     ],
                                   ),
                                 ),
-                                if (_shouldShowReadMore(holidays[index].description, index))
+                                if (_shouldShowReadMore(
+                                    holidays[index].description, index))
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        expandedStates[index] = !(expandedStates[index] ?? false);
+                                        expandedStates[index] =
+                                            !(expandedStates[index] ?? false);
                                       });
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 8.0),
                                       child: Text(
-                                        expandedStates[index] == true 
-                                            ? "Baca lebih sedikit" 
+                                        expandedStates[index] == true
+                                            ? "Baca lebih sedikit"
                                             : "Baca selengkapnya",
                                         style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -386,7 +394,6 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
                     .sessionYear
                     .getEndDateInDateTime();
 
-                setState(() {});
                 updateMonthViceHolidays();
               }
             }

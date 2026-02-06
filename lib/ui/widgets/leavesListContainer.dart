@@ -7,9 +7,8 @@ import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
-import 'package:eschool/ui/widgets/customShimmerContainer.dart';
 import 'package:eschool/utils/utils.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -166,25 +165,22 @@ class _LeavesListContainerState extends State<LeavesListContainer>
         height: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[300]!),
+          border: Border.all(color: Colors.grey[300] ?? Colors.grey),
         ),
         child: isImage && detail.fileUrl != null
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  detail.fileUrl!,
+                child: CachedNetworkImage(
+                  imageUrl: detail.fileUrl!,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
+                  errorWidget: (context, url, error) =>
                       _buildFileTypeIcon(detail),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).colorScheme.primary,
-                        strokeWidth: 2,
-                      ),
-                    );
-                  },
+                  placeholder: (context, url) => Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.primary,
+                      strokeWidth: 2,
+                    ),
+                  ),
                 ),
               )
             : _buildFileTypeIcon(detail),
@@ -389,7 +385,8 @@ class _LeavesListContainerState extends State<LeavesListContainer>
       } else if (leaveDetail.length > 1) {
         final fromDate =
             DateTime.tryParse(leaveDetail.first.date) ?? DateTime.now();
-        final formattedFromDate = DateFormat("dd MMM yyyy", 'id').format(fromDate);
+        final formattedFromDate =
+            DateFormat("dd MMM yyyy", 'id').format(fromDate);
         // (kalau butuh rentang, bisa tambahkan toDate & tampilkan)
         return Text(
           formattedFromDate,
@@ -777,84 +774,49 @@ class _LeavesListContainerState extends State<LeavesListContainer>
   }
 
   Widget _buildLoadingShimmer() {
-    return ListView.builder(
-      padding: EdgeInsets.only(
-        top: Utils.getScrollViewTopPadding(
-              context: context,
-              appBarHeightPercentage: Utils.appBarSmallerHeightPercentage,
-            ) +
-            10,
-        bottom: 20,
+    final dummyLeaves = List.generate(
+      5,
+      (index) => Leave(
+        id: index,
+        userId: 0,
+        reason: 'This is a dummy reason for the loading state skeletonizer.',
+        type: 'Sick',
+        fromDate: '2024-01-01',
+        toDate: '2024-01-01',
+        status: 0,
+        schoolId: 0,
+        rejectReason: '',
+        leaveMasterId: 0,
+        createdAt: '2024-01-01',
+        updatedAt: '2024-01-01',
+        leaveDetail: [
+          LeaveDetail(
+            id: index,
+            leaveId: index,
+            date: '2024-01-01',
+            type: 'Sick',
+            schoolId: 0,
+          )
+        ],
+        fileDetail: [],
       ),
-      itemCount: 5,
-      itemBuilder: (context, index) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            )
-          ],
+    );
+
+    return Skeletonizer(
+      enabled: true,
+      child: ListView.builder(
+        padding: EdgeInsets.only(
+          top: Utils.getScrollViewTopPadding(
+                context: context,
+                appBarHeightPercentage: Utils.appBarSmallerHeightPercentage,
+              ) +
+              10,
+          bottom: 20,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ShimmerLoadingContainer(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const CustomShimmerContainer(
-                      height: 40,
-                      width: 40,
-                      borderRadius: 10,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          CustomShimmerContainer(
-                            height: 18,
-                            width: double.infinity,
-                            margin: EdgeInsets.only(bottom: 6),
-                          ),
-                          CustomShimmerContainer(
-                            height: 12,
-                            width: 80,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const CustomShimmerContainer(
-                      height: 14,
-                      width: 80,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                const CustomShimmerContainer(
-                  height: 14,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(bottom: 6),
-                ),
-                CustomShimmerContainer(
-                  height: 14,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  margin: const EdgeInsets.only(bottom: 6),
-                ),
-                CustomShimmerContainer(
-                  height: 14,
-                  width: MediaQuery.of(context).size.width * 0.6,
-                ),
-              ],
-            ),
-          ),
+        itemCount: dummyLeaves.length,
+        itemBuilder: (context, index) => _buildLeaveItem(
+          dummyLeaves[index],
+          index,
         ),
       ),
     );
