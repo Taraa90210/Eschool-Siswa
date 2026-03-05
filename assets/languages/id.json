@@ -319,7 +319,7 @@
   "feesTransaction": "Transaksi Biaya",
   "noFeesTransactionsFound": "Tidak ditemukan transaksi pembayaran biaya.",
   "passed": "Lulus",
-  "paidAmount": "Jumlah Dibayar",
+  "paidAmount": "Dibayar",
   "amountInformationNotAvailable": "Informasi jumlah tidak tersedia",
   "paymentMethodNotAvailable": "Metode pembayaran tidak tersedia",
   "failed": "Gagal",

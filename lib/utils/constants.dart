@@ -4,14 +4,21 @@ import 'package:eschool/utils/labelKeys.dart';
 //Please add your admin panel url here and make sure you do not add '/' at the end of the url
 // const String baseUrl = "https://wrteam.net";
 // const String baseUrl = "https://eschbeta.techflow.my.id";
-// const String baseUrl = "https://eschool.lucia.id";
+// const String baseUrl = "https://eschool.lucia.id";P
 // const String baseUrl = "https://eschool.ac.id";
 // const String baseUrl = "https://eschoolbeta.lucia.id";
 
+//new url 
+// const String baseUrl = "https://devinduk.eschool.ac.id";
+// const String baseUrl = "https://devsekolah.eschool.ac.id";
+// const String baseUrl = "https://devapiinduk.eschool.ac.id";
+const String baseUrl = "https://devapisekolah.eschool.ac.id";
+
+
 // const String baseUrl = "https://esbeta.deanry.my.id";
 // const String baseUrl = "https://eschool.bagus-hidayat.my.id";
-const String baseUrl = "https://dev.eschool.ac.id";
-//TEST: https://eschoolsaas.thewrteam.in
+// const String baseUrl = "https://dev.eschool.ac.id";
+// TEST: https://eschoolsaas.thewrteam.in
 //Production: https://eschool-saas.wrteam.me
 const String databaseUrl = "$baseUrl/api/";
 

@@ -19,7 +19,6 @@ import 'package:eschool/ui/widgets/noDataContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/payment/xenditOnlyPaymentScreen.dart';
-import 'package:eschool/ui/screens/payment/xenditInstallmentPaymentScreen.dart';
 import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/utils/labelKeys.dart';
@@ -152,7 +151,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
   void _initializeAnimations() {
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+    duration: const Duration(milliseconds: 800),
     );
 
     _pulseController = AnimationController(
@@ -483,52 +482,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         SizedBox(width: 12),
                       ],
 
-                      // Icon dengan background gradient - berbeda untuk paid/unpaid/pending
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: isPaid
-                                ? [
-                                    accentGreen.withOpacity(0.9),
-                                    accentGreen.withOpacity(0.8),
-                                  ]
-                                : hasPendingPayment
-                                    ? [
-                                        Colors.orange.shade600.withOpacity(0.9),
-                                        Colors.orange.shade600.withOpacity(0.8),
-                                      ]
-                                    : [
-                                        primaryColor.withOpacity(0.9),
-                                        primaryColor.withOpacity(0.8),
-                                      ],
-                          ),
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [
-                            BoxShadow(
-                              color: isPaid
-                                  ? accentGreen.withOpacity(0.3)
-                                  : hasPendingPayment
-                                      ? Colors.orange.withOpacity(0.3)
-                                      : primaryColor.withOpacity(0.3),
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            )
-                          ],
-                        ),
-                        child: Icon(
-                          isPaid
-                              ? Icons.verified_rounded
-                              : hasPendingPayment
-                                  ? Icons.hourglass_top_rounded
-                                  : Icons.receipt_long_rounded,
-                          color: Colors.white,
-                          size: 22,
-                        ),
-                      ),
-                      SizedBox(width: 14),
-
                       // Fee name dan detail
                       Expanded(
                         child: Column(
@@ -552,47 +505,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               spacing: 3,
                               runSpacing: 2,
                               children: [
-                                // Fee Type Badge
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 4),
-                                  decoration: BoxDecoration(
-                                    color: feeDetails
-                                        .getFeeTypeColor()
-                                        .withOpacity(0.15),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: feeDetails
-                                          .getFeeTypeColor()
-                                          .withOpacity(0.3),
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        feeDetails.getFeeType() ==
-                                                Utils.getTranslatedLabel(
-                                                    compulsoryKey)
-                                            ? Icons.star_rounded
-                                            : Icons.star_outline_rounded,
-                                        size: 10,
-                                        color: feeDetails.getFeeTypeColor(),
-                                      ),
-                                      SizedBox(width: 3),
-                                      Text(
-                                        feeDetails.getFeeType(),
-                                        style: TextStyle(
-                                          fontSize: 9,
-                                          color: feeDetails.getFeeTypeColor(),
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 6),
                                 // Status Badge
                                 Container(
                                   padding: EdgeInsets.symmetric(
@@ -662,7 +574,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         // Total Amount - selalu ditampilkan
                         _buildAmountRow(
                           icon: Icons.account_balance_wallet_rounded,
-                          label: Utils.getTranslatedLabel(totalAmountKey),
+                          label: 'Tagihan',
                           amount: totalAmount,
                           color: Theme.of(context).colorScheme.secondary,
                           isMain: true,
@@ -1017,64 +929,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           ),
                         ),
                       ),
-
-                      SizedBox(width: 12),
-
-                      // Cicil Button
-                      if (!isPaid &&
-                          remainingAmount > 0 &&
-                          !hasPendingPayment) ...[
-                        Expanded(
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                _navigateToInstallmentPayment(feeDetails);
-                              },
-                              borderRadius: BorderRadius.circular(12),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 16),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      primaryColor.withOpacity(0.9),
-                                      primaryColor.withOpacity(0.8),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: primaryColor.withOpacity(0.25),
-                                      blurRadius: 6,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.payment_rounded,
-                                      size: 16,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      Utils.getTranslatedLabel(instalmentKey),
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
                     ],
                   ),
                 ],
@@ -1095,24 +949,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
           billName: feeDetails.name ??
               bill?.name ??
               Utils.getTranslatedLabel(unknownFeeKey),
-        ),
-      ),
-    );
-  }
-
-  void _navigateToInstallmentPayment(ChildFeeDetails feeDetails) {
-    // Navigate to installment payment screen with custom amount input
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BlocProvider(
-          create: (_) => XenditInvoiceCubit(
-            XenditRepository(),
-          ),
-          child: XenditInstallmentPaymentScreen(
-            feeDetails: feeDetails,
-            child: widget.child,
-          ),
         ),
       ),
     );
@@ -1488,7 +1324,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
   }
 
   Widget _buildPaymentOverviewBoard(List<ChildFeeDetails> fees) {
-    int totalFees = fees.length;
     int paidFees = 0;
     int pendingFees = 0;
     int unpaidFees = 0;
@@ -1496,7 +1331,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
     double paidAmount = 0;
     double pendingAmount = 0;
     double unpaidAmount = 0;
-    double totalOutstanding = 0; // Total remaining amount from all fees
 
     fees.sort((a, b) {
       final aPaid = a.getFeePaymentStatus() == paidKey ||
@@ -1558,7 +1392,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       }
 
       totalAmount += fee.getTotalAmount();
-      totalOutstanding += feeRemaining; // Add to total outstanding for all fees
     }
 
     return Animate(
@@ -1622,14 +1455,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                        Text(
-                          '$totalFees ${Utils.getTranslatedLabel(totalBillsKey)}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
@@ -1721,7 +1546,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  Utils.getTranslatedLabel(totalAmountKey),
+                                  'Tagihan',
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
@@ -1741,30 +1566,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                     height: 1,
                                   ),
                                 ),
-                                if (totalOutstanding > 0) ...[
-                                  SizedBox(height: 8),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 6, vertical: 3),
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange.shade50,
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: Border.all(
-                                        color: Colors.orange.shade200,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      Utils.getTranslatedLabel(outstandingKey) +
-                                          ': ${_formatCurrency(totalOutstanding)}',
-                                      style: TextStyle(
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.orange.shade700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               ],
                             ),
                           ),
@@ -1842,17 +1643,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                     height: 1,
                   ),
                 ),
-                if (amount > 0) ...[
-                  SizedBox(height: 2),
-                  Text(
-                    _formatCurrency(amount),
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                ],
               ],
             ),
           ),

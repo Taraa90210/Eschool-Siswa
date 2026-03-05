@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:open_filex/open_filex.dart';
+import 'package:eschool/utils/mockData.dart';
 
 class ApiException implements Exception {
   String errorMessage;
@@ -298,6 +299,16 @@ class Api {
         print("Body Params: $body");
       }
 
+      // 🛑 MOCK INTERCEPTOR
+      final mockResponse = MockData.getMockResponse(url, body, "POST");
+      if (mockResponse != null) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        if (mockResponse['error'] == true) {
+          throw ApiException(mockResponse['message'].toString());
+        }
+        return Map.from(mockResponse);
+      }
+
       final response = await dio.post(
         url,
         data: dataToSend,
@@ -325,9 +336,29 @@ class Api {
         throw ApiException(ErrorMessageKeysAndCode.internetServerErrorCode);
       }
 
-      if (e.response?.statusCode == 302) {
-        print("Redirected: ${e.response?.data}");
-        throw ApiException("Redirected: ${e.response?.data}");
+      // Handle custom error message from backend (e.g., 422 Invalid Login Credentials)
+      if (e.response?.data != null && e.response?.data is Map) {
+        final Map<String, dynamic> responseData =
+            e.response!.data as Map<String, dynamic>;
+
+        if (responseData['message'] != null) {
+          // If it's a specific "Invalid Login Credentials" error, send back our custom key
+          // so it can be translated to Indonesian by the app's localization
+          if (responseData['message']
+              .toString()
+              .toLowerCase()
+              .contains('invalid login credentials')) {
+            throw ApiException(
+                ErrorMessageKeysAndCode.invalidLogInCredentialsKey);
+          }
+          throw ApiException(responseData['message'].toString());
+        }
+
+        if (responseData['error'] == true) {
+          throw ApiException(responseData['message']?.toString() ??
+              responseData['code']?.toString() ??
+              ErrorMessageKeysAndCode.defaultErrorMessageCode);
+        }
       }
       throw ApiException(
         e.error is SocketException
@@ -352,6 +383,19 @@ class Api {
       if (kDebugMode) {
         print(url);
         print(queryParameters);
+      }
+
+      // 🛑 MOCK INTERCEPTOR
+      final mockResponse =
+          MockData.getMockResponse(url, queryParameters, "GET");
+      if (mockResponse != null) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        if (mockResponse['error'] == true) {
+          throw ApiException(mockResponse['message'] ??
+              mockResponse['code']?.toString() ??
+              "Error");
+        }
+        return Map.from(mockResponse);
       }
 
       final response = await dio.get(

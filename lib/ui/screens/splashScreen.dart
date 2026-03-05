@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigateToNextScreen() {
+    // Original Handling:
     if (context.read<AuthCubit>().state is Unauthenticated) {
       Get.offNamed(Routes.auth);
     } else {
@@ -72,18 +73,12 @@ class _SplashScreenState extends State<SplashScreen> {
           return Center(
             child: Animate(
               effects: customItemZoomAppearanceEffects(
-                delay: const Duration(
-                  milliseconds: 10,
-                ),
-                duration: const Duration(
-                  seconds: 1,
-                ),
+                delay: const Duration(milliseconds: 10),
+                duration: const Duration(seconds: 1),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(25.0),
-                child: SvgPicture.asset(
-                  Utils.getImagePath("rizkyScreen.jpg"),
-                ),
+                child: SvgPicture.asset(Utils.getImagePath("rizkyScreen.jpg")),
               ),
             ),
           );

@@ -31,11 +31,15 @@ class XenditOnlyPaymentScreen extends StatefulWidget {
 class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  final TextEditingController _amountController = TextEditingController();
   bool _isProcessing = false;
+  String? _amountError;
 
   @override
   void initState() {
     super.initState();
+    _amountController.text =
+        _formatCurrency(widget.totalAmount).replaceAll('Rp ', '');
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -46,6 +50,7 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
   @override
   void dispose() {
     _animationController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
@@ -58,8 +63,41 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
     return formatter.format(amount);
   }
 
+  double _parseAmount(String value) {
+    final cleanValue = value.replaceAll(RegExp(r'[^\d]'), '');
+    return double.tryParse(cleanValue) ?? 0;
+  }
+
+  void _validateAmount(String value) {
+    setState(() {
+      final amount = _parseAmount(value);
+      final maxAmount = widget.totalAmount;
+
+      if (value.isEmpty) {
+        _amountError = 'Masukkan nominal pembayaran';
+      } else if (amount <= 0) {
+        _amountError = 'Nominal harus lebih dari 0';
+      } else if (amount > maxAmount) {
+        _amountError =
+            'Nominal melebihi sisa tagihan (${_formatCurrency(maxAmount)})';
+      } else {
+        _amountError = null;
+      }
+    });
+  }
+
+  bool _canProceedPayment() {
+    final amount = _parseAmount(_amountController.text);
+    return amount > 0 &&
+        amount <= widget.totalAmount &&
+        _amountError == null &&
+        !_isProcessing;
+  }
+
   Future<void> _processXenditPayment() async {
-    if (_isProcessing) return;
+    if (!_canProceedPayment()) return;
+
+    final amount = _parseAmount(_amountController.text);
 
     setState(() {
       _isProcessing = true;
@@ -71,7 +109,7 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
 
       // Create description
       final feeNames = widget.selectedFees.map((f) => f.name).join(', ');
-      final description = 'Pembayaran: $feeNames';
+      final description = 'Pembayaran: $feeNames - ${_formatCurrency(amount)}';
 
       // Get fee IDs
       final feeIds = widget.selectedFees.map((fee) => fee.id!).toList();
@@ -80,7 +118,7 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       await context.read<XenditInvoiceCubit>().createInvoice(
             schoolId: 1, // TODO: Get from school data
             studentId: widget.child.id!,
-            amount: widget.totalAmount,
+            amount: amount,
             email: email,
             description: description,
             feeIds: feeIds,
@@ -261,6 +299,10 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
                         _buildSummaryCard(),
                         SizedBox(height: 16),
 
+                        // Amount Input Card
+                        _buildAmountInputCard(),
+                        SizedBox(height: 16),
+
                         // Fee Details Card
                         _buildFeeDetailsCard(),
                         SizedBox(height: 16),
@@ -412,6 +454,139 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAmountInputCard() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.edit_note,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              SizedBox(width: 12),
+              Text(
+                'Nominal Pembayaran',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16),
+          Divider(),
+          SizedBox(height: 12),
+          Text(
+            'Masukkan nominal yang ingin dibayarkan',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade700,
+            ),
+          ),
+          SizedBox(height: 12),
+          TextField(
+            controller: _amountController,
+            keyboardType: TextInputType.number,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            decoration: InputDecoration(
+              prefixText: 'Rp ',
+              prefixStyle: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              errorText: _amountError,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(
+                  color: Colors.grey.shade300,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(
+                  color: Colors.grey.shade300,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 2,
+                ),
+              ),
+              filled: true,
+              fillColor: Colors.grey.shade50,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
+            ),
+            onChanged: (value) {
+              final cleanValue = value.replaceAll(RegExp(r'[^\d]'), '');
+              if (cleanValue.isNotEmpty) {
+                final amount = double.tryParse(cleanValue) ?? 0;
+                final formatted = _formatCurrency(amount).replaceAll('Rp ', '');
+
+                if (_amountController.text != formatted) {
+                  _amountController.value = TextEditingValue(
+                    text: formatted,
+                    selection:
+                        TextSelection.collapsed(offset: formatted.length),
+                  );
+                }
+              }
+              _validateAmount(_amountController.text);
+            },
+          ),
+          if (widget.totalAmount > 0) ...[
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Maksimal:',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                Text(
+                  _formatCurrency(widget.totalAmount),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );
@@ -589,7 +764,9 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
-        onPressed: _isProcessing ? null : _processXenditPayment,
+        onPressed: (!_isProcessing && _canProceedPayment())
+            ? _processXenditPayment
+            : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,

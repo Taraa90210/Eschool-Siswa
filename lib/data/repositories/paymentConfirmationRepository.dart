@@ -4,7 +4,8 @@ import 'package:eschool/utils/api.dart';
 /// Payment Repository V2 - Uses PaymentConfirmationService
 /// This is a new repository that doesn't modify existing payment repository
 class PaymentConfirmationRepository {
-  final PaymentConfirmationService _paymentService = PaymentConfirmationService();
+  final PaymentConfirmationService _paymentService =
+      PaymentConfirmationService();
 
   /// Confirm payment after gateway success
   ///
@@ -39,4 +40,3 @@ class PaymentConfirmationRepository {
     }
   }
 }
-
