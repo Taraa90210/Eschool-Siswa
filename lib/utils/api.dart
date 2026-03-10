@@ -24,6 +24,16 @@ class ApiException implements Exception {
 
 // ignore: avoid_classes_with_only_static_members
 class Api {
+  static Map<String, dynamic> appendSchoolCode(
+      Map<String, dynamic>? queryParameters) {
+    Map<String, dynamic> params = Map.from(queryParameters ?? {});
+    final schoolCode = AuthRepository().schoolCode;
+    if (schoolCode.isNotEmpty) {
+      params['school_code'] = schoolCode;
+    }
+    return params;
+  }
+
   static Map<String, dynamic> headers() {
     final String jwtToken = AuthRepository().getJwtToken();
     final schoolCode = AuthRepository().schoolCode;
@@ -301,7 +311,7 @@ class Api {
       final response = await dio.post(
         url,
         data: dataToSend,
-        queryParameters: queryParameters,
+        queryParameters: appendSchoolCode(queryParameters),
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
         onSendProgress: onSendProgress,
@@ -356,7 +366,7 @@ class Api {
 
       final response = await dio.get(
         url,
-        queryParameters: queryParameters,
+        queryParameters: appendSchoolCode(queryParameters),
         options: useAuthToken ? Options(headers: headers()) : null,
       );
 
@@ -419,6 +429,14 @@ class Api {
         updateDownloadedPercentage, // kirim 0..100 atau -1
   }) async {
     try {
+      Uri uri = Uri.parse(url);
+      final schoolCode = AuthRepository().schoolCode;
+      if (schoolCode.isNotEmpty) {
+        final Map<String, dynamic> newParams = Map.from(uri.queryParameters);
+        newParams['school_code'] = schoolCode;
+        uri = uri.replace(queryParameters: newParams);
+        url = uri.toString();
+      }
       final dio = Dio(
         BaseOptions(
           followRedirects: true,
@@ -526,7 +544,7 @@ class Api {
 
       final response = await dio.delete(
         url,
-        queryParameters: queryParameters,
+        queryParameters: appendSchoolCode(queryParameters),
         options: useAuthToken ? Options(headers: headers()) : null,
       );
 
