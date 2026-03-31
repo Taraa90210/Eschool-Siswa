@@ -1,7 +1,5 @@
 import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/ui/widgets/downloadFileButton.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';
-import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 

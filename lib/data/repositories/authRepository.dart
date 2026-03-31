@@ -70,7 +70,7 @@ class AuthRepository {
       debugPrint(
           "DEBUG getChildrenData: Raw data length: ${(childrenList as List).length}");
 
-      final children = (childrenList as List).map((child) {
+      final children = (childrenList).map((child) {
         debugPrint("DEBUG getChildrenData: Processing child: $child");
         final student = Student.fromJson(Map.from(child));
         debugPrint(

@@ -1,15 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
-import 'package:eschool/utils/DownloadHelper.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:open_filex/open_filex.dart';
 
 class ApiException implements Exception {
   String errorMessage;
@@ -29,13 +24,13 @@ class Api {
     final schoolCode = AuthRepository().schoolCode;
 
     if (kDebugMode) {
-      print(jwtToken);
+      print(
+          "DEBUG headers(): jwtToken='${jwtToken.isNotEmpty ? 'HAS_VALUE(${jwtToken.substring(0, jwtToken.length.clamp(0, 20))}...)' : 'EMPTY'}', schoolCode='$schoolCode'");
     }
 
     return {
       "Authorization": "Bearer $jwtToken",
-      "school_code": schoolCode,
-      // "localtonet-skip-warning": "true",
+      "school-code": schoolCode,
       "Accept": "application/json",
     };
   }
@@ -43,178 +38,193 @@ class Api {
   ///[General Apis]
   //Apis that will be use in both student and parent app
   //
-  static String logout = "${databaseUrl}logout";
-  static String settings = "${databaseUrl}settings";
-  static String holidays = "${databaseUrl}holidays";
+  static String get logout => "${databaseUrl}logout";
+  static String get settings => "${databaseUrl}settings";
+  static String get holidays => "${databaseUrl}holidays";
 
-  static String changePassword = "${databaseUrl}change-password";
-  static String getSchoolGallery = "${databaseUrl}gallery";
-  static String getSchoolSessionYears = "${databaseUrl}session-years";
-  static String getUsers = "${databaseUrl}users";
-  static String getUserChatHistory = "${databaseUrl}users/chat/history";
-  static String chatMessages = "${databaseUrl}message";
-  static String readMessages = "${databaseUrl}message/read";
-  static String deleteMessages = "${databaseUrl}delete/message";
+  static String get changePassword => "${databaseUrl}change-password";
+  static String get getSchoolGallery => "${databaseUrl}gallery";
+  static String get getSchoolSessionYears => "${databaseUrl}session-years";
+  static String get getUsers => "${databaseUrl}users";
+  static String get getUserChatHistory => "${databaseUrl}users/chat/history";
+  static String get chatMessages => "${databaseUrl}message";
+  static String get readMessages => "${databaseUrl}message/read";
+  static String get deleteMessages => "${databaseUrl}delete/message";
 
   //
 
   //
   ///[Student app apis]
   //
-  static String studentLogin = "${databaseUrl}student/login";
-  static String studentProfile = "${databaseUrl}student/get-profile-data";
-  static String studentSubjects = "${databaseUrl}student/subjects";
+  static String get studentLogin => "${databaseUrl}student/login";
+  static String get studentProfile => "${databaseUrl}student/get-profile-data";
+  static String get studentSubjects => "${databaseUrl}student/subjects";
   //get subjects of given class
-  static String classSubjects = "${databaseUrl}student/class-subjects";
-  static String studentTimeTable = "${databaseUrl}student/timetable";
-  static String studentExamList = "${databaseUrl}student/get-exam-list";
-  static String studentExamStatus =
+  static String get classSubjects => "${databaseUrl}student/class-subjects";
+  static String get studentTimeTable => "${databaseUrl}student/timetable";
+  static String get studentExamList => "${databaseUrl}student/get-exam-list";
+  static String get studentExamStatus =>
       "${databaseUrl}student/get-online-exam-status";
 
-  static String getSchoolSettingDetails =
+  static String get getSchoolSettingDetails =>
       "${databaseUrl}student/school-settings";
 
-  static String studentExamDetails = "${databaseUrl}student/get-exam-details";
-  static String selectStudentElectiveSubjects =
+  static String get studentExamDetails =>
+      "${databaseUrl}student/get-exam-details";
+  static String get selectStudentElectiveSubjects =>
       "${databaseUrl}student/select-subjects";
-  static String getLessonsOfSubject = "${databaseUrl}student/lessons";
-  static String getstudyMaterialsOfTopic =
+  static String get getLessonsOfSubject => "${databaseUrl}student/lessons";
+  static String get getstudyMaterialsOfTopic =>
       "${databaseUrl}student/lesson-topics";
-  static String getStudentAttendance = "${databaseUrl}student/attendance";
-  static String getAssignments = "${databaseUrl}student/assignments";
-  static String submitAssignment = "${databaseUrl}student/submit-assignment";
-  static String generalAnnouncements = "${databaseUrl}student/announcements";
-  static String guardianDetailsOfStudent =
+  static String get getStudentAttendance => "${databaseUrl}student/attendance";
+  static String get getAssignments => "${databaseUrl}student/assignments";
+  static String get submitAssignment =>
+      "${databaseUrl}student/submit-assignment";
+  static String get generalAnnouncements =>
+      "${databaseUrl}student/announcements";
+  static String get guardianDetailsOfStudent =>
       "${databaseUrl}student/guradian-details";
-  static String deleteAssignment =
+  static String get deleteAssignment =>
       "${databaseUrl}student/delete-assignment-submission";
 
-  static String studentResults = "${databaseUrl}student/exam-marks";
-  static String requestResetPassword = "${databaseUrl}student/forgot-password";
+  static String get studentResults => "${databaseUrl}student/exam-marks";
+  static String get requestResetPassword =>
+      "${databaseUrl}student/forgot-password";
 
-  static String studentExamOnlineList =
+  static String get studentExamOnlineList =>
       "${databaseUrl}student/get-online-exam-list";
-  static String studentExamOnlineQuestions =
+  static String get studentExamOnlineQuestions =>
       "${databaseUrl}student/get-online-exam-questions";
-  static String studentSubmitOnlineExamAnswers =
+  static String get studentSubmitOnlineExamAnswers =>
       "${databaseUrl}student/submit-online-exam-answers";
 
-  static String studentOnlineExamResultList =
+  static String get studentOnlineExamResultList =>
       "${databaseUrl}student/get-online-exam-result-list";
 
-  static String studentOnlineExamResult =
+  static String get studentOnlineExamResult =>
       "${databaseUrl}student/get-online-exam-result";
 
-  static String studentOnlineExamReport =
+  static String get studentOnlineExamReport =>
       "${databaseUrl}student/get-online-exam-report";
-  static String studentAssignmentReport =
+  static String get studentAssignmentReport =>
       "${databaseUrl}student/get-assignments-report";
 
-  static String getStudentSliders = "${databaseUrl}student/sliders";
+  static String get getStudentSliders => "${databaseUrl}student/sliders";
 
   // Fitur Tambahan E-School versi 1.3.3 Student - Galang
-  static String getSubjectAttendance =
+  static String get getSubjectAttendance =>
       "${databaseUrl}student/subject-attendance";
 
-  static String getSystemInformation = "${databaseUrl}/api/information";
+  static String get getSystemInformation => "${databaseUrl}/api/information";
 
   //
   ///[Parent app apis]
   //
-  static String subjectsByChildId = "${databaseUrl}parent/subjects";
-  static String parentLogin = "${databaseUrl}parent/login";
+  static String get subjectsByChildId => "${databaseUrl}parent/subjects";
+  static String get parentLogin => "${databaseUrl}parent/login";
 
   //
-  static String childProfileDetails =
+  static String get childProfileDetails =>
       "${databaseUrl}parent/get-child-profile-data";
-  static String lessonsOfSubjectParent = "${databaseUrl}parent/lessons";
-  static String getstudyMaterialsOfTopicParent =
+  static String get lessonsOfSubjectParent => "${databaseUrl}parent/lessons";
+  static String get getstudyMaterialsOfTopicParent =>
       "${databaseUrl}parent/lesson-topics";
-  static String getAssignmentsParent = "${databaseUrl}parent/assignments";
-  static String getParentChildSchoolSettingDetails =
+  static String get getAssignmentsParent => "${databaseUrl}parent/assignments";
+  static String get getParentChildSchoolSettingDetails =>
       "${databaseUrl}parent/school-settings";
-  static String getStudentAttendanceParent = "${databaseUrl}parent/attendance";
-  static String getStudentTimetableParent = "${databaseUrl}parent/timetable";
-  static String getStudentExamListParent = "${databaseUrl}parent/get-exam-list";
-  static String getStudentResultsParent = "${databaseUrl}parent/exam-marks";
-  static String getStudentExamDetailsParent =
+  static String get getStudentAttendanceParent =>
+      "${databaseUrl}parent/attendance";
+  static String get getStudentTimetableParent =>
+      "${databaseUrl}parent/timetable";
+  static String get getStudentExamListParent =>
+      "${databaseUrl}parent/get-exam-list";
+  static String get getStudentResultsParent =>
+      "${databaseUrl}parent/exam-marks";
+  static String get getStudentExamDetailsParent =>
       "${databaseUrl}parent/get-exam-details";
-  static String updateGuardianPhoto = "${databaseUrl}parent/profile";
+  static String get updateGuardianPhoto => "${databaseUrl}parent/profile";
 
-  static String generalAnnouncementsParent =
+  static String get generalAnnouncementsParent =>
       "${databaseUrl}parent/announcements";
 
-  static String getStudentTeachersParent = "${databaseUrl}parent/teachers";
-  static String forgotPassword = "${databaseUrl}forgot-password";
+  static String get getStudentTeachersParent => "${databaseUrl}parent/teachers";
+  static String get forgotPassword => "${databaseUrl}forgot-password";
 
-  static String getStudentFeesDetailParent = "${databaseUrl}parent/fees";
-  static String addFeesTransaction =
+  static String get getStudentFeesDetailParent => "${databaseUrl}parent/fees";
+  static String get addFeesTransaction =>
       "${databaseUrl}parent/add-fees-transaction";
-  static String failPaymentTransaction =
+  static String get failPaymentTransaction =>
       "${databaseUrl}parent/fail-payment-transaction";
-  static String storeFeesParent = "${databaseUrl}parent/store-fees";
+  static String get storeFeesParent => "${databaseUrl}parent/store-fees";
 
-  static String getPaidFeesListParent = "${databaseUrl}parent/fees-paid-list";
-  static String downloadFeesPaidReceiptParent =
+  static String get getPaidFeesListParent =>
+      "${databaseUrl}parent/fees-paid-list";
+  static String get downloadFeesPaidReceiptParent =>
       "${databaseUrl}parent/fees-paid-receipt-pdf";
 
-  static String parentExamOnlineList =
+  static String get parentExamOnlineList =>
       "${databaseUrl}parent/get-online-exam-list";
-  static String parentOnlineExamResultList =
+  static String get parentOnlineExamResultList =>
       "${databaseUrl}parent/get-online-exam-result-list";
-  static String parentOnlineExamResult =
+  static String get parentOnlineExamResult =>
       "${databaseUrl}parent/get-online-exam-result";
-  static String parentOnlineExamReport =
+  static String get parentOnlineExamReport =>
       "${databaseUrl}parent/get-online-exam-report";
-  static String parentAssignmentReport =
+  static String get parentAssignmentReport =>
       "${databaseUrl}parent/get-assignments-report";
 
-  static String getFeesTransactions =
+  static String get getFeesTransactions =>
       "${databaseUrl}parent/fees-transactions-list";
 
-  static String getParentSliders = "${databaseUrl}parent/sliders";
+  static String get getParentSliders => "${databaseUrl}parent/sliders";
 
-  static String payChildCompulsoryFees =
+  static String get payChildCompulsoryFees =>
       "${databaseUrl}parent/fees/compulsory/pay";
 
-  static String payChildOptionalFees = "${databaseUrl}parent/fees/optional/pay";
-  static String confirmPayment = "${databaseUrl}parent/payment-confirmation";
-  static String getTransactions = "${databaseUrl}payment-transactions";
-  static String downloadFeeReceipt = "${databaseUrl}parent/fees/receipt";
-  static String downloadStudentResult = "${databaseUrl}student-exan-result-pdf";
+  static String get payChildOptionalFees =>
+      "${databaseUrl}parent/fees/optional/pay";
+  static String get confirmPayment =>
+      "${databaseUrl}parent/payment-confirmation";
+  static String get getTransactions => "${databaseUrl}payment-transactions";
+  static String get downloadFeeReceipt => "${databaseUrl}parent/fees/receipt";
+  static String get downloadStudentResult =>
+      "${databaseUrl}student-exan-result-pdf";
 
   // Payment submission endpoints - Updated to match API documentation
-  static String submitSinglePayment = "${databaseUrl}parent/fees/pay-bill";
-  static String submitBulkPayment = "${databaseUrl}parent/fees/pay-bill-bulk";
-  static String submitInstallmentPayment =
+  static String get submitSinglePayment => "${databaseUrl}parent/fees/pay-bill";
+  static String get submitBulkPayment =>
+      "${databaseUrl}parent/fees/pay-bill-bulk";
+  static String get submitInstallmentPayment =>
       "${databaseUrl}parent/fees/pay-installment";
-  static String verifyPaymentStatus =
+  static String get verifyPaymentStatus =>
       "${databaseUrl}parent/fees/payment-status";
 
   // Xendit payment gateway endpoints (DEMO - will be implemented in backend)
-  static String createXenditInvoice = "${databaseUrl}parent/fees/xendit/create";
-  static String getXenditStatus = "${databaseUrl}parent/fees/xendit/status";
+  static String get createXenditInvoice =>
+      "${databaseUrl}parent/fees/xendit/create";
+  static String get getXenditStatus =>
+      "${databaseUrl}parent/fees/xendit/status";
 
   // Fitur tambahan Eschool - Galang
 
-  static String getSubjectAttendanceParent =
+  static String get getSubjectAttendanceParent =>
       "${databaseUrl}parent/subject-attendance";
 
-  static String parentApplyLeaves = "${databaseUrl}parent/apply-leaves";
+  static String get parentApplyLeaves => "${databaseUrl}parent/apply-leaves";
 
-  static String parentGetLeaves = "${databaseUrl}parent/child-leaves";
+  static String get parentGetLeaves => "${databaseUrl}parent/child-leaves";
 
   // Contact/Support endpoints
-  static String submitContact = "${databaseUrl}contact/submit";
-  static String getContacts = "${databaseUrl}contacts";
-  static String getContactDetails = "${databaseUrl}contacts";
-  static String getContactStats = "${databaseUrl}contacts/stats";
+  static String get submitContact => "${databaseUrl}contact/submit";
+  static String get getContacts => "${databaseUrl}contacts";
+  static String get getContactDetails => "${databaseUrl}contacts";
+  static String get getContactStats => "${databaseUrl}contacts/stats";
 
   // Extracurricular endpoints
-  static String getExtracurriculars =
+  static String get getExtracurriculars =>
       "${databaseUrl}student/extracurricular/show";
-  static String getMyExtracurriculars = "${databaseUrl}student/my-eskul";
-  static String joinExtracurricular = "${databaseUrl}student/join-eskul";
+  static String get getMyExtracurriculars => "${databaseUrl}student/my-eskul";
+  static String get joinExtracurricular => "${databaseUrl}student/join-eskul";
 
   // static Future<Map<String, dynamic>> post({
   //   required Map<String, dynamic> body,

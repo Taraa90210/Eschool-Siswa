@@ -215,7 +215,7 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
 
   @override
   void dispose() {
-    _audioPlayer?.dispose();
+    _audioPlayer.dispose();
     Future.microtask(() async {
       await SecureScreen.disableSecure();
     });
@@ -451,7 +451,7 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                value: localFamily,
+                initialValue: localFamily,
                 isExpanded: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(

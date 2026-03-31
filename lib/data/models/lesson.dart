@@ -34,5 +34,7 @@ class Lesson {
         .toList();
   }
 
-  Object? toJson() {}
+  Object? toJson() {
+    return null;
+  }
 }

@@ -1,7 +1,4 @@
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
 import 'package:eschool/cubits/childFeeDetailsCubit.dart';
 import 'package:eschool/cubits/paymentTransactionsCubit.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
@@ -26,16 +23,12 @@ import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/constants.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:open_filex/open_filex.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 // import 'package:mime/mime.dart';
 
 class ChildFeesScreen extends StatefulWidget {

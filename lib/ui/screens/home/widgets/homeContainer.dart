@@ -5,7 +5,6 @@ import 'package:eschool/cubits/noticeBoardCubit.dart';
 import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/data/models/student.dart';
-import 'package:eschool/ui/screens/home/widgets/homeContainerTopProfileContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeScreenDataLoadingContainer.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
@@ -24,10 +23,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:icons_plus/icons_plus.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:lottie/lottie.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class HomeContainer extends StatefulWidget {
   final bool isForBottomMenuBackground;

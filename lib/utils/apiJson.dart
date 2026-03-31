@@ -51,7 +51,7 @@ class ApiJson {
       print('───────────────────────────────────────────────────────');
       print('📤 HEADERS BEING SENT:');
       print('   Authorization: Bearer $jwtToken');
-      print('   school_code: $schoolCode');
+      print('   school-code: $schoolCode');
       print('   Content-Type: application/json');
       print('   Accept: application/json');
       print('═══════════════════════════════════════════════════════');
@@ -59,7 +59,8 @@ class ApiJson {
 
     return {
       "Authorization": "Bearer $jwtToken",
-      "school_code": schoolCode,
+      "school-code":
+          schoolCode, // Use dash to avoid Nginx stripping underscore headers
       "Content-Type": "application/json",
       "Accept": "application/json",
     };

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:eschool/utils/CurencyFormater.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1128,10 +1127,10 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                               ],
                                               SizedBox(height: 4),
                                               if (method.accountNumber
-                                                      ?.isNotEmpty ==
+                                                      .isNotEmpty ==
                                                   true) ...[
                                                 Text(
-                                                  method.accountNumber!,
+                                                  method.accountNumber,
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.grey.shade600,
@@ -1140,7 +1139,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                                 ),
                                               ],
                                               if (method.accountHolder
-                                                      ?.isNotEmpty ==
+                                                      .isNotEmpty ==
                                                   true) ...[
                                                 SizedBox(height: 2),
                                                 Text(

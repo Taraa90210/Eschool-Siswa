@@ -123,18 +123,18 @@ class _PaymentHistoryTabScreenState extends State<PaymentHistoryTabScreen> {
             ),
             datePickerTheme: DatePickerThemeData(
               // untuk pastikan teks tanggal terpilih putih
-              dayForegroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected))
+              dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected))
                   return Colors.white;
                 return null; // default
               }),
-              dayBackgroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected)) return Colors.red;
+              dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected)) return Colors.red;
                 return null;
               }),
               rangeSelectionBackgroundColor: Colors.red, // area range
               rangeSelectionOverlayColor:
-                  MaterialStateProperty.all(Colors.red.withOpacity(.12)),
+                  WidgetStateProperty.all(Colors.red.withOpacity(.12)),
             ),
           ),
           child: child!,

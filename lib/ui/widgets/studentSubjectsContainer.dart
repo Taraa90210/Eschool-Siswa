@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/data/models/subject.dart';
-import 'package:eschool/ui/widgets/noDataContainer.dart';
 import 'package:eschool/ui/widgets/subjectImageContainer.dart';
 import 'package:eschool/utils/systemModules.dart';
 import 'package:eschool/utils/utils.dart';
@@ -193,7 +192,7 @@ class StudentSubjectsContainer extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: Utils.getColorScheme(context).onBackground,
+                color: Utils.getColorScheme(context).onSurface,
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),

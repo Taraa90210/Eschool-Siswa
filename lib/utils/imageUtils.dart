@@ -5,7 +5,6 @@ import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
 
 class ImageItem {
   final String? id;

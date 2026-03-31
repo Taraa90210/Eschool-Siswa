@@ -1,10 +1,7 @@
-import 'package:eschool/cubits/downloadFileCubit.dart';
 import 'package:eschool/cubits/leavesCubit.dart';
 import 'package:eschool/data/models/leave.dart';
 import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/data/repositories/subjectRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
@@ -13,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/ui/widgets/svgButton.dart';
 import 'package:eschool/ui/widgets/applyLeavesContainer.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/expandableText.dart';
@@ -371,7 +367,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
     }
 
     try {
-      if (leaveDetail.length == 1 && leaveDetail[0].date != null) {
+      if (leaveDetail.length == 1) {
         final date = DateTime.tryParse(leaveDetail[0].date) ?? DateTime.now();
         final formattedDate = DateFormat("dd MMM yyyy", 'id').format(date);
         return Text(

@@ -395,7 +395,7 @@ class _UploadAssignmentFilesBottomsheetContainerState
                                 .map((file) => file.path!)
                                 .toList(),
                             answerText:
-                                _answerController?.text?.isNotEmpty == true
+                                _answerController.text.isNotEmpty == true
                                     ? _answerController.text
                                     : null,
                           );

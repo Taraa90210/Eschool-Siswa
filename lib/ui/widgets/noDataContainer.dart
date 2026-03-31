@@ -2,7 +2,6 @@ import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NoDataContainer extends StatelessWidget {
   final Color? textColor;

@@ -2,12 +2,10 @@ import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/noticeBoardCubit.dart';
 import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoaders/announcementShimmerLoadingContainer.dart';
-import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:animate_do/animate_do.dart';
@@ -291,7 +289,7 @@ class LatestNoticiesContainer extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: Utils.getColorScheme(context).surfaceVariant,
+                color: Utils.getColorScheme(context).surfaceContainerHighest,
                 shape: BoxShape.circle,
               ),
             ),
@@ -300,7 +298,7 @@ class LatestNoticiesContainer extends StatelessWidget {
               width: 120,
               height: 24,
               decoration: BoxDecoration(
-                color: Utils.getColorScheme(context).surfaceVariant,
+                color: Utils.getColorScheme(context).surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -309,7 +307,7 @@ class LatestNoticiesContainer extends StatelessWidget {
               width: 80,
               height: 24,
               decoration: BoxDecoration(
-                color: Utils.getColorScheme(context).surfaceVariant,
+                color: Utils.getColorScheme(context).surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
@@ -321,7 +319,7 @@ class LatestNoticiesContainer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Container(
             height: 1,
-            color: Utils.getColorScheme(context).surfaceVariant,
+            color: Utils.getColorScheme(context).surfaceContainerHighest,
           ),
         ),
 

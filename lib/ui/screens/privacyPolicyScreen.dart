@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:eschool/cubits/appSettingsCubit.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';

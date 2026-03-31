@@ -1,6 +1,4 @@
-import 'package:eschool/data/models/paymentTransaction.dart';
 import 'package:eschool/data/repositories/paymentRepository.dart';
-import 'package:eschool/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class LatestPaymentTransactionState {}

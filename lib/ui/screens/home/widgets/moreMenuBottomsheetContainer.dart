@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/ui/widgets/customUserProfileImageWidget.dart';

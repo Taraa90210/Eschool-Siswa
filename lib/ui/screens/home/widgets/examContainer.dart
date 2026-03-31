@@ -1,11 +1,9 @@
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/examTabSelectionCubit.dart';
 import 'package:eschool/data/models/subject.dart';
-import 'package:eschool/ui/widgets/customTabBarContainer.dart';
 import 'package:eschool/ui/widgets/examOfflineListContainer.dart';
 import 'package:eschool/ui/widgets/examOnlineListContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/tabBarBackgroundContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:eschool/utils/app_config.dart';
 import 'package:eschool/utils/labelKeys.dart';
 
 //database urls
@@ -12,16 +13,15 @@ import 'package:eschool/utils/labelKeys.dart';
 // const String baseUrl = "https://eschool.bagus-hidayat.my.id";
 // const String baseUrl = "https://dev.eschool.ac.id";
 
-//TEST: https://eschoolsaas.thewrteam.in
-//Production: https://eschool-saas.wrteam.me
-
-//new url 
+//new url
 // const String baseUrl = "https://devinduk.eschool.ac.id";
 // const String baseUrl = "https://devsekolah.eschool.ac.id";
 // const String baseUrl = "https://devapiinduk.eschool.ac.id";
-const String baseUrl = "https://devapisekolah.eschool.ac.id";
+// const String baseUrl = "https://devapisekolah.eschool.ac.id";
+// const String baseUrl = "https://eschool.ac.id";
+String get baseUrl => AppConfig.baseUrl;
 
-const String databaseUrl = "$baseUrl/api/";
+String get databaseUrl => AppConfig.databaseUrl;
 
 //Socket url
 const String socketUrl = "ws://193.203.162.252:8090";
@@ -39,7 +39,7 @@ const Duration homeMenuBottomSheetAnimationDuration =
 //Change slider duration
 const Duration changeSliderDuration = Duration(seconds: 5);
 
-//Number of latest notices to show in home container  
+//Number of latest notices to show in home container
 const int numberOfLatestNoticesInHomeScreen = 3;
 
 //notification channel keys

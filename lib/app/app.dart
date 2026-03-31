@@ -26,6 +26,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:eschool/app/routes.dart';
 
+import 'package:eschool/ui/widgets/globalEnvFab.dart';
+
+import 'package:eschool/utils/app_config.dart';
 import 'package:eschool/cubits/appConfigurationCubit.dart';
 import 'package:eschool/cubits/appLocalizationCubit.dart';
 import 'package:eschool/cubits/authCubit.dart';
@@ -87,6 +90,7 @@ Future<void> initializeApp() async {
   await AppTranslation.loadJsons();
 
   await Hive.initFlutter();
+  await AppConfig.init(); // load environment pilihan dari storage
   await Hive.openBox(showCaseBoxKey);
   await Hive.openBox(authBoxKey);
   await Hive.openBox(notificationsBoxKey);
@@ -215,6 +219,15 @@ class _MyAppState extends State<MyApp> {
         child: Builder(
           builder: (context) {
             return GetMaterialApp(
+              builder: (context, child) {
+                return Stack(
+                  textDirection: TextDirection.ltr,
+                  children: [
+                    if (child != null) child,
+                    const GlobalEnvFab(),
+                  ],
+                );
+              },
               debugShowCheckedModeBanner: false,
               theme: Theme.of(context).copyWith(
                 textTheme:

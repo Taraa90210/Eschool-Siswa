@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/app/routes.dart';
 import 'package:eschool/data/models/gallery.dart';
 import 'package:eschool/data/models/sessionYear.dart';
 import 'package:eschool/data/models/studyMaterial.dart';

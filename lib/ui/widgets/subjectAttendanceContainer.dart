@@ -6,7 +6,6 @@ import 'package:eschool/ui/widgets/changeCalendarMonthButton.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainerNoRadius.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:eschool/ui/widgets/subjectImageContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
@@ -360,7 +359,6 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 surface: surfaceColor,
                                 onSurface: Colors.grey[800] ?? Colors.grey,
                               ),
-                              dialogBackgroundColor: Colors.transparent,
                               textButtonTheme: TextButtonThemeData(
                                 style: TextButton.styleFrom(
                                   foregroundColor: primaryColor,
@@ -434,11 +432,11 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                     height: 0.8,
                                   ),
                                 ),
-                              ),
+                              ), dialogTheme: DialogThemeData(backgroundColor: Colors.transparent),
                             ),
                             child: MediaQuery(
                               data: MediaQuery.of(context).copyWith(
-                                textScaleFactor: 1.0,
+                                textScaler: TextScaler.linear(1.0),
                               ),
                               child: Builder(
                                 builder: (context) => Dialog(
@@ -1193,7 +1191,6 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                   surface: surfaceColor,
                                   onSurface: Colors.grey[800] ?? Colors.grey,
                                 ),
-                                dialogBackgroundColor: Colors.transparent,
                                 textButtonTheme: TextButtonThemeData(
                                   style: TextButton.styleFrom(
                                     foregroundColor: primaryColor,
@@ -1268,11 +1265,11 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                       height: 0.8,
                                     ),
                                   ),
-                                ),
+                                ), dialogTheme: DialogThemeData(backgroundColor: Colors.transparent),
                               ),
                               child: MediaQuery(
                                 data: MediaQuery.of(context).copyWith(
-                                  textScaleFactor: 1.0,
+                                  textScaler: TextScaler.linear(1.0),
                                 ),
                                 child: Builder(
                                   builder: (context) => Dialog(

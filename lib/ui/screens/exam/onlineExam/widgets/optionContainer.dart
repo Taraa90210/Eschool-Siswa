@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eschool/data/models/answerOption.dart';
 import 'package:eschool/data/models/question.dart';
-import 'package:eschool/utils/utils.dart';
 
 class OptionContainer extends StatefulWidget {
   final Function(Question, AnswerOption) submitAnswer;

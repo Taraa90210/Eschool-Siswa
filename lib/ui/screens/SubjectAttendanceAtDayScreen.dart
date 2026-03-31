@@ -1,15 +1,9 @@
-import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/subjectAttendanceCubit.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/styles/colors.dart';
 import 'package:eschool/ui/widgets/subjectAttendanceContainer.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class SubjectAttendanceAtDayScreen extends StatefulWidget {
   final DateTime? selectedDate;

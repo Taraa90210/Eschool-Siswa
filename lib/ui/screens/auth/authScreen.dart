@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/appConfigurationCubit.dart';
+
+import 'package:eschool/utils/env_switcher_util.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,8 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
+  int _envTapCount = 0;
+  DateTime? _lastTapTime;
   late final AnimationController _backgroundAnimationController;
   late final AnimationController _logoAnimationController;
   late final AnimationController _bottomMenuAnimationController;
@@ -130,7 +134,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     _buttonAnimationController.dispose();
     _floatingParticlesController.dispose();
     _pulseAnimationController.dispose();
-    super.  dispose();
+    super.dispose();
   }
 
   Widget _buildAnimatedBackground() {
@@ -476,6 +480,21 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     );
   }
 
+  void _onCopyrightTap() {
+    final now = DateTime.now();
+    if (_lastTapTime != null &&
+        now.difference(_lastTapTime!) > const Duration(seconds: 2)) {
+      _envTapCount = 0;
+    }
+    _lastTapTime = now;
+    _envTapCount++;
+    if (_envTapCount >= 7) {
+      _envTapCount = 0;
+      EnvSwitcherUtil.showEnvDialog(
+          context); // sama dengan dialog yang dibuka FAB
+    }
+  }
+
   Widget _buildFooter() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -487,12 +506,15 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text(
-            "© ${DateTime.now().year} UBIG eSchool",
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey.shade600,
-              fontWeight: FontWeight.w500,
+          child: GestureDetector(
+            onTap: _onCopyrightTap,
+            child: Text(
+              "© ${DateTime.now().year} UBIG eSchool",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey.shade600,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ),

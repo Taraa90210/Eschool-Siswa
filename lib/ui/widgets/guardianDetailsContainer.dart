@@ -838,8 +838,8 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
                   base.textTheme.headlineMedium?.copyWith(color: textCol),
               headerHelpStyle:
                   base.textTheme.labelMedium?.copyWith(color: textCol),
-              dayForegroundColor: MaterialStateProperty.resolveWith((states) {
-                if (states.contains(MaterialState.selected))
+              dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+                if (states.contains(WidgetState.selected))
                   return Colors.white;
                 return null;
               }),
@@ -1049,7 +1049,7 @@ class _GuardianDetailsContainerState extends State<GuardianDetailsContainer>
               padding: const EdgeInsets.fromLTRB(16, 0, 12, 12),
               child: DropdownButtonFormField<T>(
                 focusNode: focusNode,
-                value: value,
+                initialValue: value,
                 isExpanded: true,
                 decoration: const InputDecoration(
                   border: InputBorder.none,

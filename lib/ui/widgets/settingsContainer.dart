@@ -462,7 +462,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
             Switch(
               value: value,
               onChanged: onChanged,
-              activeColor: Theme.of(context).colorScheme.primary,
+              activeThumbColor: Theme.of(context).colorScheme.primary,
             ),
           ],
         ),

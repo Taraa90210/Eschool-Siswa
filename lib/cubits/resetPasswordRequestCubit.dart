@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class RequestResetPasswordState extends Equatable {}

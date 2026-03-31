@@ -1,6 +1,4 @@
 import 'package:eschool/data/models/assignment.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/ui/widgets/studyMaterialWithDownloadButtonContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

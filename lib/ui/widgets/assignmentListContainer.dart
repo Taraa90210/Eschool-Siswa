@@ -18,7 +18,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 // custom Expandable
-import 'package:eschool/ui/widgets/expandableTextAssignment.dart';
 
 // Add this import at the top of the file
 import 'package:eschool/ui/widgets/assignmentStatusBadge.dart';

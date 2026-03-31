@@ -11,7 +11,6 @@ import 'package:eschool/cubits/resultsCubit.dart';
 import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/schoolSessionYearsCubit.dart';
-import 'package:eschool/cubits/socketSettingCubit.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
 import 'package:eschool/cubits/studentGuardianDetailsCubit.dart';
 import 'package:eschool/cubits/subjectAttendanceCubit.dart';
@@ -27,7 +26,6 @@ import 'package:eschool/ui/screens/home/cubits/assignmentsTabSelectionCubit.dart
 import 'package:eschool/ui/screens/home/widgets/bottomNavigationItemContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/examContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeContainer.dart';
-import 'package:eschool/ui/screens/home/widgets/homeContainerTopProfileContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeScreenDataLoadingContainer.dart';
 import 'package:eschool/ui/widgets/shimmerLoaders/profileHeaderShimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/moreMenuBottomsheetContainer.dart';
@@ -58,14 +56,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 // Tambahan import untuk redesain
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:animate_do/animate_do.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:icons_plus/icons_plus.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../widgets/resultsContainer.dart';
 

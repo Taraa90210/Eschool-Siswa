@@ -15,7 +15,6 @@ import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -567,17 +566,17 @@ class _ParentLoginScreenState extends State<ParentLoginScreen>
                 },
                 activeColor: _primaryRed,
                 checkColor: Colors.white,
-                fillColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.selected)) {
+                fillColor: WidgetStateProperty.resolveWith<Color>(
+                  (Set<WidgetState> states) {
+                    if (states.contains(WidgetState.selected)) {
                       return _primaryRed;
                     }
                     return Colors.transparent;
                   },
                 ),
-                side: MaterialStateBorderSide.resolveWith(
+                side: WidgetStateBorderSide.resolveWith(
                   (states) => BorderSide(
-                    color: states.contains(MaterialState.selected)
+                    color: states.contains(WidgetState.selected)
                         ? _primaryRed
                         : Colors.grey.shade400,
                     width: 2,

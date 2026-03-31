@@ -1,6 +1,4 @@
 import 'package:eschool/cubits/submitOnlineExamAnswersCubit.dart';
-import 'package:eschool/data/models/question.dart';
-import 'package:eschool/ui/screens/aboutUsScreen.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

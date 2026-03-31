@@ -3,10 +3,8 @@ import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class LogoutButton extends StatelessWidget {

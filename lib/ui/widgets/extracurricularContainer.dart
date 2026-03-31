@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/extracurricularCubit.dart';
 import 'package:eschool/cubits/myExtracurricularCubit.dart';

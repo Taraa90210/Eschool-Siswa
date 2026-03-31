@@ -8,7 +8,6 @@ import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class SchoolGalleryContainer extends StatelessWidget {
@@ -159,7 +158,7 @@ class SchoolGalleryContainer extends StatelessWidget {
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Container(
                                     color: Utils.getColorScheme(context)
-                                        .surfaceVariant,
+                                        .surfaceContainerHighest,
                                     child: Center(
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
@@ -171,7 +170,7 @@ class SchoolGalleryContainer extends StatelessWidget {
                                   errorWidget: (context, url, error) =>
                                       Container(
                                     color: Utils.getColorScheme(context)
-                                        .surfaceVariant,
+                                        .surfaceContainerHighest,
                                     child: Icon(
                                       Icons.image_not_supported_outlined,
                                       color: Utils.getColorScheme(context)
@@ -241,7 +240,7 @@ class SchoolGalleryContainer extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
-                        color: Utils.getColorScheme(context).onBackground,
+                        color: Utils.getColorScheme(context).onSurface,
                       ),
                     ),
                   ),
@@ -300,7 +299,7 @@ class SchoolGalleryContainer extends StatelessWidget {
                 width: 100,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: Utils.getColorScheme(context).surfaceVariant,
+                  color: Utils.getColorScheme(context).surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -309,7 +308,7 @@ class SchoolGalleryContainer extends StatelessWidget {
                 width: 80,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: Utils.getColorScheme(context).surfaceVariant,
+                  color: Utils.getColorScheme(context).surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
@@ -327,7 +326,7 @@ class SchoolGalleryContainer extends StatelessWidget {
                   width: 180,
                   margin: EdgeInsetsDirectional.only(end: 16),
                   decoration: BoxDecoration(
-                    color: Utils.getColorScheme(context).surfaceVariant,
+                    color: Utils.getColorScheme(context).surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(16),
                   ),
                 );

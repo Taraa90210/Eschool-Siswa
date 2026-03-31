@@ -1,20 +1,13 @@
-import 'dart:convert';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/appConfigurationCubit.dart';
-import 'package:eschool/data/repositories/authRepository.dart';
 import 'package:eschool/cubits/authCubit.dart';
-import 'package:eschool/cubits/socketSettingCubit.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/ui/widgets/appUnderMaintenanceContainer.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';
-import 'package:eschool/ui/widgets/customRoundedButton.dart';
 import 'package:eschool/ui/widgets/forceUpdateDialogContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/systemModules.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
