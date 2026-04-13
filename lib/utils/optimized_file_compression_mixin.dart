@@ -167,7 +167,7 @@ mixin OptimizedFileCompressionMixin {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(
@@ -194,7 +194,7 @@ mixin OptimizedFileCompressionMixin {
                     Text(
                       '${OptimizedFileCompressionUtils.formatFileSize(originalSize)} → ${OptimizedFileCompressionUtils.formatFileSize(compressedSize)}',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         fontSize: 13,
                       ),
                       maxLines: 1,
@@ -203,7 +203,7 @@ mixin OptimizedFileCompressionMixin {
                     Text(
                       '${reduction.toStringAsFixed(1)}% ${Utils.getTranslatedLabel(sizeReductionKey)}',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -340,7 +340,7 @@ class _CompressionDialogState extends State<_CompressionDialog> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               spreadRadius: 5,
             ),
@@ -364,7 +364,7 @@ class _CompressionDialogState extends State<_CompressionDialog> {
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.red.withOpacity(0.3),
+                      color: Colors.red.withValues(alpha: 0.3),
                       blurRadius: 15,
                       spreadRadius: 2,
                     ),

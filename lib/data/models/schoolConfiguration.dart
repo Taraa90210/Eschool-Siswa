@@ -1,4 +1,5 @@
 import 'package:eschool/data/models/paymentGateway.dart';
+import 'package:eschool/data/models/paymentMethod.dart';
 import 'package:eschool/data/models/schoolSettings.dart';
 import 'package:eschool/data/models/semesterDetails.dart';
 import 'package:eschool/data/models/sessionYear.dart';
@@ -35,5 +36,25 @@ class SchoolConfiguration {
 
   bool isOnlineFeePaymentEnable() {
     return enabledPaymentGateways.isNotEmpty;
+  }
+
+  /// Get allowed Xendit methods for this school (parsed from API, includes logo & admin fee)
+  List<XenditPaymentMethod>? getXenditAllowedMethods() {
+    try {
+      final xenditGateway = enabledPaymentGateways.firstWhere(
+        (g) => g.paymentMethod?.toLowerCase() == 'xendit',
+      );
+      return xenditGateway.allowedMethods;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  String? getCurrencyCode() {
+    try {
+      return enabledPaymentGateways.first.currencyCode;
+    } catch (e) {
+      return null;
+    }
   }
 }

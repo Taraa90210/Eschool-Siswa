@@ -128,7 +128,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .onSurface
-                                                .withOpacity(0.75),
+                                                .withValues(alpha: 0.75),
                                             fontWeight: FontWeight.w400,
                                             fontSize: 10,
                                           ),

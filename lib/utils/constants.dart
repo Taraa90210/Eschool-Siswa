@@ -84,8 +84,8 @@ const String defaultStudentPassword = "eSchool@#12";
 // const String defaultParentPassword = "089510048669";
 
 // default credentials of parent - eschool beta (sekarang)
-const String defaultParentEmail = "ortuyusuf70@eschool.ac.id";
-const String defaultParentPassword = "081330961187";
+const String defaultParentEmail = "dafa@exmaple.com";
+const String defaultParentPassword = "2197498792";
 
 // const String defaultParentEmail = "ortuadam98@eschool.ac.id";
 // const String defaultParentPassword = "085102199266";

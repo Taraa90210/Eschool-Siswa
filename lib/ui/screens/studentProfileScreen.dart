@@ -139,7 +139,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
               borderRadius: BorderRadius.circular(20.0),
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).shadowColor.withOpacity(0.05),
+                  color: Theme.of(context).shadowColor.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -154,7 +154,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
                   height: 48,
                   decoration: BoxDecoration(
                     color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: SvgPicture.asset(
@@ -178,7 +178,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .onSurface
-                              .withOpacity(0.7),
+                              .withValues(alpha: 0.7),
                           fontWeight: FontWeight.w400,
                           fontSize: 13.0,
                         ),
@@ -315,7 +315,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
                     gradient: LinearGradient(
                       colors: [
                         Theme.of(context).colorScheme.primary,
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -326,7 +326,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.3),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       )
@@ -372,7 +372,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen>
                         decoration: BoxDecoration(
                           color: Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.2),
+                              .withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(

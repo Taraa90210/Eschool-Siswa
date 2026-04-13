@@ -57,7 +57,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
 
     if (isUpdate) {
       final databinding = widget.data!;
-      _reasonController.text = databinding.reason ?? "";
+      _reasonController.text = databinding.reason;
 
       // Ambil detail yang BUKAN file untuk tipe izin, sort by ID descending (terbaru)
       final nonFileDetails = databinding.leaveDetail
@@ -119,9 +119,6 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
   }
 
   // === Helpers untuk beda URL vs path lokal ===
-  bool _isUrl(String s) {
-    return s.startsWith('http://') || s.startsWith('https://');
-  }
 
   String _filenameFromUrl(String url) {
     try {
@@ -208,9 +205,6 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
 
   void _showSnackBar(String message, {bool isError = false}) {
     // Deteksi apakah pesan sukses
-    final isSuccess = !isError &&
-        (message == Utils.getTranslatedLabel(leaveAppliedSuccessfullyKey) ||
-            message == Utils.getTranslatedLabel(leaveUpdatedSuccessfullyKey));
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -220,7 +214,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -332,14 +326,16 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color:
-                    Theme.of(context).colorScheme.onSurface.withOpacity(0.06),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.06),
                 blurRadius: 18,
                 offset: const Offset(0, 10),
               ),
             ],
             border: Border.all(
-              color: Theme.of(context).dividerColor.withOpacity(0.4),
+              color: Theme.of(context).dividerColor.withValues(alpha: 0.4),
               width: 0.8,
             ),
           ),
@@ -379,7 +375,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .onSurface
-                            .withOpacity(.7),
+                            .withValues(alpha: .7),
                         fontSize: 13.5,
                       ),
                     ),
@@ -474,7 +470,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
                               child: Container(
                                 padding: EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.9),
+                                  color: Colors.white.withValues(alpha: 0.9),
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
@@ -544,7 +540,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             )
@@ -554,7 +553,8 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           leading: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -573,7 +573,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
             subtitle,
             style: TextStyle(
               fontSize: 12,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.6),
             ),
           ),
           trailing: IconButton(
@@ -597,35 +600,6 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
     );
   }
 
-  String _getFileType(String filePath) {
-    final extension = path.extension(filePath).toLowerCase();
-    switch (extension) {
-      case '.pdf':
-        return 'PDF Document';
-      case '.jpg':
-      case '.jpeg':
-        return 'JPEG Image';
-      case '.png':
-        return 'PNG Image';
-      default:
-        return 'File';
-    }
-  }
-
-  IconData _getFileIcon(String filePath) {
-    final extension = path.extension(filePath).toLowerCase();
-    switch (extension) {
-      case '.pdf':
-        return Icons.picture_as_pdf_rounded;
-      case '.jpg':
-      case '.jpeg':
-      case '.png':
-        return Icons.image_rounded;
-      default:
-        return Icons.insert_drive_file_rounded;
-    }
-  }
-
   Widget _buildReasonField() {
     return Animate(
       effects: const [
@@ -645,7 +619,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             )
@@ -656,7 +633,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           decoration: InputDecoration(
             labelText: Utils.getTranslatedLabel(reasonLeavesKey),
             labelStyle: TextStyle(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.7),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
@@ -724,7 +704,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           border: Border.all(color: Colors.grey.shade300),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             )
@@ -774,7 +757,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             color: isSelected
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
                 : Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
@@ -825,10 +808,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           ),
         ),
         child: Row(
@@ -872,7 +855,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
           border: Border.all(color: Colors.grey.shade300),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             )
@@ -883,7 +869,10 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
@@ -903,7 +892,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withOpacity(0.6),
+                        .withValues(alpha: 0.6),
                   ),
                 ),
                 Text(
@@ -960,7 +949,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -989,7 +978,7 @@ class _ApplyLeavesContainerState extends State<ApplyLeavesContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .onSurface
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                           ),
                         ),
                       ],

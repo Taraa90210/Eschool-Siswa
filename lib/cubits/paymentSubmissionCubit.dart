@@ -50,7 +50,8 @@ class PaymentVerificationFailure extends PaymentVerificationState {
 class PaymentSubmissionCubit extends Cubit<PaymentSubmissionState> {
   final PaymentSubmissionRepository _paymentRepository;
 
-  PaymentSubmissionCubit(this._paymentRepository) : super(PaymentSubmissionInitial());
+  PaymentSubmissionCubit(this._paymentRepository)
+      : super(PaymentSubmissionInitial());
 
   // Always use bulk payment - even for single fees (convert to array)
   Future<void> submitPayment({
@@ -70,7 +71,7 @@ class PaymentSubmissionCubit extends Cubit<PaymentSubmissionState> {
       );
 
       final totalAmount = result['data']['total_amount']?.toString() ?? '';
-      
+
       emit(PaymentSubmissionSuccess(
         response: result,
         transactionId: totalAmount,
@@ -100,8 +101,9 @@ class PaymentSubmissionCubit extends Cubit<PaymentSubmissionState> {
         proofFile: proofFile,
       );
 
-      final transactionId = result['data']['transaction_id']?.toString() ?? 'Unknown';
-      
+      final transactionId =
+          result['data']['transaction_id']?.toString() ?? 'Unknown';
+
       emit(PaymentSubmissionSuccess(
         response: result,
         transactionId: transactionId,
@@ -110,40 +112,6 @@ class PaymentSubmissionCubit extends Cubit<PaymentSubmissionState> {
     } catch (e) {
       emit(PaymentSubmissionFailure(e.toString()));
     }
-  }
-
-  // Legacy methods for backward compatibility - redirect to bulk payment
-  @Deprecated('Use submitPayment with array instead')
-  Future<void> submitSinglePayment({
-    required int childId,
-    required int feesId,
-    required double amount,
-    required int paymentMethodId,
-    required File proofFile,
-  }) async {
-    // Convert single payment to bulk payment format
-    await submitPayment(
-      childId: childId,
-      feesIds: [feesId], // Convert single ID to array
-      paymentMethodId: paymentMethodId,
-      proofFile: proofFile,
-    );
-  }
-
-  @Deprecated('Use submitPayment instead')
-  Future<void> submitBulkPayment({
-    required int childId,
-    required List<int> feesIds,
-    required int paymentMethodId,
-    required File proofFile,
-  }) async {
-    // Redirect to new unified method
-    await submitPayment(
-      childId: childId,
-      feesIds: feesIds,
-      paymentMethodId: paymentMethodId,
-      proofFile: proofFile,
-    );
   }
 
   // Reset state
@@ -156,7 +124,8 @@ class PaymentSubmissionCubit extends Cubit<PaymentSubmissionState> {
 class PaymentVerificationCubit extends Cubit<PaymentVerificationState> {
   final PaymentSubmissionRepository _paymentRepository;
 
-  PaymentVerificationCubit(this._paymentRepository) : super(PaymentVerificationInitial());
+  PaymentVerificationCubit(this._paymentRepository)
+      : super(PaymentVerificationInitial());
 
   // Verify payment status
   Future<void> verifyPaymentStatus(String transactionId) async {

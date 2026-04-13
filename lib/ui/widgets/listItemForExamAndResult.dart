@@ -75,14 +75,13 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        primaryColor.withOpacity(0.9),
-        primaryColor.withOpacity(0.8),
+        primaryColor.withValues(alpha: 0.9),
+        primaryColor.withValues(alpha: 0.8),
       ],
     );
 
     // Determine status text based on examStatus
     String statusText = "";
-    DateTime now = DateTime.now();
 
     if (widget.examStatus == 1) {
       statusText = Utils.getTranslatedLabel(onGoingKey);
@@ -144,8 +143,8 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                       boxShadow: [
                         BoxShadow(
                           color: _isHovering
-                              ? primaryColor.withOpacity(0.15)
-                              : Colors.black.withOpacity(0.08),
+                              ? primaryColor.withValues(alpha: 0.15)
+                              : Colors.black.withValues(alpha: 0.08),
                           blurRadius: _isHovering ? 15 : 10,
                           spreadRadius: _isHovering ? 1 : 0,
                           offset: Offset(0, _isHovering ? 6 : 4),
@@ -153,8 +152,8 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                       ],
                       border: Border.all(
                         color: _isHovering
-                            ? primaryColor.withOpacity(0.3)
-                            : Colors.grey.withOpacity(0.1),
+                            ? primaryColor.withValues(alpha: 0.3)
+                            : Colors.grey.withValues(alpha: 0.1),
                         width: 1.5,
                       ),
                     ),
@@ -196,16 +195,18 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 4),
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
+                                        color:
+                                            Colors.white.withValues(alpha: 0.2),
                                         borderRadius: BorderRadius.circular(30),
                                         border: Border.all(
-                                          color: Colors.white.withOpacity(0.3),
+                                          color: Colors.white
+                                              .withValues(alpha: 0.3),
                                           width: 0.8,
                                         ),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                primaryColor.withOpacity(0.1),
+                                            color: primaryColor.withValues(
+                                                alpha: 0.1),
                                             blurRadius: 3,
                                             spreadRadius: 0,
                                             offset: const Offset(0, 1),
@@ -246,8 +247,9 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                                                           _getPositiveStatusColor(
                                                                   statusText,
                                                                   primaryColor)
-                                                              .withOpacity(
-                                                                  value * 0.5),
+                                                              .withValues(
+                                                                  alpha: value *
+                                                                      0.5),
                                                       blurRadius: value * 4,
                                                       spreadRadius: value * 1,
                                                     ),
@@ -334,7 +336,7 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                               // Divider
                               Container(
                                 height: 1,
-                                color: Colors.grey.withOpacity(0.15),
+                                color: Colors.grey.withValues(alpha: 0.15),
                                 margin: const EdgeInsets.only(bottom: 16),
                               ),
 
@@ -456,7 +458,7 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
                                                   color: Colors.grey
-                                                      .withOpacity(0.1),
+                                                      .withValues(alpha: 0.1),
                                                   borderRadius:
                                                       BorderRadius.circular(4),
                                                 ),
@@ -479,7 +481,8 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                                                       color: _getProgressColor(
                                                               widget
                                                                   .resultPercentage)
-                                                          .withOpacity(0.4),
+                                                          .withValues(
+                                                              alpha: 0.4),
                                                       blurRadius: 4,
                                                       offset:
                                                           const Offset(0, 2),
@@ -504,7 +507,7 @@ class _ListItemForExamAndResultState extends State<ListItemForExamAndResult>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 12.0),
                             decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.05),
+                              color: Colors.grey.withValues(alpha: 0.05),
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(14.5),
                                 bottomRight: Radius.circular(14.5),

@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:eschool/data/models/electiveSubject.dart';
 import 'package:eschool/data/models/sliderDetails.dart';
 import 'package:eschool/data/models/subject.dart';
@@ -49,13 +50,13 @@ class StudentSubjectsAndSlidersCubit
       int? childId}) async {
     emit(StudentSubjectsAndSlidersFetchInProgress());
     try {
-      print("Calling the api");
+      debugPrint("Calling the api");
       final sliders = isSliderModuleEnable
           ? await schoolRepository.fetchSliders(
               useParentApi: useParentApi, childId: childId)
           : List<SliderDetails>.from([]);
-      print(sliders);
-      print("---");
+      debugPrint(sliders.toString());
+      debugPrint("---");
 
       final subjects = useParentApi
           ? await parentRepository.fetchChildSubjects(childId: childId ?? 0)

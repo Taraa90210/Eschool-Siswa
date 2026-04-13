@@ -36,12 +36,12 @@ class ExamQuestionStatusBottomSheetContainer extends StatelessWidget {
   // Color palette
   Color _getPrimaryColor(BuildContext context) => Color(0xFFE94057);
   Color _getSecondaryColor(BuildContext context) =>
-      Color(0xFFF27121).withOpacity(0.8);
+      Color(0xFFF27121).withValues(alpha: 0.8);
   Color _getBackgroundColor(BuildContext context) =>
       Theme.of(context).scaffoldBackgroundColor;
   Color _getCompletedColor(BuildContext context) => Color(0xFF4CAF50);
   Color _getPendingColor(BuildContext context) =>
-      Color(0xFFF44336).withOpacity(0.8);
+      Color(0xFFF44336).withValues(alpha: 0.8);
   Color _getDoubtfulColor(BuildContext context) => Color(0xFFFF9800);
   Color _getTextColor(BuildContext context) => Color(0xFF2D3142);
 
@@ -87,7 +87,7 @@ class ExamQuestionStatusBottomSheetContainer extends StatelessWidget {
           color: color,
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 4,
               offset: Offset(0, 2),
             )
@@ -123,8 +123,8 @@ class ExamQuestionStatusBottomSheetContainer extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: bgColor.withOpacity(0.15),
-        border: Border.all(color: bgColor.withOpacity(0.3), width: 1),
+        color: bgColor.withValues(alpha: 0.15),
+        border: Border.all(color: bgColor.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         children: [
@@ -306,7 +306,7 @@ class ExamQuestionStatusBottomSheetContainer extends StatelessWidget {
                 Container(
                   height: 50,
                   width: 1,
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.white.withValues(alpha: 0.5),
                 ),
                 Expanded(
                   child: Column(

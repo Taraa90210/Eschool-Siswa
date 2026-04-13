@@ -1,4 +1,4 @@
-// ignore: depend_on_referenced_packages
+﻿// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/utils/stripeService.dart';
@@ -59,7 +59,7 @@ class PostFeesPaymentCubit extends Cubit<PostFeesPaymentState> {
         emit(PostFeesPaymentSuccess());
       } else {
         if (kDebugMode) {
-          print("Payment Error because of status.");
+          debugPrint("Payment Error because of status.");
         }
         await _studentRepository.failPaymentTransaction(
           transactionId: transactionId,
@@ -68,7 +68,7 @@ class PostFeesPaymentCubit extends Cubit<PostFeesPaymentState> {
       }
     } catch (e, st) {
       if (kDebugMode) {
-        print("Payment Error: $e $st");
+        debugPrint("Payment Error: $e $st");
       }
       await _studentRepository.failPaymentTransaction(
         transactionId: transactionId,
@@ -77,3 +77,4 @@ class PostFeesPaymentCubit extends Cubit<PostFeesPaymentState> {
     }
   }
 }
+

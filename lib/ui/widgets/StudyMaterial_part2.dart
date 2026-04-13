@@ -129,7 +129,8 @@ class StudyMaterialWithDownloadButtonContainer2 extends StatelessWidget {
             borderType: BorderType.RRect,
             dashPattern: const [10, 10],
             radius: const Radius.circular(10.0),
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
+            color:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
             child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -162,7 +163,7 @@ class StudyMaterialWithDownloadButtonContainer2 extends StatelessWidget {
 
     // Kartu kecil dengan thumbnail jika gambar
     final isImage = _isImage(studyMaterial);
-    final fileUrl = studyMaterial.fileUrl ?? "";
+    final fileUrl = studyMaterial.fileUrl;
 
     return GestureDetector(
       onTap: isImage
@@ -261,7 +262,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     final total = widget.items.length;
 
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.95),
+      backgroundColor: Colors.black.withValues(alpha: 0.95),
       body: SafeArea(
         child: Stack(
           children: [
@@ -272,7 +273,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               itemCount: total,
               itemBuilder: (context, i) {
                 final item = widget.items[i];
-                final url = item.fileUrl ?? "";
+                final url = item.fileUrl;
 
                 return Center(
                   child: CachedNetworkImage(

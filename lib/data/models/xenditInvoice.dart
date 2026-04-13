@@ -3,6 +3,8 @@ class XenditInvoice {
   final String externalId;
   final String status;
   final double amount;
+  final double baseAmount; // Original nominal without fee
+  final double feeAmount; // Admin fee
   final String invoiceUrl;
   final DateTime expiryDate;
   final String? payerEmail;
@@ -15,6 +17,8 @@ class XenditInvoice {
     required this.externalId,
     required this.status,
     required this.amount,
+    required this.baseAmount,
+    required this.feeAmount,
     required this.invoiceUrl,
     required this.expiryDate,
     this.payerEmail,
@@ -24,11 +28,18 @@ class XenditInvoice {
   });
 
   factory XenditInvoice.fromJson(Map<String, dynamic> json) {
+    final amount = double.parse(json['amount'].toString());
     return XenditInvoice(
       id: json['id'] as String,
       externalId: json['external_id'] as String,
       status: json['status'] as String,
-      amount: double.parse(json['amount'].toString()),
+      amount: amount,
+      baseAmount: json['base_amount'] != null
+          ? double.parse(json['base_amount'].toString())
+          : amount, // Fallback to total amount
+      feeAmount: json['fee_amount'] != null
+          ? double.parse(json['fee_amount'].toString())
+          : 0, // Fallback to 0
       invoiceUrl: json['invoice_url'] as String,
       expiryDate: DateTime.parse(json['expiry_date'] as String),
       payerEmail: json['payer_email'] as String?,
@@ -43,11 +54,18 @@ class XenditInvoice {
   /// Parse backend API response format
   /// Backend returns: { error: false, invoice_id: "...", invoice_url: "...", ... }
   factory XenditInvoice.fromBackendResponse(Map<String, dynamic> json) {
+    final amount = double.parse(json['amount'].toString());
     return XenditInvoice(
-      id: json['invoice_id'] as String, // Backend uses 'invoice_id' not 'id'
+      id: (json['id'] ?? json['invoice_id']) as String,
       externalId: json['external_id'] as String,
       status: json['status'] as String,
-      amount: double.parse(json['amount'].toString()),
+      amount: amount,
+      baseAmount: json['base_amount'] != null
+          ? double.parse(json['base_amount'].toString())
+          : amount,
+      feeAmount: json['fee_amount'] != null
+          ? double.parse(json['fee_amount'].toString())
+          : 0,
       invoiceUrl: json['invoice_url'] as String,
       expiryDate: DateTime.parse(json['expiry_date'] as String),
       payerEmail: json['payer_email'] as String?,
@@ -67,6 +85,8 @@ class XenditInvoice {
       'external_id': externalId,
       'status': status,
       'amount': amount,
+      'base_amount': baseAmount,
+      'fee_amount': feeAmount,
       'invoice_url': invoiceUrl,
       'expiry_date': expiryDate.toIso8601String(),
       'payer_email': payerEmail,
@@ -104,6 +124,8 @@ class XenditInvoice {
     String? externalId,
     String? status,
     double? amount,
+    double? baseAmount,
+    double? feeAmount,
     String? invoiceUrl,
     DateTime? expiryDate,
     String? payerEmail,
@@ -116,6 +138,8 @@ class XenditInvoice {
       externalId: externalId ?? this.externalId,
       status: status ?? this.status,
       amount: amount ?? this.amount,
+      baseAmount: baseAmount ?? this.baseAmount,
+      feeAmount: feeAmount ?? this.feeAmount,
       invoiceUrl: invoiceUrl ?? this.invoiceUrl,
       expiryDate: expiryDate ?? this.expiryDate,
       payerEmail: payerEmail ?? this.payerEmail,

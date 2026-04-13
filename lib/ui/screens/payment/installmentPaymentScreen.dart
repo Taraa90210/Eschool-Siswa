@@ -11,10 +11,12 @@ import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
 import 'package:eschool/cubits/paymentSubmissionCubit.dart';
 import 'package:eschool/cubits/paymentMethodCubit.dart';
+import 'package:eschool/data/models/paymentMethodModel.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 
 class InstallmentPaymentScreen extends StatefulWidget {
   final ChildFeeDetails feeDetails;
@@ -194,7 +196,8 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
       _showFileSourceDialog();
     } catch (e) {
       setState(() {
-        uploadError = '$failedToSelectFile${e.toString()}';
+        uploadError =
+            '$failedToSelectFile${ErrorMessageMapper.getUserFriendlyMessage(e)}';
         isUploading = false;
       });
       _uploadController.reset();
@@ -296,10 +299,10 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.06),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.06),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -383,7 +386,8 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
       _uploadController.reset();
     } catch (e) {
       setState(() {
-        uploadError = '$failedToSelectFile${e.toString()}';
+        uploadError =
+            '$failedToSelectFile${ErrorMessageMapper.getUserFriendlyMessage(e)}';
         isUploading = false;
       });
       _uploadController.reset();
@@ -430,7 +434,8 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
       _uploadController.reset();
     } catch (e) {
       setState(() {
-        uploadError = '$failedToTakePhoto${e.toString()}';
+        uploadError =
+            '$failedToTakePhoto${ErrorMessageMapper.getUserFriendlyMessage(e)}';
         isUploading = false;
       });
       _uploadController.reset();
@@ -503,8 +508,10 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                   height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.04),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.04),
                   ),
                 ),
               );
@@ -593,7 +600,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                   border: Border.all(color: Colors.grey.shade200),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),
@@ -741,7 +748,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                   border: Border.all(color: Colors.grey.shade200),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),
@@ -866,7 +873,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                   border: Border.all(color: Colors.grey.shade200),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),
@@ -982,8 +989,9 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                               ? Theme.of(context)
                                                   .colorScheme
                                                   .primary
-                                                  .withOpacity(0.1)
-                                              : Colors.black.withOpacity(0.04),
+                                                  .withValues(alpha: 0.1)
+                                              : Colors.black
+                                                  .withValues(alpha: 0.04),
                                           blurRadius: isSelected ? 8 : 4,
                                           offset: Offset(0, isSelected ? 4 : 2),
                                         ),
@@ -1005,7 +1013,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                                     : Theme.of(context)
                                                         .colorScheme
                                                         .primary
-                                                        .withOpacity(0.9),
+                                                        .withValues(alpha: 0.9),
                                             border: (method
                                                         .imageUrl?.isNotEmpty ==
                                                     true)
@@ -1065,13 +1073,15 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                                               Theme.of(context)
                                                                   .colorScheme
                                                                   .primary
-                                                                  .withOpacity(
-                                                                      0.9),
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.9),
                                                               Theme.of(context)
                                                                   .colorScheme
                                                                   .primary
-                                                                  .withOpacity(
-                                                                      0.7),
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.7),
                                                             ],
                                                           ),
                                                           borderRadius:
@@ -1100,7 +1110,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                method.name ?? unknownMethod,
+                                                method.name,
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold,
@@ -1245,7 +1255,7 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                   border: Border.all(color: Colors.grey.shade200),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),
@@ -1313,7 +1323,8 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                                 onTap: () {
                                   showDialog(
                                     context: context,
-                                    barrierColor: Colors.black.withOpacity(0.8),
+                                    barrierColor:
+                                        Colors.black.withValues(alpha: 0.8),
                                     builder: (context) {
                                       return Dialog(
                                         backgroundColor: Colors.transparent,
@@ -1484,13 +1495,13 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.04),
+                                .withValues(alpha: 0.04),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.3),
+                                  .withValues(alpha: 0.3),
                               width: 2,
                               style: BorderStyle.solid,
                             ),
@@ -1670,7 +1681,10 @@ class _InstallmentPaymentScreenState extends State<InstallmentPaymentScreen>
                     ),
                     elevation: isEnabled ? 8 : 2,
                     shadowColor: isEnabled
-                        ? Theme.of(context).colorScheme.primary.withOpacity(0.3)
+                        ? Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.3)
                         : Colors.transparent,
                   ),
                   child: Row(

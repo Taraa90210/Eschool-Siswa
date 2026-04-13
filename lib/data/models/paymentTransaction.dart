@@ -15,6 +15,8 @@ class PaymentTransaction {
   final String? updatedAt;
   final String? currencyCode;
   final String? currencySymbol;
+  final double? adminFee;
+  final double? totalAmount;
 
   PaymentTransaction(
       {this.id,
@@ -30,7 +32,9 @@ class PaymentTransaction {
       this.createdAt,
       this.updatedAt,
       this.currencyCode,
-      this.currencySymbol});
+      this.currencySymbol,
+      this.adminFee,
+      this.totalAmount});
 
   PaymentTransaction copyWith(
       {int? id,
@@ -46,7 +50,9 @@ class PaymentTransaction {
       String? updatedAt,
       School? school,
       String? currencySymbol,
-      String? currencyCode}) {
+      String? currencyCode,
+      double? adminFee,
+      double? totalAmount}) {
     return PaymentTransaction(
       id: id ?? this.id,
       userId: userId ?? this.userId,
@@ -62,6 +68,8 @@ class PaymentTransaction {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       school: school ?? this.school,
+      adminFee: adminFee ?? this.adminFee,
+      totalAmount: totalAmount ?? this.totalAmount,
     );
   }
 
@@ -69,6 +77,12 @@ class PaymentTransaction {
       : id = json['id'] as int?,
         userId = json['user_id'] as int?,
         amount = double.parse((json['amount'] ?? 0).toString()),
+        adminFee = json['admin_fee_amount'] != null
+            ? double.parse(json['admin_fee_amount'].toString())
+            : null,
+        totalAmount = json['total_amount'] != null
+            ? double.parse(json['total_amount'].toString())
+            : null,
         paymentGateway = json['payment_gateway'] as String?,
         orderId = json['order_id'] as String?,
         paymentId = json['payment_id'] as String?,
@@ -96,5 +110,7 @@ class PaymentTransaction {
         'created_at': createdAt,
         'updated_at': updatedAt,
         'school': school?.toJson(),
+        'admin_fee_amount': adminFee,
+        'total_amount': totalAmount,
       };
 }

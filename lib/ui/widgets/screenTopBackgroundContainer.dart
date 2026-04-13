@@ -38,25 +38,6 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
       ),
     );
   }
-  
-  // New decorative element - education themed icon
-  Widget _buildEducationIcon(double size, Color color, IconData icon) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color.withOpacity(0.15),
-      ),
-      child: Center(
-        child: Icon(
-          icon,
-          size: size * 0.6,
-          color: Colors.white.withOpacity(0.7),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +67,10 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              primaryColor.withOpacity(0.9), // Exactly 0.9 opacity as requested
-              primaryColor.withOpacity(0.8), // Exactly 0.8 opacity as requested
+              primaryColor.withValues(
+                  alpha: 0.9), // Exactly 0.9 opacity as requested
+              primaryColor.withValues(
+                  alpha: 0.8), // Exactly 0.8 opacity as requested
             ],
           ),
           borderRadius: const BorderRadius.only(
@@ -96,7 +79,7 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: primaryColor.withOpacity(0.3),
+              color: primaryColor.withValues(alpha: 0.3),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -107,7 +90,7 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
           children: [
             // Enhanced decorative elements
             _buildDecorations(context, primaryColor, containerHeight),
-            
+
             // Content overlay
             if (child != null)
               Positioned.fill(
@@ -125,53 +108,57 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
       )
     ]);
   }
-  
+
   // Enhanced decorations method
-  Widget _buildDecorations(BuildContext context, Color primaryColor, double containerHeight) {
+  Widget _buildDecorations(
+      BuildContext context, Color primaryColor, double containerHeight) {
     return Stack(
       children: [
         // Decorative circles and shapes
         Positioned(
           top: -20,
           left: -20,
-          child: _buildDecorativeCircle(100, Colors.white.withOpacity(0.05)),
+          child:
+              _buildDecorativeCircle(100, Colors.white.withValues(alpha: 0.05)),
         ),
         Positioned(
           top: 60,
           left: 130,
-          child: _buildDecorativeCircle(30, Colors.white.withOpacity(0.08)),
+          child:
+              _buildDecorativeCircle(30, Colors.white.withValues(alpha: 0.08)),
         ),
         Positioned(
           bottom: 15,
           right: 20,
-          child: _buildDecorativeSquare(40, Colors.white.withOpacity(0.05)),
+          child:
+              _buildDecorativeSquare(40, Colors.white.withValues(alpha: 0.05)),
         ),
-        
+
         // Education themed icons (if we have enough height)
 
-        
         // Floating particles for subtle animation
         ..._generateFloatingParticles(containerHeight),
       ],
     );
   }
-  
+
   // Generate floating particles for subtle animation
   List<Widget> _generateFloatingParticles(double containerHeight) {
     final random = Random(42); // Fixed seed for consistent pattern
     final int particleCount = containerHeight > 120 ? 8 : 4;
-    
+
     return List.generate(particleCount, (index) {
       final top = random.nextDouble() * containerHeight * 0.7;
       final left = random.nextDouble() * 350;
       final size = random.nextDouble() * 2.5 + 1.5; // Size between 1.5-4
-      
+
       return Positioned(
         top: top,
         left: left,
         child: _FloatingParticle(
           size: size,
-          color: Colors.white.withOpacity(0.4 + random.nextDouble() * 0.3),
+          color:
+              Colors.white.withValues(alpha: 0.4 + random.nextDouble() * 0.3),
         ),
       );
     });
@@ -182,20 +169,20 @@ class ScreenTopBackgroundContainer extends StatelessWidget {
 class _FloatingParticle extends StatefulWidget {
   final double size;
   final Color color;
-  
+
   const _FloatingParticle({
     required this.size,
     required this.color,
   });
-  
+
   @override
   State<_FloatingParticle> createState() => _FloatingParticleState();
 }
 
-class _FloatingParticleState extends State<_FloatingParticle> 
+class _FloatingParticleState extends State<_FloatingParticle>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  
+
   @override
   void initState() {
     super.initState();
@@ -204,13 +191,13 @@ class _FloatingParticleState extends State<_FloatingParticle>
       duration: Duration(milliseconds: 2000 + (widget.size * 500).toInt()),
     )..repeat(reverse: true);
   }
-  
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -231,7 +218,7 @@ class _FloatingParticleState extends State<_FloatingParticle>
                 color: widget.color,
                 boxShadow: [
                   BoxShadow(
-                    color: widget.color.withOpacity(0.5),
+                    color: widget.color.withValues(alpha: 0.5),
                     blurRadius: widget.size * 1.5,
                     spreadRadius: widget.size / 3,
                   ),

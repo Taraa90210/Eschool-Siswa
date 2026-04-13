@@ -125,13 +125,13 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.white,
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                   width: 1.5,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   ),
@@ -163,7 +163,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
@@ -196,7 +196,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.1),
+                                      .withValues(alpha: 0.1),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
@@ -269,12 +269,12 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
         border: Border.all(
           color: isSelected
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: isSelected ? 8 : 4,
             offset: const Offset(0, 2),
           ),
@@ -354,14 +354,14 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
         child: InkWell(
           borderRadius: BorderRadius.circular(32),
           highlightColor: Colors.transparent,
-          splashColor: colorScheme['primary']!.withOpacity(0.05),
+          splashColor: colorScheme['primary']!.withValues(alpha: 0.05),
           child: Ink(
             decoration: BoxDecoration(
               color: Colors.white, // White background for card
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: Offset(0, 8),
                   spreadRadius: -5,
@@ -418,7 +418,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
               size: Size.infinite,
               painter: ModernPatternPainter(
                 primaryColor: Colors.white,
-                secondaryColor: Colors.white.withOpacity(0.5),
+                secondaryColor: Colors.white.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -434,7 +434,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    Colors.white.withOpacity(0.2),
+                    Colors.white.withValues(alpha: 0.2),
                     Colors.transparent,
                   ],
                 ),
@@ -455,7 +455,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 10,
                       spreadRadius: -5,
                     ),
@@ -505,7 +505,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                     letterSpacing: 0.3,
                     shadows: [
                       Shadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         offset: Offset(0, 2),
                         blurRadius: 4,
                       ),
@@ -521,7 +521,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                   width: 60,
                   height: 3,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     borderRadius: BorderRadius.circular(1.5),
                   ),
                 ),
@@ -617,7 +617,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                     boxShadow: isAvailable
                         ? [
                             BoxShadow(
-                              color: Color(0xFF4CAF50).withOpacity(0.4),
+                              color: Color(0xFF4CAF50).withValues(alpha: 0.4),
                               blurRadius: 15,
                               offset: Offset(0, 5),
                               spreadRadius: -5,
@@ -640,7 +640,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                                   );
                             },
                       borderRadius: BorderRadius.circular(16),
-                      splashColor: Colors.white.withOpacity(0.2),
+                      splashColor: Colors.white.withValues(alpha: 0.2),
                       highlightColor: Colors.transparent,
                       child: Center(
                         child: isLoading
@@ -659,7 +659,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                                   Container(
                                     padding: EdgeInsets.all(6),
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.2),
+                                      color: Colors.white.withValues(alpha: 0.2),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Icon(
@@ -706,7 +706,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.4),
+            color: color.withValues(alpha: 0.4),
             blurRadius: 15,
             offset: Offset(0, 5),
             spreadRadius: -5,
@@ -725,7 +725,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                 Container(
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -764,7 +764,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 15,
               offset: Offset(0, 5),
               spreadRadius: -5,
@@ -781,7 +781,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                   Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: colorScheme['primary']!.withOpacity(0.1),
+                      color: colorScheme['primary']!.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -819,7 +819,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                   Container(
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: colorScheme['primary']!.withOpacity(0.07),
+                      color: colorScheme['primary']!.withValues(alpha: 0.07),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -836,7 +836,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
             Divider(
               height: 1,
               thickness: 1,
-              color: colorScheme['primary']!.withOpacity(0.08),
+              color: colorScheme['primary']!.withValues(alpha: 0.08),
               indent: 20,
               endIndent: 20,
             ),
@@ -850,7 +850,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     decoration: BoxDecoration(
-                      color: colorScheme['primary']!.withOpacity(0.1),
+                      color: colorScheme['primary']!.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -928,14 +928,14 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
         child: InkWell(
           borderRadius: BorderRadius.circular(32),
           highlightColor: Colors.transparent,
-          splashColor: colorScheme['primary']!.withOpacity(0.05),
+          splashColor: colorScheme['primary']!.withValues(alpha: 0.05),
           child: Ink(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: Offset(0, 8),
                   spreadRadius: -5,
@@ -990,7 +990,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
               size: Size.infinite,
               painter: ModernPatternPainter(
                 primaryColor: Colors.white,
-                secondaryColor: Colors.white.withOpacity(0.5),
+                secondaryColor: Colors.white.withValues(alpha: 0.5),
               ),
             ),
           ),
@@ -1002,10 +1002,10 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -1039,11 +1039,11 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: statusColor.withOpacity(0.9),
+                color: statusColor.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: statusColor.withOpacity(0.3),
+                    color: statusColor.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: Offset(0, 4),
                   ),
@@ -1101,10 +1101,10 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: colorScheme['primary']!.withOpacity(0.05),
+              color: colorScheme['primary']!.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: colorScheme['primary']!.withOpacity(0.1),
+                color: colorScheme['primary']!.withValues(alpha: 0.1),
                 width: 1,
               ),
             ),
@@ -1115,7 +1115,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: colorScheme['primary']!.withOpacity(0.1),
+                    color: colorScheme['primary']!.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -1274,10 +1274,10 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: colorScheme['primary']!.withOpacity(0.05),
+        color: colorScheme['primary']!.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: colorScheme['primary']!.withOpacity(0.1),
+          color: colorScheme['primary']!.withValues(alpha: 0.1),
           width: 1,
         ),
       ),
@@ -1340,7 +1340,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
             borderRadius: BorderRadius.circular(32),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 20,
                 offset: Offset(0, 8),
                 spreadRadius: -5,
@@ -1401,7 +1401,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                                 width: double.infinity,
                                 height: 28,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3),
+                                  color: Colors.white.withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
@@ -1410,7 +1410,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                                 width: 200,
                                 height: 28,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3),
+                                  color: Colors.white.withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
@@ -1419,7 +1419,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                                 width: 60,
                                 height: 3,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Colors.white.withValues(alpha: 0.5),
                                   borderRadius: BorderRadius.circular(1.5),
                                 ),
                               ),
@@ -1454,7 +1454,7 @@ class _ExtracurricularContainerState extends State<ExtracurricularContainer>
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 15,
                         offset: Offset(0, 5),
                         spreadRadius: -5,

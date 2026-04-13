@@ -34,7 +34,6 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
   bool _isSearchFocused = false;
   final TextEditingController _searchController = TextEditingController();
   late AnimationController _animationController;
-  late Animation<double> _animation;
   final FocusNode _searchFocusNode = FocusNode();
 
   @override
@@ -45,11 +44,6 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
-    );
-
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
     );
 
     _searchFocusNode.addListener(() {
@@ -155,24 +149,6 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
               }).toList();
 
               if (filteredExams.isEmpty) {
-                Icon icon = _searchQuery.isNotEmpty
-                    ? Icon(
-                        Icons.search_off_rounded,
-                        size: 48,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.5),
-                      )
-                    : Icon(
-                        Icons.event_busy_rounded,
-                        size: 48,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.5),
-                      );
-
                 String message = _searchQuery.isNotEmpty
                     ? Utils.getTranslatedLabel(noExamsFoundKey)
                     : Utils.getTranslatedLabel(noExamsFoundKey);
@@ -181,7 +157,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                   NoDataContainer(
                     titleKey: message,
                   ),
-               ];
+                ];
               }
 
               return List.generate(
@@ -286,166 +262,13 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
     );
   }
 
-  Icon _getFilterIcon(String filter) {
-    switch (filter) {
-      case 'ongoing':
-        return Icon(
-          Icons.play_circle_outline_rounded,
-          color: Theme.of(context).colorScheme.primary,
-          size: 20,
-        );
-      case 'completed':
-        return Icon(
-          Icons.check_circle_outline_rounded,
-          color: Theme.of(context).colorScheme.primary,
-          size: 20,
-        );
-      case 'upcoming':
-        return Icon(
-          Icons.upcoming_rounded,
-          color: Theme.of(context).colorScheme.primary,
-          size: 20,
-        );
-      case 'all':
-      default:
-        return Icon(
-          Icons.filter_list_rounded,
-          color: Theme.of(context).colorScheme.primary,
-          size: 20,
-        );
-    }
-  }
-
-  String _getFilterText(String filter) {
-    switch (filter) {
-      case 'ongoing':
-        return Utils.getTranslatedLabel(onGoingKey);
-      case 'completed':
-        return Utils.getTranslatedLabel(completedKey);
-      case 'upcoming':
-        return Utils.getTranslatedLabel(commingSoonKey);
-      case 'all':
-      default:
-        return Utils.getTranslatedLabel(allKey);
-    }
-  }
-
-  void _showFilterBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * (0.075),
-            vertical: MediaQuery.of(context).size.height * (0.05),
-          ),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Utils.bottomSheetTopRadius),
-              topRight: Radius.circular(Utils.bottomSheetTopRadius),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                Utils.getTranslatedLabel(filterKey),
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Divider(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-              _buildFilterOptionTile(
-                title: Utils.getTranslatedLabel(allKey),
-                filterValue: 'all',
-              ),
-              _buildFilterOptionTile(
-                title: Utils.getTranslatedLabel(onGoingKey),
-                filterValue: 'ongoing',
-              ),
-              _buildFilterOptionTile(
-                title: Utils.getTranslatedLabel(completedKey),
-                filterValue: 'completed',
-              ),
-              _buildFilterOptionTile(
-                title: Utils.getTranslatedLabel(commingSoonKey),
-                filterValue: 'upcoming',
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildFilterOptionTile({
-    required String title,
-    required String filterValue,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _selectedFilter = filterValue;
-          });
-          Navigator.pop(context);
-        },
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(2),
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 1.75,
-                ),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _selectedFilter == filterValue
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).scaffoldBackgroundColor,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 14,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
       displacment: Utils.getScrollViewTopPadding(
         context: context,
-        appBarHeightPercentage: Utils.appBarBiggerHeightPercentage - (Utils.appBarBiggerHeightPercentage * 0.1),
+        appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
+            (Utils.appBarBiggerHeightPercentage * 0.1),
       ),
       onRefreshCallback: () {
         context.read<ExamDetailsCubit>().fetchStudentExamsList(
@@ -461,7 +284,8 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
           bottom: Utils.getScrollViewBottomPadding(context),
           top: Utils.getScrollViewTopPadding(
             context: context,
-            appBarHeightPercentage: Utils.appBarBiggerHeightPercentage - (Utils.appBarBiggerHeightPercentage * 0.1),
+            appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
+                (Utils.appBarBiggerHeightPercentage * 0.1),
           ),
         ),
         child: Column(
@@ -481,9 +305,9 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
               selectedExamFilterIndex:
                   examFilters.indexOf(_currentlySelectedExamFilter),
             ),
-                        Padding(
-              padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 10.0),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 16.0, right: 16.0, top: 16.0, bottom: 10.0),
               child: Row(
                 children: [
                   // Search Bar - Takes available space dynamically
@@ -498,7 +322,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           width: 1.5,
                         ),
                         boxShadow: [
@@ -506,7 +330,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.08),
+                                .withValues(alpha: 0.08),
                             blurRadius: _isSearchFocused ? 8 : 4,
                             offset: const Offset(0, 3),
                           ),
@@ -543,7 +367,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontSize: 14,
                                 ),
                                 border: InputBorder.none,
@@ -577,7 +401,7 @@ class _ExamOfflineListContainerState extends State<ExamOfflineListContainer>
                                           color: Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.1),
+                                              .withValues(alpha: 0.1),
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(

@@ -388,7 +388,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 11,
-                              color: colorScheme.secondary.withOpacity(0.85),
+                              color: colorScheme.secondary.withValues(alpha: 0.85),
                             ),
                           ),
                         ],
@@ -405,7 +405,7 @@ class _ChatContactsScreenState extends State<ChatContactsScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 11.5,
-                                color: colorScheme.secondary.withOpacity(0.75),
+                                color: colorScheme.secondary.withValues(alpha: 0.75),
                               ),
                             ),
                           ),

@@ -27,14 +27,14 @@ class ChangeCalendarMonthButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.transparent),
           color: isDisable
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.75)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.75)
               : null,
           gradient: isDisable
               ? null
               : LinearGradient(
                   colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.95),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.95),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -46,7 +46,7 @@ class ChangeCalendarMonthButton extends StatelessWidget {
           size: 30,
           color: Theme.of(context)
               .scaffoldBackgroundColor
-              .withOpacity(isDisable ? 0.75 : 1.0),
+              .withValues(alpha: isDisable ? 0.75 : 1.0),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/models/holiday.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
@@ -46,8 +47,7 @@ class HolidaysCubit extends Cubit<HolidaysState> {
         ),
       );
     } catch (e) {
-      print("ELOL");
-      print(e);
+      debugPrint('HolidaysCubit error: ${e.toString()}');
       emit(HolidaysFetchFailure(e.toString()));
     }
   }

@@ -8,7 +8,8 @@ class XenditRepository {
   // - _isDemoMode = false + _useDirectXendit = true: Use real Xendit API (testing)
   // - _isDemoMode = false + _useDirectXendit = false: Use backend API (production)
   final bool _isDemoMode = false;
-  final bool _useDirectXendit = true; // Set to false when backend is ready
+  final bool _useDirectXendit = false; // Set to false when backend is ready
+  final XenditDirectRepository _directRepository = XenditDirectRepository();
 
   /// Create Xendit invoice
   ///
@@ -18,55 +19,54 @@ class XenditRepository {
     required int schoolId,
     required int studentId,
     required double amount,
+    required double baseAmount,
+    required double feeAmount,
     required String email,
     required String description,
     required List<int> feeIds,
+    List<String>? paymentMethods,
+    dynamic paymentMethodId, // Added for new API
   }) async {
-    // Use direct Xendit API (for testing without backend)
-    if (_useDirectXendit && !_isDemoMode) {
-      final directRepo = XenditDirectRepository();
-      return await directRepo.createInvoice(
-        email: email,
-        amount: amount,
-        description: description,
-      );
-    }
-
-    // Use HTML mockup demo
-    if (_isDemoMode) {
-      // DEMO: Simulate API delay
-      await Future.delayed(Duration(seconds: 2));
-
-      // DEMO: Return mock invoice
-      return _createMockInvoice(
-        amount: amount,
-        email: email,
-        description: description,
-      );
-    }
-
-    // PRODUCTION CODE (akan diaktifkan nanti):
     try {
+      final externalId =
+          'SCHOOL_${schoolId}_STUDENT_${studentId}_${DateTime.now().millisecondsSinceEpoch}';
+
+      // Use direct Xendit API for testing if configured
+      if (_useDirectXendit) {
+        return await _directRepository.createInvoice(
+          amount: amount,
+          baseAmount: baseAmount,
+          feeAmount: feeAmount,
+          externalId: externalId,
+          payerEmail: email,
+          description: description,
+          paymentMethods: paymentMethods,
+        );
+      }
+
       final result = await Api.post(
         url: Api.createXenditInvoice,
         body: {
           'school_id': schoolId,
           'student_id': studentId,
-          'amount': amount,
+          'amount':
+              baseAmount.toInt(), // Send base only; backend adds its own fee
+          'base_amount': baseAmount.toInt(),
+          'fee_amount': feeAmount.toInt(),
+          'external_id': externalId,
           'email': email,
           'description': description,
           'fee_ids': feeIds,
+          if (paymentMethodId != null &&
+              int.tryParse(paymentMethodId.toString()) != null)
+            'payment_method_id': int.parse(paymentMethodId.toString()),
+          if (paymentMethods != null) 'payment_methods': paymentMethods,
         },
         useAuthToken: true,
       );
 
-      // Backend returns invoice data directly in response (not nested in 'data')
-      // Response format: { error: false, message: "...", invoice_id: "...", invoice_url: "...", ... }
-      if (result['error'] == false) {
-        return XenditInvoice.fromBackendResponse(result);
-      } else {
-        throw ApiException(result['message'] ?? 'Failed to create invoice');
-      }
+      final invoiceData = result['data'] ?? result;
+      return XenditInvoice.fromBackendResponse(invoiceData);
     } catch (e) {
       throw ApiException(e.toString());
     }
@@ -79,8 +79,7 @@ class XenditRepository {
   Future<XenditInvoice> getInvoiceStatus(String invoiceId) async {
     // Use direct Xendit API (for testing without backend)
     if (_useDirectXendit && !_isDemoMode) {
-      final directRepo = XenditDirectRepository();
-      return await directRepo.getInvoiceStatus(invoiceId);
+      return await _directRepository.getInvoiceStatus(invoiceId);
     }
 
     // Use HTML mockup demo
@@ -91,6 +90,8 @@ class XenditRepository {
       // DEMO: Return mock invoice with updated status
       return _createMockInvoice(
         amount: 500000,
+        baseAmount: 500000,
+        feeAmount: 0,
         email: 'demo@example.com',
         description: 'Demo Payment',
         status: 'paid', // Simulate successful payment
@@ -99,17 +100,15 @@ class XenditRepository {
 
     // PRODUCTION CODE:
     try {
-      final result = await Api.get(
-        url: '${Api.getXenditStatus}/$invoiceId',
+      final result = await Api.post(
+        url: Api.getXenditStatus,
+        body: {'invoice_id': invoiceId},
         useAuthToken: true,
       );
 
-      // Backend returns: { error: false, data: { id: "...", status: "...", ... } }
-      if (result['error'] == false) {
-        return XenditInvoice.fromJson(result['data']);
-      } else {
-        throw ApiException(result['message'] ?? 'Failed to get invoice status');
-      }
+      // Backend returns Xendit Invoice object directly or inside data
+      final invoiceData = result['data'] ?? result;
+      return XenditInvoice.fromBackendResponse(invoiceData);
     } catch (e) {
       throw ApiException(e.toString());
     }
@@ -119,18 +118,22 @@ class XenditRepository {
 
   XenditInvoice _createMockInvoice({
     required double amount,
+    required double baseAmount,
+    required double feeAmount,
     required String email,
     required String description,
     String status = 'pending',
   }) {
     final now = DateTime.now();
     final expiryDate = now.add(Duration(hours: 24));
-    
+
     return XenditInvoice(
       id: 'demo_invoice_${now.millisecondsSinceEpoch}',
       externalId: 'SCHOOL_DEMO_${now.millisecondsSinceEpoch}',
       status: status,
       amount: amount,
+      baseAmount: baseAmount,
+      feeAmount: feeAmount,
       // DEMO: Use HTML mockup for demo payment interface
       // This creates a realistic demo payment page without needing real Xendit API
       invoiceUrl: _getDemoPaymentPageUrl(amount, description),

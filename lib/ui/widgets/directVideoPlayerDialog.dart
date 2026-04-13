@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:eschool/data/models/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
@@ -15,29 +14,33 @@ class DirectVideoPlayerDialog extends StatefulWidget {
   final StudyMaterial currentlyPlayingVideo;
   final List<StudyMaterial> relatedVideos;
 
-  const DirectVideoPlayerDialog({
-    Key? key, 
-    required this.currentlyPlayingVideo, 
-    required this.relatedVideos
-  }) : super(key: key);
+  const DirectVideoPlayerDialog(
+      {Key? key,
+      required this.currentlyPlayingVideo,
+      required this.relatedVideos})
+      : super(key: key);
 
   @override
-  _DirectVideoPlayerDialogState createState() => _DirectVideoPlayerDialogState();
+  _DirectVideoPlayerDialogState createState() =>
+      _DirectVideoPlayerDialogState();
 }
 
-class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with TickerProviderStateMixin {
+class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog>
+    with TickerProviderStateMixin {
   late StudyMaterial currentlyPlayingStudyMaterialVideo;
   late bool assignedVideoController = false;
 
   YoutubePlayerController? _youtubePlayerController;
   VideoPlayerController? _videoPlayerController;
 
-  late final AnimationController controlsMenuAnimationController = AnimationController(
+  late final AnimationController controlsMenuAnimationController =
+      AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 500),
   );
 
-  late Animation<double> controlsMenuAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+  late Animation<double> controlsMenuAnimation =
+      Tween<double>(begin: 0.0, end: 1.0).animate(
     CurvedAnimation(
       parent: controlsMenuAnimationController,
       curve: Curves.easeInOut,
@@ -47,8 +50,9 @@ class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with 
   @override
   void initState() {
     currentlyPlayingStudyMaterialVideo = widget.currentlyPlayingVideo;
-    
-    if (currentlyPlayingStudyMaterialVideo.studyMaterialType == StudyMaterialType.youtubeVideo) {
+
+    if (currentlyPlayingStudyMaterialVideo.studyMaterialType ==
+        StudyMaterialType.youtubeVideo) {
       _loadYoutubeController();
     } else {
       _loadVideoController();
@@ -61,8 +65,7 @@ class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with 
       _videoPlayerController = VideoPlayerController.networkUrl(
         Uri.parse(currentlyPlayingStudyMaterialVideo.fileUrl),
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-      )
-        ..initialize().then((_) {
+      )..initialize().then((_) {
           setState(() {
             _videoPlayerController?.play();
           });
@@ -112,112 +115,6 @@ class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with 
     super.dispose();
   }
 
-  Widget _buildVideoDetailsContainer({
-    required StudyMaterial studyMaterial,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          if (studyMaterial.id == currentlyPlayingStudyMaterialVideo.id) {
-            return;
-          }
-
-          assignedVideoController = false;
-          currentlyPlayingStudyMaterialVideo = studyMaterial;
-          setState(() {});
-
-          // Dispose existing controllers
-          _youtubePlayerController?.dispose();
-          _videoPlayerController?.dispose();
-          _youtubePlayerController = null;
-          _videoPlayerController = null;
-
-          // Load new controller based on video type
-          if (currentlyPlayingStudyMaterialVideo.studyMaterialType == StudyMaterialType.youtubeVideo) {
-            _loadYoutubeController();
-          } else {
-            _loadVideoController();
-          }
-          setState(() {});
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).scaffoldBackgroundColor,
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                offset: const Offset(5, 5),
-                blurRadius: 10,
-              )
-            ],
-          ),
-          child: LayoutBuilder(
-            builder: (context, boxConstraints) {
-              return Row(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              studyMaterial.fileThumbnail,
-                            ),
-                          ),
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        height: 65,
-                        width: boxConstraints.maxWidth * (0.3),
-                      ),
-                      currentlyPlayingStudyMaterialVideo.id == studyMaterial.id
-                          ? Container(
-                              height: 65,
-                              width: boxConstraints.maxWidth * (0.3),
-                              decoration: BoxDecoration(
-                                color: const Color(0xff212121).withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Lottie.asset(
-                                "assets/animations/music_playing.json",
-                                animate: true,
-                              ),
-                            )
-                          : const SizedBox()
-                    ],
-                  ),
-                  SizedBox(
-                    width: boxConstraints.maxWidth * (0.05),
-                  ),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          studyMaterial.fileName,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildVideoControlMenuContainer() {
     return AnimatedBuilder(
       animation: controlsMenuAnimationController,
@@ -251,8 +148,11 @@ class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with 
                   ),
                   Center(
                     child: PlayPauseButtonContainer(
-                      isYoutubeVideo: currentlyPlayingStudyMaterialVideo.studyMaterialType == StudyMaterialType.youtubeVideo,
-                      controlsAnimationController: controlsMenuAnimationController,
+                      isYoutubeVideo: currentlyPlayingStudyMaterialVideo
+                              .studyMaterialType ==
+                          StudyMaterialType.youtubeVideo,
+                      controlsAnimationController:
+                          controlsMenuAnimationController,
                       youtubePlayerController: _youtubePlayerController,
                       videoPlayerController: _videoPlayerController,
                     ),
@@ -260,12 +160,16 @@ class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with 
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
+                      padding: const EdgeInsets.only(
+                          bottom: 15, left: 10, right: 10),
                       child: VideoControlsContainer(
-                        isYoutubeVideo: currentlyPlayingStudyMaterialVideo.studyMaterialType == StudyMaterialType.youtubeVideo,
+                        isYoutubeVideo: currentlyPlayingStudyMaterialVideo
+                                .studyMaterialType ==
+                            StudyMaterialType.youtubeVideo,
                         youtubePlayerController: _youtubePlayerController,
                         videoPlayerController: _videoPlayerController,
-                        controlsAnimationController: controlsMenuAnimationController,
+                        controlsAnimationController:
+                            controlsMenuAnimationController,
                       ),
                     ),
                   ),
@@ -279,12 +183,12 @@ class _DirectVideoPlayerDialogState extends State<DirectVideoPlayerDialog> with 
   }
 
   @override
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Dialog(
       insetPadding: EdgeInsets.all(10),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.95, 
+        height: MediaQuery.of(context).size.height * 0.95,
         child: Column(
           children: [
             // Video Player
@@ -297,9 +201,12 @@ Widget build(BuildContext context) {
                     // ✅ Gunakan Positioned.fill + FittedBox untuk mengisi space maksimal dengan aspect ratio terjaga
                     Positioned.fill(
                       child: assignedVideoController
-                          ? (currentlyPlayingStudyMaterialVideo.studyMaterialType == StudyMaterialType.youtubeVideo
+                          ? (currentlyPlayingStudyMaterialVideo
+                                      .studyMaterialType ==
+                                  StudyMaterialType.youtubeVideo
                               ? FittedBox(
-                                  fit: BoxFit.contain, // ✅ Contain = max size dengan aspect ratio terjaga
+                                  fit: BoxFit
+                                      .contain, // ✅ Contain = max size dengan aspect ratio terjaga
                                   child: SizedBox(
                                     width: 16 * 100,
                                     height: 9 * 100,
@@ -320,9 +227,12 @@ Widget build(BuildContext context) {
                                   ? FittedBox(
                                       fit: BoxFit.contain,
                                       child: SizedBox(
-                                        width: _videoPlayerController!.value.size.width,
-                                        height: _videoPlayerController!.value.size.height,
-                                        child: VideoPlayer(_videoPlayerController!),
+                                        width: _videoPlayerController!
+                                            .value.size.width,
+                                        height: _videoPlayerController!
+                                            .value.size.height,
+                                        child: VideoPlayer(
+                                            _videoPlayerController!),
                                       ),
                                     )
                                   : FittedBox(
@@ -335,11 +245,13 @@ Widget build(BuildContext context) {
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: CachedNetworkImageProvider(
-                                                currentlyPlayingStudyMaterialVideo.fileThumbnail,
+                                                currentlyPlayingStudyMaterialVideo
+                                                    .fileThumbnail,
                                               ),
                                             ),
                                           ),
-                                          child: CustomCircularProgressIndicator(),
+                                          child:
+                                              CustomCircularProgressIndicator(),
                                         ),
                                       ),
                                     ))

@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:eschool/data/repositories/onlineExamRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,13 +30,15 @@ class SubmitOnlineExamAnswersCubit extends Cubit<SubmitOnlineExamAnswersState> {
       {required int examId, required Map<int, dynamic> answers}) async {
     emit(SubmitOnlineExamAnswersInProgress());
     try {
-      print("-------X-------");
+      debugPrint("-------X-------");
       emit(SubmitOnlineExamAnswersSuccess(
           message: await _onlineExamRepository.setExamOnlineAnswers(
               examId: examId, answerData: answers)));
     } catch (e) {
-      print("-------Y-------");
+      debugPrint("-------Y-------");
       emit(SubmitOnlineExamAnswersFailure(e.toString()));
     }
   }
 }
+
+

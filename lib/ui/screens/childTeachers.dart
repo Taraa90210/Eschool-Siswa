@@ -85,7 +85,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             )
@@ -114,7 +114,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.1),
+                            .withValues(alpha: 0.1),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
@@ -146,16 +146,16 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                           decoration: BoxDecoration(
                             color: subjectTeacher.subject?.nameWithType ==
                                     "Wali Kelas"
-                                ? Colors.orange.withOpacity(0.1)
+                                ? Colors.orange.withValues(alpha: 0.1)
                                 : Theme.of(context)
                                     .colorScheme
                                     .primary
-                                    .withOpacity(0.1),
+                                    .withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                             border: subjectTeacher.subject?.nameWithType ==
                                     "Wali Kelas"
                                 ? Border.all(
-                                    color: Colors.orange.withOpacity(0.5))
+                                    color: Colors.orange.withValues(alpha: 0.5))
                                 : null,
                           ),
                           child: Row(
@@ -196,7 +196,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface
-                                  .withOpacity(0.6),
+                                  .withValues(alpha: 0.6),
                             ),
                             const SizedBox(width: 6),
                             Text(
@@ -206,7 +206,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onSurface
-                                    .withOpacity(0.7),
+                                    .withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -220,7 +220,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withOpacity(0.4),
+                        .withValues(alpha: 0.4),
                   ),
                 ],
               ),
@@ -305,13 +305,13 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           boxShadow: [
                             BoxShadow(
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.1),
+                                  .withValues(alpha: 0.1),
                               blurRadius: 10,
                               spreadRadius: 2,
                             )
@@ -343,7 +343,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.1),
+                            .withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: Text(
@@ -384,11 +384,11 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.08),
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.08),
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.02),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: Offset(0, 4),
           ),
@@ -402,7 +402,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -422,7 +422,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .onSurface
-                          .withOpacity(0.6),
+                          .withValues(alpha: 0.6),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -517,7 +517,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
     bool isOutlined = false,
   }) {
     return Material(
-      color: isOutlined ? Colors.transparent : color.withOpacity(0.1),
+      color: isOutlined ? Colors.transparent : color.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -527,7 +527,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: isOutlined
-                ? Border.all(color: color.withOpacity(0.5), width: 1.5)
+                ? Border.all(color: color.withValues(alpha: 0.5), width: 1.5)
                 : null,
           ),
           child: Column(
@@ -562,7 +562,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 5),
           )
@@ -660,7 +660,7 @@ class _ChildTeachersScreenState extends State<ChildTeachersScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .onSurface
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       thickness: 1,
                       indent: 20,
                       endIndent: 20,

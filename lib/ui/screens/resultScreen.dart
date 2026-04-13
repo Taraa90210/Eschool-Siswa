@@ -141,7 +141,7 @@ class ResultScreen extends StatelessWidget {
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.075),
+                            .withValues(alpha: 0.075),
                         offset: const Offset(2.5, 2.5),
                         blurRadius: 5,
                       )
@@ -267,7 +267,7 @@ class ResultScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.075),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.075),
             offset: const Offset(2.5, 2.5),
             blurRadius: 5,
           ),
@@ -309,7 +309,7 @@ class ResultScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.075),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.075),
             offset: const Offset(2.5, 2.5),
             blurRadius: 5,
           )
@@ -358,7 +358,7 @@ class ResultScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.075),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.075),
             offset: const Offset(2.5, 2.5),
             blurRadius: 5,
           )
@@ -387,7 +387,7 @@ class ResultScreen extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.75),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.75),
             fontWeight: FontWeight.w400,
             fontSize: 13.0,
           ),

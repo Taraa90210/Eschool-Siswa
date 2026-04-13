@@ -92,12 +92,13 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
   String getCurrencySymbol() {
     // Diganti menjadi statis untuk sementara hingga masalah dari beckend terselesaikan - Galang
     return 'Rp';
-    // return context.read<SchoolConfigurationCubit>().getSchoolConfiguration().schoolSettings.currencySymbol ??'';  
+    // return context.read<SchoolConfigurationCubit>().getSchoolConfiguration().schoolSettings.currencySymbol ??'';
   }
+
   TextStyle getPaidOnTextStyle() {
     return TextStyle(
         fontSize: 12.0,
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.75));
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.75));
   }
 
   TextStyle getPaymentInfoTitleStyle() {
@@ -489,7 +490,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
             child: Icon(
               Icons.edit,
               size: 18,
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.3),
             ),
           ),
         )
@@ -557,7 +558,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                       ),
                       const Spacer(),
                       Text(
-                        "${getCurrencySymbol()}${NumberFormat("#,##0", "id_ID").format(currentInstallmentAmount)}", 
+                        "${getCurrencySymbol()}${NumberFormat("#,##0", "id_ID").format(currentInstallmentAmount)}",
                         // "${getCurrencySymbol()}${currentInstallmentAmount.toStringAsFixed(2)}",
                         style: getPaymentInfoAmountValueStyle(),
                       )
@@ -654,7 +655,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                   ),
                   const Spacer(),
                   Text(
-                    "${getCurrencySymbol()}${NumberFormat("#,##0", 'id_ID').format(totalAmount)}", 
+                    "${getCurrencySymbol()}${NumberFormat("#,##0", 'id_ID').format(totalAmount)}",
                     // "${getCurrencySymbol()}${totalAmount.toStringAsFixed(2)}",
                     style: getPaymentInfoAmountValueStyle(),
                   )
@@ -797,7 +798,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                     }
                   }
 
-                    context
+                  context
                       .read<LatestPaymentTransactionCubit>()
                       .fetchLatestPaymentTransactions(widget.child.id ?? 0);
                 },
@@ -825,7 +826,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.25)))),
+                                  .withValues(alpha: 0.25)))),
                   padding: EdgeInsets.only(
                     bottom: 10,
                   ),
@@ -891,17 +892,17 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                                         width: 5.0,
                                       ),
                                       Text(
-                                        Utils.formatDate(DateTime.parse(widget
+                                        Utils.formatDateFromStr(widget
                                             .childFeeDetails
                                             .optionalPaidDate(
                                                 optionalFeeId:
-                                                    optionalFee.id ?? 0))),
+                                                    optionalFee.id ?? 0)),
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .secondary
-                                                .withOpacity(0.75)),
+                                                .withValues(alpha: 0.75)),
                                       ),
                                     ],
                                   )
@@ -972,7 +973,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.25)))),
+                                        .withValues(alpha: 0.25)))),
                         padding: EdgeInsets.only(
                           bottom: 10,
                         ),
@@ -987,7 +988,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                             ),
                             Text(
                               // Update Format -- Galang
-                              "${getCurrencySymbol()}${NumberFormat("#,##0" ,'id_ID').format(compulsoryFee.amount ?? 0)}",
+                              "${getCurrencySymbol()}${NumberFormat("#,##0", 'id_ID').format(compulsoryFee.amount ?? 0)}",
                               // "${getCurrencySymbol()}${(compulsoryFee.amount ?? 0).toStringAsFixed(2)}",
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary),
@@ -1014,7 +1015,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                       const Spacer(),
                       Text(
                         // Update Format -- Galang
-                        "${getCurrencySymbol()}${NumberFormat("#,##0" ,'id_ID').format(widget.childFeeDetails.dueChargesAmount)}",
+                        "${getCurrencySymbol()}${NumberFormat("#,##0", 'id_ID').format(widget.childFeeDetails.dueChargesAmount)}",
                         // "${getCurrencySymbol()}${widget.childFeeDetails.dueChargesAmount}",
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.primary),
@@ -1033,7 +1034,7 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
             const Spacer(),
             Text(
               // Update Format -- Galang
-              "${getCurrencySymbol()}${NumberFormat("#,##0" ,'id_ID').format(widget.childFeeDetails.totalCompulsoryFees)}",
+              "${getCurrencySymbol()}${NumberFormat("#,##0", 'id_ID').format(widget.childFeeDetails.totalCompulsoryFees)}",
               // "${getCurrencySymbol()}${widget.childFeeDetails.totalCompulsoryFees?.toStringAsFixed(2)}",
               style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
@@ -1051,8 +1052,8 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                       ),
                       const Spacer(),
                       Text(
-                        Utils.formatDate(DateTime.parse(widget.childFeeDetails
-                            .fullCompulsoryFeePaidDate())),
+                        Utils.formatDateFromStr(
+                            widget.childFeeDetails.fullCompulsoryFeePaidDate()),
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.primary),
                       )
@@ -1110,14 +1111,14 @@ class _ChildFeeDetailsScreenState extends State<ChildFeeDetailsScreen> {
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.85),
+                              .withValues(alpha: 0.85),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const Spacer(),
                       Text(
                         // Update Format -- Galang
-                        "${getCurrencySymbol()}${NumberFormat("#,##0" ,'id_ID').format(widget.childFeeDetails.remainingInstallmentAmount())}",
+                        "${getCurrencySymbol()}${NumberFormat("#,##0", 'id_ID').format(widget.childFeeDetails.remainingInstallmentAmount())}",
                         // "${getCurrencySymbol()}${widget.childFeeDetails.remainingInstallmentAmount().toStringAsFixed(2)}",
                         style: TextStyle(
                             fontWeight: FontWeight.w600,

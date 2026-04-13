@@ -164,48 +164,6 @@ class _ChapterDetailsScreenState extends State<ChapterDetailsScreen> {
     }
   }
 
-  Widget _buildChapterContentTitles() {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * (0.1),
-      ),
-      height: 40,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: chapterContentTitles
-            .map(
-              (title) => GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedTabTitleKey = title;
-                  });
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: _selectedTabTitleKey == title
-                        ? Theme.of(context).colorScheme.primary
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  alignment: Alignment.center,
-                  child: Text(
-                    Utils.getTranslatedLabel(title),
-                    style: TextStyle(
-                      color: _selectedTabTitleKey == title
-                          ? Theme.of(context).scaffoldBackgroundColor
-                          : Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,8 +174,7 @@ class _ChapterDetailsScreenState extends State<ChapterDetailsScreen> {
             Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: EdgeInsets.only(
-                ),
+                padding: EdgeInsets.only(),
                 child: NoDataContainer(
                   titleKey: noChaptersKey, // Show empty chapter message
                   animate: true,
@@ -260,7 +217,8 @@ class _ChapterDetailsScreenState extends State<ChapterDetailsScreen> {
                                           element.studyMaterialType ==
                                               StudyMaterialType.youtubeVideo ||
                                           element.studyMaterialType ==
-                                              StudyMaterialType.uploadedVideoUrl,
+                                              StudyMaterialType
+                                                  .uploadedVideoUrl,
                                     )
                                     .toList(),
                               )

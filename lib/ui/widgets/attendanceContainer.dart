@@ -77,57 +77,6 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
     );
   }
 
-  Widget _buildAttendanceCounterContainer({
-    required String title,
-    required BoxConstraints boxConstraints,
-    required String value,
-    required Color backgroundColor,
-  }) {
-    return Container(
-      height: boxConstraints.maxWidth * (0.425),
-      width: boxConstraints.maxWidth * (0.425),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: backgroundColor.withOpacity(0.25),
-            offset: const Offset(5, 5),
-            blurRadius: 10,
-          )
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: boxConstraints.maxWidth * (0.45) * (0.125),
-          ),
-          CircleAvatar(
-            radius: 25,
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            child: Center(
-              child: Text(
-                value,
-                style: TextStyle(
-                  color: backgroundColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   // Galang
   Widget _buildAttendanceCounterHadirContainer({
     required String title,
@@ -224,7 +173,7 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
           color: backgroundColor,
           boxShadow: [
             BoxShadow(
-              color: backgroundColor.withOpacity(0.25),
+              color: backgroundColor.withValues(alpha: 0.25),
               offset: const Offset(5, 5),
               blurRadius: 10,
             ),
@@ -445,7 +394,7 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
           color: backgroundColor,
           boxShadow: [
             BoxShadow(
-              color: backgroundColor.withOpacity(0.25),
+              color: backgroundColor.withValues(alpha: 0.25),
               offset: const Offset(5, 5),
               blurRadius: 10,
             ),
@@ -524,7 +473,7 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.075),
+                        .withValues(alpha: 0.075),
                     offset: const Offset(2.5, 2.5),
                     blurRadius: 5,
                   )
@@ -606,7 +555,10 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.075),
+            color: Theme.of(context)
+                .colorScheme
+                .secondary
+                .withValues(alpha: 0.075),
             offset: const Offset(5.0, 5),
             blurRadius: 10,
           )
@@ -659,15 +611,6 @@ class _AttendanceContainerState extends State<AttendanceContainer> {
         },
         availableGestures: AvailableGestures.none,
         onDaySelected: (selectedDay, focusedDay) {
-          // Check if the selected day is a present day (holiday)
-          bool isPresent = presentDays.indexWhere(
-                (element) {
-                  return Utils.formatDate(selectedDay) ==
-                      Utils.formatDate(element.date);
-                },
-              ) !=
-              -1;
-
           Get.toNamed(
             Routes.subjectAttendanceAtDay,
             arguments: {

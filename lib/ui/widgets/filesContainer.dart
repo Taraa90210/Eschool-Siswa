@@ -35,7 +35,7 @@ class _FilesContainerState extends State<FilesContainer> {
           borderRadius: BorderRadius.circular(16),
           gradient: LinearGradient(
             colors: [
-              accentColor.withOpacity(0.8),
+              accentColor.withValues(alpha: 0.8),
               accentColor,
             ],
             begin: Alignment.topLeft,
@@ -43,7 +43,7 @@ class _FilesContainerState extends State<FilesContainer> {
           ),
           boxShadow: [
             BoxShadow(
-              color: accentColor.withOpacity(0.3),
+              color: accentColor.withValues(alpha: 0.3),
               offset: const Offset(2, 4),
               blurRadius: 12,
             ),
@@ -88,7 +88,7 @@ class _FilesContainerState extends State<FilesContainer> {
                         Text(
                           ".${file.fileExtension} • ${_getFileSizeText(file)}",
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha: 0.8),
                             fontSize: 12.0,
                           ),
                         ),
@@ -111,7 +111,7 @@ class _FilesContainerState extends State<FilesContainer> {
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
@@ -167,7 +167,7 @@ class _FilesContainerState extends State<FilesContainer> {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(iconData, color: iconColor, size: 22),

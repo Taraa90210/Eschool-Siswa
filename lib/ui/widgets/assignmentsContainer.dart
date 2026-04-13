@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/assignmentsCubit.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/studentSubjectAndSlidersCubit.dart';
-import 'package:eschool/data/models/assignment.dart';
+
 import 'package:eschool/data/models/subject.dart';
 import 'package:eschool/ui/screens/home/cubits/assignmentsTabSelectionCubit.dart';
 import 'package:eschool/ui/widgets/assignmentFilterBottomsheetContainer.dart';
@@ -146,7 +146,8 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
 
   Widget _buildAppBarContainer() {
     return ScreenTopBackgroundContainer(
-      heightPercentage: Utils.appBarBiggerHeightPercentage - (Utils.appBarBiggerHeightPercentage * 0.1),
+      heightPercentage: Utils.appBarBiggerHeightPercentage -
+          (Utils.appBarBiggerHeightPercentage * 0.1),
       child: LayoutBuilder(
         builder: (context, boxConstraints) {
           return Stack(
@@ -187,12 +188,13 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                 ),
               ),
               Align(
-                alignment: Alignment(0.0, 0.3), // Moved down to reduce empty space
+                alignment:
+                    Alignment(0.0, 0.3), // Moved down to reduce empty space
                 child: Container(
                   width: boxConstraints.maxWidth * (0.7),
                   height: 45,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                    color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Row(
@@ -202,12 +204,14 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                             AssignmentsTabSelectionState>(
                           bloc: context.read<AssignmentsTabSelectionCubit>(),
                           builder: (context, state) {
-                            final bool isSelected = state.assignmentFilterTabTitle == assignedKey;
+                            final bool isSelected =
+                                state.assignmentFilterTabTitle == assignedKey;
                             return GestureDetector(
                               onTap: () {
                                 context
                                     .read<AssignmentsTabSelectionCubit>()
-                                    .changeAssignmentFilterTabTitle(assignedKey);
+                                    .changeAssignmentFilterTabTitle(
+                                        assignedKey);
                                 fetchAssignments();
                               },
                               child: Container(
@@ -216,8 +220,8 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                                   vertical: 5.0,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: isSelected 
-                                      ? Theme.of(context).colorScheme.primary 
+                                  color: isSelected
+                                      ? Theme.of(context).colorScheme.primary
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
@@ -225,10 +229,13 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                                 child: Text(
                                   Utils.getTranslatedLabel(assignedKey),
                                   style: TextStyle(
-                                    color: isSelected 
-                                        ? Colors.white 
-                                        : Theme.of(context).scaffoldBackgroundColor,
-                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                   ),
                                 ),
                               ),
@@ -241,12 +248,14 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                             AssignmentsTabSelectionState>(
                           bloc: context.read<AssignmentsTabSelectionCubit>(),
                           builder: (context, state) {
-                            final bool isSelected = state.assignmentFilterTabTitle == submittedKey;
+                            final bool isSelected =
+                                state.assignmentFilterTabTitle == submittedKey;
                             return GestureDetector(
                               onTap: () {
                                 context
                                     .read<AssignmentsTabSelectionCubit>()
-                                    .changeAssignmentFilterTabTitle(submittedKey);
+                                    .changeAssignmentFilterTabTitle(
+                                        submittedKey);
                                 fetchAssignments();
                               },
                               child: Container(
@@ -255,8 +264,8 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                                   vertical: 5.0,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: isSelected 
-                                      ? Theme.of(context).colorScheme.primary 
+                                  color: isSelected
+                                      ? Theme.of(context).colorScheme.primary
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
@@ -264,10 +273,13 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                                 child: Text(
                                   Utils.getTranslatedLabel(submittedKey),
                                   style: TextStyle(
-                                    color: isSelected 
-                                        ? Colors.white 
-                                        : Theme.of(context).scaffoldBackgroundColor,
-                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                    color: isSelected
+                                        ? Colors.white
+                                        : Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                   ),
                                 ),
                               ),
@@ -286,92 +298,6 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
     );
   }
 
-  Widget _buildAssignmentStatusIndicator(Assignment assignment) {
-    if (assignment.assignmentSubmission.id != 0 &&
-        assignment.assignmentSubmission.points > 0) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.check_circle,
-              color: Theme.of(context).colorScheme.primary,
-              size: 16.0,
-            ),
-            const SizedBox(width: 4.0),
-            Text(
-              "${Utils.getTranslatedLabel('grade')}: ${assignment.assignmentSubmission.points}/${assignment.points}",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-                fontSize: 12.0,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else if (assignment.assignmentSubmission.id != 0) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        decoration: BoxDecoration(
-          color: Colors.amber.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.pending,
-              color: Colors.amber,
-              size: 16.0,
-            ),
-            const SizedBox(width: 4.0),
-            Text(
-              Utils.getTranslatedLabel('submitted'),
-              style: const TextStyle(
-                color: Colors.amber,
-                fontWeight: FontWeight.bold,
-                fontSize: 12.0,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.assignment_late,
-              color: Colors.red,
-              size: 16.0,
-            ),
-            const SizedBox(width: 4.0),
-            Text(
-              Utils.getTranslatedLabel(notSubmittedKey),
-              style: const TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-                fontSize: 12.0,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -379,7 +305,8 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
         CustomRefreshIndicator(
           displacment: Utils.getScrollViewTopPadding(
             context: context,
-            appBarHeightPercentage: Utils.appBarBiggerHeightPercentage - (Utils.appBarBiggerHeightPercentage * 0.1),
+            appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
+                (Utils.appBarBiggerHeightPercentage * 0.1),
           ),
           onRefreshCallback: () {
             fetchAssignments();
@@ -392,7 +319,8 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
               padding: EdgeInsets.only(
                 top: Utils.getScrollViewTopPadding(
                   context: context,
-                  appBarHeightPercentage: Utils.appBarBiggerHeightPercentage - (Utils.appBarBiggerHeightPercentage * 0.1),
+                  appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
+                      (Utils.appBarBiggerHeightPercentage * 0.1),
                 ),
                 bottom: Utils.getScrollViewBottomPadding(context),
               ),
@@ -407,8 +335,7 @@ class _AssignmentsContainerState extends State<AssignmentsContainer> {
                       AssignmentsTabSelectionState>(
                     builder: (context, state) {
                       return AssignmentListContainer(
-                        animateItems: !widget
-                            .isForBottomMenuBackground,
+                        animateItems: !widget.isForBottomMenuBackground,
                         assignmentTabTitle: state.assignmentFilterTabTitle,
                         currentSelectedSubjectId:
                             state.assignmentFilterByClassSubjectId,

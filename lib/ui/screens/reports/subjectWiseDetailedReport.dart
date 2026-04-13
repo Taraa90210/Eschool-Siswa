@@ -181,7 +181,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                     width: boxConstraints.maxWidth * (0.7),
                     height: 45,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                      color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Row(
@@ -277,7 +277,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                     width: boxConstraints.maxWidth * (0.7),
                     height: 45,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                      color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     alignment: Alignment.center,
@@ -322,7 +322,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               blurRadius: 10,
               spreadRadius: 1,
               offset: const Offset(0, 2),
@@ -347,7 +347,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -365,7 +365,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
               animation: true,
               animationDuration: 1500,
               barRadius: const Radius.circular(5),
-              backgroundColor: Colors.grey.withOpacity(0.2),
+              backgroundColor: Colors.grey.withValues(alpha: 0.2),
               progressColor: progressColor,
               padding: EdgeInsets.zero,
             ),
@@ -455,14 +455,14 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 5,
             spreadRadius: 1,
             offset: const Offset(0, 2),
           ),
         ],
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
           width: 1,
         ),
       ),
@@ -489,8 +489,8 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(20),
@@ -515,7 +515,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                     Container(
                       height: 6,
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.2),
+                        color: Colors.grey.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -536,11 +536,11 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                             Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.8),
+                                .withValues(alpha: 0.8),
                             Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.7),
+                                .withValues(alpha: 0.7),
                           ],
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
@@ -583,8 +583,8 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                   percentage: state.submittedAssignments! / state.assignments!,
                   progressColor: LinearGradient(
                     colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                     ],
                   ).colors.first,
                   subtitle1: Utils.getTranslatedLabel(submittedKey),
@@ -601,8 +601,8 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                       int.parse(state.totalPoints!),
                   progressColor: LinearGradient(
                     colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                     ],
                   ).colors.first,
                   subtitle1: Utils.getTranslatedLabel(obtainedKey),
@@ -646,13 +646,13 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.05),
+                          .withValues(alpha: 0.05),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.2),
+                            .withValues(alpha: 0.2),
                         width: 1,
                       ),
                     ),
@@ -717,7 +717,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                   value: state.totalExams.toString(),
                   percentage: state.attempted! / state.totalExams!,
                   progressColor:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                   subtitle1: Utils.getTranslatedLabel(attemptedKey),
                   subtitle2: Utils.getTranslatedLabel(missedKey),
                   value1: state.attempted.toString(),
@@ -731,7 +731,7 @@ class SubjectWiseDetailedReportState extends State<SubjectWiseDetailedReport>
                   percentage: int.parse(state.totalObtainedMarks!) /
                       int.parse(state.totalMarks!),
                   progressColor:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                   subtitle1: Utils.getTranslatedLabel(obtainedKey),
                   subtitle2: Utils.getTranslatedLabel(percentageKey),
                   value1: state.totalObtainedMarks!,

@@ -93,7 +93,7 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
               borderRadius: BorderRadius.circular(16.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.06),
+                  color: Colors.black.withValues(alpha: 0.06),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
@@ -114,15 +114,15 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            primaryColor.withOpacity(0.9),
-                            primaryColor.withOpacity(0.8)
+                            primaryColor.withValues(alpha: 0.9),
+                            primaryColor.withValues(alpha: 0.8)
                           ],
                           end: Alignment.topRight,
                           begin: Alignment.bottomLeft,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor.withOpacity(0.3),
+                            color: primaryColor.withValues(alpha: 0.3),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),
@@ -273,7 +273,7 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.075),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.075),
             offset: const Offset(5.0, 5),
             blurRadius: 10,
           )
@@ -322,7 +322,7 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
             gradient: LinearGradient(
               colors: [
                 Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -482,7 +482,7 @@ class _HolidaysContainerState extends State<HolidaysContainer> {
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.075),
+                        .withValues(alpha: 0.075),
                     offset: const Offset(2.5, 2.5),
                     blurRadius: 5,
                   )

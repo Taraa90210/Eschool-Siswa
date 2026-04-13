@@ -60,7 +60,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.75)),
+                          .withValues(alpha: 0.75)),
                 ),
                 const SizedBox(
                   height: 30,

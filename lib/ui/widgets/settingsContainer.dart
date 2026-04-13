@@ -1,19 +1,16 @@
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/cubits/appConfigurationCubit.dart';
 import 'package:eschool/cubits/authCubit.dart';
 import 'package:eschool/cubits/notificationSettingsCubit.dart';
 import 'package:eschool/data/repositories/settingsRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/logoutButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsContainer extends StatefulWidget {
   const SettingsContainer({Key? key}) : super(key: key);
@@ -47,7 +44,8 @@ class _SettingsContainerState extends State<SettingsContainer> {
         return Container(
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -67,7 +65,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                
+
                 // Title
                 Text(
                   "Kontak & Dukungan",
@@ -82,7 +80,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                   "Hubungi tim support dan lihat riwayat pesan Anda",
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.7),
                   ),
                 ),
                 const SizedBox(height: 24.0),
@@ -99,7 +100,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     Get.toNamed(Routes.submitContact);
                   },
                 ),
-                
+
                 // Show history for all users (students and parents)
                 _buildContactOption(
                   context,
@@ -112,7 +113,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     Get.toNamed(Routes.contacts);
                   },
                 ),
-                
+
                 // Info for all users
                 const SizedBox(height: 16.0),
                 Container(
@@ -172,10 +173,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
           child: Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.05),
+              color: color.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
               ),
             ),
             child: Row(
@@ -183,7 +184,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 Container(
                   padding: const EdgeInsets.all(12.0),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Icon(
@@ -210,7 +211,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                         subtitle,
                         style: TextStyle(
                           fontSize: 13.0,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -218,7 +222,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 ),
                 Icon(
                   Icons.chevron_right,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.4),
                 ),
               ],
             ),
@@ -226,23 +233,6 @@ class _SettingsContainerState extends State<SettingsContainer> {
         ),
       ),
     );
-  }
-
-  Future<void> _shareApp(BuildContext context) async {
-    final appUrl = context.read<AppConfigurationCubit>().getAppLink();
-    if (await canLaunchUrl(Uri.parse(appUrl))) {
-      launchUrl(Uri.parse(appUrl));
-    } else {
-      if (context.mounted) {
-        Utils.showCustomSnackBar(
-          context: context,
-          errorMessage: Utils.getTranslatedLabel(
-            ErrorMessageKeysAndCode.defaultErrorMessageKey,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.error,
-        );
-      }
-    }
   }
 
   void _showNotificationSettings(BuildContext context) {
@@ -256,7 +246,8 @@ class _SettingsContainerState extends State<SettingsContainer> {
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20.0)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -276,7 +267,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  
+
                   // Title
                   Text(
                     Utils.getTranslatedLabel(notificationSettingsKey),
@@ -291,13 +282,17 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     Utils.getTranslatedLabel(notificationSettingsDescKey),
                     style: TextStyle(
                       fontSize: 14.0,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 24.0),
 
                   // Notification Settings
-                  BlocBuilder<NotificationSettingsCubit, NotificationSettingsState>(
+                  BlocBuilder<NotificationSettingsCubit,
+                      NotificationSettingsState>(
                     builder: (context, state) {
                       return Column(
                         children: [
@@ -307,7 +302,9 @@ class _SettingsContainerState extends State<SettingsContainer> {
                             subtitle: "Getaran saat menerima notifikasi",
                             value: state.allowVibration,
                             onChanged: (value) {
-                              context.read<NotificationSettingsCubit>().changeVibration(value);
+                              context
+                                  .read<NotificationSettingsCubit>()
+                                  .changeVibration(value);
                             },
                             context: context,
                           ),
@@ -315,9 +312,9 @@ class _SettingsContainerState extends State<SettingsContainer> {
                       );
                     },
                   ),
-                  
+
                   const SizedBox(height: 24.0),
-                  
+
                   // Info
                   Container(
                     padding: const EdgeInsets.all(12.0),
@@ -350,7 +347,7 @@ class _SettingsContainerState extends State<SettingsContainer> {
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 20.0),
                 ],
               ),
@@ -416,7 +413,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                    Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.7),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -452,7 +452,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.6),
                       fontSize: 12,
                     ),
                   ),
@@ -498,7 +501,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
                   gradient: LinearGradient(
                     colors: [
                       Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                      Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.7),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -528,7 +534,10 @@ class _SettingsContainerState extends State<SettingsContainer> {
               ),
               Icon(
                 Icons.chevron_right,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.8),
               ),
             ],
           ),

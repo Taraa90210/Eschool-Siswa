@@ -1,129 +1,228 @@
+import 'package:equatable/equatable.dart';
+
 /// Payment Method Model
 ///
-/// Represents different Xendit payment methods with their respective fees
-class PaymentMethod {
-  final String id;
+/// Represents different Xendit payment methods with their respective fees.
+/// Data diambil dari API backend melalui [fromJson].
+class XenditPaymentMethod extends Equatable {
+  final dynamic id; // String atau int dari DB
   final String name;
   final String description;
   final String icon;
-  final PaymentMethodType type;
+  final String? iconUrl;
+  final XenditPaymentMethodType type;
+  final double adminFee;
+  final String? adminFeeType; // "flat" atau "percentage"
+  final String? adminFeeLabel;
+  final String? xenditCode; // Kode untuk Xendit invoice restriction
 
-  PaymentMethod({
+  const XenditPaymentMethod({
     required this.id,
     required this.name,
     required this.description,
     required this.icon,
+    this.iconUrl,
     required this.type,
+    required this.adminFee,
+    this.adminFeeType,
+    this.adminFeeLabel,
+    this.xenditCode,
   });
 
-  /// Calculate fee for this payment method
+  /// Parse dari API response JSON.
+  /// Fields yang diharapkan: id, name, code/gateway_code, image_url, admin_fee
+  factory XenditPaymentMethod.fromJson(Map<String, dynamic> json) {
+    double parsedAdminFee = 0.0;
+    final rawFee = json['admin_fee'];
+    if (rawFee is num) {
+      parsedAdminFee = rawFee.toDouble();
+    } else if (rawFee is String) {
+      parsedAdminFee = double.tryParse(rawFee) ?? 0.0;
+    }
+
+    final code =
+        json['gateway_code'] as String? ?? json['code'] as String? ?? '';
+
+    return XenditPaymentMethod(
+      id: json['id'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      icon: _fallbackIconFromCode(code),
+      iconUrl: json['image_url'] ?? json['logo_url'],
+      type: _xenditTypeFromCode(code),
+      adminFee: parsedAdminFee,
+      adminFeeType: json['admin_fee_type'] as String?,
+      adminFeeLabel: json['admin_fee_label'] as String?,
+      xenditCode: code.isEmpty ? null : code,
+    );
+  }
+
+  /// Tentukan tipe pembayaran berdasarkan kode Xendit
+  static XenditPaymentMethodType _xenditTypeFromCode(String code) {
+    const eWalletCodes = {
+      'OVO',
+      'DANA',
+      'SHOPEEPAY',
+      'LINKAJA',
+      'GOPAY',
+      'ASTRAPAY'
+    };
+    const vaCodes = {'BCA', 'BNI', 'BRI', 'MANDIRI', 'BSI', 'PERMATA', 'CIMB'};
+    final upper = code.toUpperCase();
+    if (eWalletCodes.contains(upper)) return XenditPaymentMethodType.eWallet;
+    if (vaCodes.contains(upper)) return XenditPaymentMethodType.virtualAccount;
+    if (upper == 'QRIS') return XenditPaymentMethodType.qris;
+    return XenditPaymentMethodType.eWallet;
+  }
+
+  /// Fallback icon emoji berdasarkan kode metode
+  static String _fallbackIconFromCode(String code) {
+    final upper = code.toUpperCase();
+    if ({'BCA', 'BNI', 'BRI', 'MANDIRI', 'BSI', 'PERMATA'}.contains(upper)) {
+      return '🏦';
+    }
+    if ({'ALFAMART', 'INDOMARET'}.contains(upper)) return '🏪';
+    if (upper == 'QRIS') return '📸';
+    if (upper == 'OVO') return '💜';
+    if (upper == 'SHOPEEPAY') return '🧡';
+    return '💳';
+  }
+
+  /// Hitung biaya admin berdasarkan adminFee dan adminFeeType dari DB
   double calculateFee(double baseAmount) {
-    switch (type) {
-      case PaymentMethodType.virtualAccount:
-        return 4000.0; // Flat Rp 4.000
-
-      case PaymentMethodType.eWallet:
-        return baseAmount * 0.02; // 2%
-
-      case PaymentMethodType.qris:
-        return baseAmount * 0.007; // 0.7%
-
-      case PaymentMethodType.creditCard:
-        return (baseAmount * 0.029) + 2000.0; // 2.9% + Rp 2.000
-
-      case PaymentMethodType.retail:
-        return 5000.0; // Flat Rp 5.000
-    }
+    if (adminFee <= 0) return 0.0;
+    if (adminFeeType == 'percentage') return baseAmount * adminFee;
+    if (adminFeeType == 'flat') return adminFee;
+    // Fallback: jika adminFee < 1.0 dianggap persentase, selainnya flat
+    return adminFee < 1.0 ? baseAmount * adminFee : adminFee;
   }
 
-  /// Get total amount (base + fee)
-  double getTotalAmount(double baseAmount) {
-    return baseAmount + calculateFee(baseAmount);
-  }
+  /// Hitung total (pokok + biaya admin)
+  double getTotalAmount(double baseAmount) =>
+      baseAmount + calculateFee(baseAmount);
 
-  /// Format fee description
+  /// Format deskripsi biaya untuk UI
   String getFeeDescription(double baseAmount) {
-    final fee = calculateFee(baseAmount);
-    final formatted = _formatCurrency(fee);
-
-    switch (type) {
-      case PaymentMethodType.virtualAccount:
-        return 'Biaya Admin: $formatted';
-      case PaymentMethodType.eWallet:
-        return 'Biaya Admin (2%): $formatted';
-      case PaymentMethodType.qris:
-        return 'Biaya Admin (0.7%): $formatted';
-      case PaymentMethodType.creditCard:
-        return 'Biaya Admin (2.9% + Rp 2k): $formatted';
-      case PaymentMethodType.retail:
-        return 'Biaya Admin: $formatted';
+    if (adminFeeLabel != null && adminFeeLabel!.isNotEmpty) {
+      if (adminFeeLabel == 'Rp 0' || adminFeeLabel == '0%') {
+        return 'Tanpa Biaya Admin';
+      }
+      return 'Biaya Admin: $adminFeeLabel';
     }
+
+    final fee = calculateFee(baseAmount);
+    if (fee <= 0) return 'Tanpa Biaya Admin';
+
+    final formatted = _formatCurrency(fee);
+    if (adminFeeType == 'percentage' ||
+        (adminFeeType == null && adminFee > 0 && adminFee < 1.0)) {
+      final pct = (adminFee * 100)
+          .toStringAsFixed(adminFee == adminFee.roundToDouble() ? 0 : 1);
+      return 'Biaya Admin ($pct%): $formatted';
+    }
+    return 'Biaya Admin: $formatted';
   }
 
   String _formatCurrency(double amount) {
     final formatted = amount.toStringAsFixed(0).replaceAllMapped(
           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (Match m) => '${m[1]}.',
+          (m) => '${m[1]}.',
         );
     return 'Rp $formatted';
   }
 
-  /// Predefined payment methods
-  static List<PaymentMethod> getAllMethods() {
+  /// Daftar metode pembayaran fallback (dipakai jika API tidak mengembalikan allowed_methods).
+  /// Idealnya data berasal dari API melalui [fromJson].
+  static List<XenditPaymentMethod> getAllMethods() {
     return [
-      PaymentMethod(
-        id: 'virtual_account',
-        name: 'Virtual Account',
-        description: 'BCA, Mandiri, BNI, BRI, Permata',
-        icon: '🏦',
-        type: PaymentMethodType.virtualAccount,
-      ),
-      PaymentMethod(
-        id: 'ewallet',
-        name: 'E-Wallet',
-        description: 'DANA, OVO, LinkAja, ShopeePay',
-        icon: '💳',
-        type: PaymentMethodType.eWallet,
-      ),
-      PaymentMethod(
-        id: 'qris',
-        name: 'QRIS',
-        description: 'Scan QR dengan aplikasi bank/e-wallet',
+      // E-Wallets
+      const XenditPaymentMethod(
+        id: 3,
+        name: 'Gopay',
+        description: 'E-wallet Gopay',
         icon: '📱',
-        type: PaymentMethodType.qris,
+        iconUrl:
+            'https://cdn.icon-icons.com/icons2/2699/PNG/512/gopay_logo_icon_170323.png',
+        type: XenditPaymentMethodType.eWallet,
+        adminFee: 0.015,
+        adminFeeType: 'percentage',
+        xenditCode: 'GOPAY',
       ),
-      PaymentMethod(
-        id: 'credit_card',
-        name: 'Credit/Debit Card',
-        description: 'Visa, Mastercard, JCB',
-        icon: '💰',
-        type: PaymentMethodType.creditCard,
+      const XenditPaymentMethod(
+        id: 4,
+        name: 'Dana',
+        description: 'E-wallet DANA',
+        icon: '💳',
+        iconUrl:
+            'https://cdn.icon-icons.com/icons2/2699/PNG/512/dana_logo_icon_169999.png',
+        type: XenditPaymentMethodType.eWallet,
+        adminFee: 0.015,
+        adminFeeType: 'percentage',
+        xenditCode: 'DANA',
       ),
-      PaymentMethod(
-        id: 'retail',
-        name: 'Retail',
-        description: 'Alfamart, Indomaret',
-        icon: '🛒',
-        type: PaymentMethodType.retail,
+
+      // Virtual Accounts
+      const XenditPaymentMethod(
+        id: 5,
+        name: 'BSI',
+        description: 'Virtual Account BSI',
+        icon: '🏦',
+        type: XenditPaymentMethodType.virtualAccount,
+        adminFee: 4000.0,
+        adminFeeType: 'flat',
+        xenditCode: 'BSI',
+      ),
+      const XenditPaymentMethod(
+        id: 6,
+        name: 'BRI',
+        description: 'Virtual Account BRI',
+        icon: '🏦',
+        type: XenditPaymentMethodType.virtualAccount,
+        adminFee: 4000.0,
+        adminFeeType: 'flat',
+        xenditCode: 'BRI',
+      ),
+      const XenditPaymentMethod(
+        id: 7,
+        name: 'Mandiri',
+        description: 'Virtual Account Mandiri',
+        icon: '🏦',
+        type: XenditPaymentMethodType.virtualAccount,
+        adminFee: 4000.0,
+        adminFeeType: 'flat',
+        xenditCode: 'MANDIRI',
       ),
     ];
   }
 
-  /// Get method by ID
-  static PaymentMethod? getById(String id) {
+  /// Cari metode berdasarkan ID dari daftar fallback.
+  /// Mengembalikan null jika tidak ditemukan.
+  static XenditPaymentMethod? getById(dynamic id) {
     try {
-      return getAllMethods().firstWhere((method) => method.id == id);
-    } catch (e) {
+      return getAllMethods()
+          .firstWhere((m) => m.id.toString() == id.toString());
+    } catch (_) {
       return null;
     }
   }
+
+  List<Object?> get props => [
+        id,
+        name,
+        type,
+        adminFee,
+        adminFeeType,
+        xenditCode,
+      ];
 }
 
-/// Payment Method Types
-enum PaymentMethodType {
-  virtualAccount,
-  eWallet,
-  qris,
-  creditCard,
-  retail,
+/// Tipe metode pembayaran Xendit
+enum XenditPaymentMethodType {
+  virtualAccount('Transfer Bank (VA)'),
+  eWallet('E-Wallet'),
+  qris('QR Code'),
+  creditCard('Kartu Kredit');
+
+  final String categoryName;
+  const XenditPaymentMethodType(this.categoryName);
 }

@@ -119,7 +119,7 @@ class _ChildDetailsScreenState extends State<ChildDetailsScreen> {
                       border: Border.all(
                         color: Theme.of(context)
                             .scaffoldBackgroundColor
-                            .withOpacity(0.1),
+                            .withValues(alpha: 0.1),
                       ),
                       shape: BoxShape.circle,
                     ),
@@ -130,7 +130,7 @@ class _ChildDetailsScreenState extends State<ChildDetailsScreen> {
                         border: Border.all(
                           color: Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                         ),
                         shape: BoxShape.circle,
                       ),
@@ -146,7 +146,7 @@ class _ChildDetailsScreenState extends State<ChildDetailsScreen> {
                     decoration: BoxDecoration(
                       color: Theme.of(context)
                           .scaffoldBackgroundColor
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     width: MediaQuery.of(context).size.width * (0.4),

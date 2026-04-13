@@ -1,7 +1,7 @@
 import 'package:eschool/data/models/xenditInvoice.dart';
 import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/data/models/paymentMethod.dart';
-import 'package:eschool/utils/xenditFeeCalculator.dart';
+import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // States
@@ -60,7 +60,8 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
     required String email,
     required String description,
     required List<int> feeIds,
-    String? paymentMethodId, // Optional: for accurate fee calculation
+    XenditPaymentMethod?
+        paymentMethod, // Accept full object to utilize dynamic API fees
   }) async {
     emit(XenditInvoiceLoading());
 
@@ -69,14 +70,12 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
       final baseAmount = amount;
       double feeAmount;
 
-      if (paymentMethodId != null) {
-        // Use accurate fee for selected payment method
-        final method = PaymentMethod.getById(paymentMethodId);
-        feeAmount = method?.calculateFee(baseAmount) ??
-            XenditFeeCalculator.calculateFee(baseAmount);
+      if (paymentMethod != null) {
+        // Use accurate fee from the dynamically parsed object
+        feeAmount = paymentMethod.calculateFee(baseAmount);
       } else {
-        // Use default fee if no method selected
-        feeAmount = XenditFeeCalculator.calculateFee(baseAmount);
+        // Fallback: 3% flat fee jika metode pembayaran tidak dipilih
+        feeAmount = baseAmount * 0.03;
       }
 
       final totalAmount = baseAmount + feeAmount;
@@ -86,9 +85,15 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
         schoolId: schoolId,
         studentId: studentId,
         amount: totalAmount, // User pays this (base + fee)
+        baseAmount: baseAmount,
+        feeAmount: feeAmount,
         email: email,
         description: description,
         feeIds: feeIds,
+        paymentMethods: paymentMethod?.xenditCode != null
+            ? [paymentMethod!.xenditCode!]
+            : null,
+        paymentMethodId: paymentMethod?.id,
       );
 
       emit(XenditInvoiceSuccess(
@@ -98,7 +103,7 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
         totalAmount: totalAmount,
       ));
     } catch (e) {
-      emit(XenditInvoiceFailure(e.toString()));
+      emit(XenditInvoiceFailure(ErrorMessageMapper.getUserFriendlyMessage(e)));
     }
   }
 
@@ -115,7 +120,7 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
 
       emit(XenditInvoiceStatusUpdated(invoice));
     } catch (e) {
-      emit(XenditInvoiceFailure(e.toString()));
+      emit(XenditInvoiceFailure(ErrorMessageMapper.getUserFriendlyMessage(e)));
     }
   }
 

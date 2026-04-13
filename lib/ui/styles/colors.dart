@@ -25,7 +25,7 @@ const Color onPendingColor = Color(0xffe6b830);
 //shimmer loading colors
 final Color shimmerBaseColor = Colors.grey.shade300;
 final Color shimmerhighlightColor = Colors.grey.shade100;
-final Color shimmerContentColor = Colors.white.withOpacity(0.85);
+final Color shimmerContentColor = Colors.white.withValues(alpha: 0.85);
 
 //colors used for status (change to globally apply personalized color)
 final Color greenColor = Colors.green;

@@ -1,6 +1,4 @@
 import 'package:eschool/cubits/childFeeDetailsCubit.dart';
-import 'package:eschool/cubits/paymentTransactionsCubit.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
 // import 'package:eschool/data/repositories/paymentRepository.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:eschool/data/models/student.dart';
@@ -20,10 +18,7 @@ import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
-import 'package:eschool/utils/api.dart';
-import 'package:eschool/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -60,6 +55,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
 
   // Tab selection state - Default: Unpaid (Belum Dibayar)
   String selectedTab = 'unpaid'; // 'paid', 'unpaid'
+  bool _isSortDescending = true;
 
   // String variables for display text
   String get paidTab => 'Sudah Dibayar';
@@ -278,9 +274,9 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
   double _getTotalSelectedAmount(List<ChildFeeDetails> fees) {
     double total = 0;
     for (var fee in fees) {
+      final status = fee.getFeePaymentStatus();
       if (selectedFeeIds.contains(fee.id) &&
-          fee.getFeePaymentStatus() == unpaidKey) {
-        // ✅ Fixed: check unpaidKey
+          (status == unpaidKey || status == partiallyPaidKey)) {
         total += fee.remainingFeeAmountToPay();
       }
     }
@@ -375,16 +371,19 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           ? Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3)
-                          : primaryColor.withOpacity(0.1),
+                              .withValues(alpha: 0.3)
+                          : primaryColor.withValues(alpha: 0.1),
               width: isSelected ? 2 : 1),
           boxShadow: [
             BoxShadow(
               color: isSelected
-                  ? Theme.of(context).colorScheme.primary.withOpacity(0.15)
+                  ? Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.15)
                   : hasPendingPayment
-                      ? Colors.orange.withOpacity(0.1)
-                      : primaryColor.withOpacity(0.08),
+                      ? Colors.orange.withValues(alpha: 0.1)
+                      : primaryColor.withValues(alpha: 0.08),
               blurRadius: isSelected ? 16 : 12,
               offset: const Offset(0, 6),
               spreadRadius: 0,
@@ -429,7 +428,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               border: Border.all(
                                 color: isSelected
                                     ? Theme.of(context).colorScheme.primary
-                                    : primaryColor.withOpacity(0.3),
+                                    : primaryColor.withValues(alpha: 0.3),
                                 width: 2,
                               ),
                             ),
@@ -479,13 +478,13 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          primaryColor.withOpacity(0.06),
-                          primaryColor.withOpacity(0.03),
+                          primaryColor.withValues(alpha: 0.06),
+                          primaryColor.withValues(alpha: 0.03),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                        color: primaryColor.withOpacity(0.15),
+                        color: primaryColor.withValues(alpha: 0.15),
                         width: 1,
                       ),
                     ),
@@ -519,7 +518,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             icon: Icons.pending_actions_rounded,
                             label: Utils.getTranslatedLabel(remainingKey),
                             amount: remainingAmount,
-                            color: primaryColor.withOpacity(0.8),
+                            color: primaryColor.withValues(alpha: 0.8),
                           ),
                         ],
 
@@ -531,7 +530,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                           Container(
                             padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.1),
+                              color: Colors.grey.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Row(
@@ -574,7 +573,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             child: _buildInfoBadge(
                               icon: Icons.class_rounded,
                               label: className,
-                              color: primaryColor.withOpacity(0.8),
+                              color: primaryColor.withValues(alpha: 0.8),
                             ),
                           ),
                         if (className != null && sessionYear != null)
@@ -584,7 +583,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                             child: _buildInfoBadge(
                               icon: Icons.calendar_today_rounded,
                               label: sessionYear,
-                              color: primaryColor.withOpacity(0.9),
+                              color: primaryColor.withValues(alpha: 0.9),
                             ),
                           ),
                       ],
@@ -606,8 +605,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                 ? Theme.of(context)
                                     .colorScheme
                                     .primary
-                                    .withOpacity(0.08)
-                                : primaryColor.withOpacity(0.06),
+                                    .withValues(alpha: 0.08)
+                                : primaryColor.withValues(alpha: 0.06),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: hasPendingPayment
@@ -616,8 +615,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                   ? Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.3)
-                                  : primaryColor.withOpacity(0.2),
+                                      .withValues(alpha: 0.3)
+                                  : primaryColor.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -634,8 +633,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                         ? Theme.of(context)
                                             .colorScheme
                                             .primary
-                                            .withOpacity(0.15)
-                                        : primaryColor.withOpacity(0.15),
+                                            .withValues(alpha: 0.15)
+                                        : primaryColor.withValues(alpha: 0.15),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(
@@ -647,7 +646,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                     size: 14,
                                     color: isOverdue
                                         ? Theme.of(context).colorScheme.primary
-                                        : primaryColor.withOpacity(0.8),
+                                        : primaryColor.withValues(alpha: 0.8),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -672,7 +671,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                               ? Theme.of(context)
                                                   .colorScheme
                                                   .primary
-                                              : primaryColor.withOpacity(0.8),
+                                              : primaryColor.withValues(
+                                                  alpha: 0.8),
                                         ),
                                       ),
                                       Text(
@@ -687,8 +687,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                                                   ? Theme.of(context)
                                                       .colorScheme
                                                       .primary
-                                                  : primaryColor
-                                                      .withOpacity(0.8))
+                                                  : primaryColor.withValues(
+                                                      alpha: 0.8))
                                               : Colors.grey.shade600,
                                           fontStyle: dueDate != null
                                               ? FontStyle.normal
@@ -867,7 +867,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         Container(
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
@@ -883,7 +883,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
             style: TextStyle(
               fontSize: isMain ? 13 : 12,
               fontWeight: isMain ? FontWeight.w600 : FontWeight.w500,
-              color: color.withOpacity(0.9),
+              color: color.withValues(alpha: 0.9),
             ),
           ),
         ),
@@ -909,10 +909,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.12),
+          color: color.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: color.withOpacity(0.25),
+            color: color.withValues(alpha: 0.25),
             width: 1,
           ),
         ),
@@ -950,7 +950,8 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            color:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
             blurRadius: 12,
             offset: const Offset(0, 6),
           )
@@ -1143,14 +1144,15 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).colorScheme.primary.withOpacity(0.9),
-              Theme.of(context).colorScheme.primary.withOpacity(0.8),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
             ],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
               blurRadius: 15,
               offset: Offset(0, 8),
             ),
@@ -1168,7 +1170,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                     Text(
                       '$selectedCount ${Utils.getTranslatedLabel(selectedCount > 1 ? itemsSelectedKey : itemSelectedKey)}',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -1238,7 +1240,38 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       if (aPaid && !bPaid) return 1;
       // Kalau a belum lunas dan b sudah lunas → a di depan
       if (!aPaid && bPaid) return -1;
-      // Kalau dua-duanya sama (lunas atau belum) → posisi tetap
+
+      // Jika statusnya sama, kita urutkan berdasarkan tanggal pembayaran (jika ada) -> terbaru di atas
+      DateTime? getLatestDate(ChildFeeDetails fee) {
+        DateTime? latest;
+        if (fee.bills != null && fee.bills!.isNotEmpty) {
+          for (var p in fee.bills!.first.paymentHistory) {
+            final dateStr = p.date ?? '';
+            if (dateStr.isNotEmpty) {
+              final d = Utils.parseUtcDate(dateStr);
+              if (d != null) {
+                if (latest == null || d.isAfter(latest)) {
+                  latest = d;
+                }
+              }
+            }
+          }
+        }
+        return latest;
+      }
+
+      final dateA = getLatestDate(a);
+      final dateB = getLatestDate(b);
+
+      if (dateA != null && dateB != null) {
+        return _isSortDescending
+            ? dateB.compareTo(dateA)
+            : dateA.compareTo(dateB);
+      }
+      if (dateA != null) return _isSortDescending ? -1 : 1;
+      if (dateB != null) return _isSortDescending ? 1 : -1;
+
+      // Kalau tidak punya payment date, posisi tetap
       return 0;
     });
 
@@ -1312,7 +1345,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 8,
               offset: Offset(0, 2),
             ),
@@ -1332,7 +1365,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -1424,7 +1457,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.1),
+                                  .withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
@@ -1514,10 +1547,10 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
       width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.06),
+        color: color.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.15),
+          color: color.withValues(alpha: 0.15),
           width: 1,
         ),
       ),
@@ -1527,7 +1560,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -1549,7 +1582,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: color.withOpacity(0.8),
+                    color: color.withValues(alpha: 0.8),
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -1608,7 +1641,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.04),
+                          .withValues(alpha: 0.04),
                     ),
                   ),
                 );
@@ -1727,28 +1760,74 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
                       alignment: Alignment(0.0, 0.3),
                       child: Container(
                         width: boxConstraints.maxWidth * 0.9,
-                        child: OutlinedButton.icon(
-                          icon: Icon(Icons.filter_list),
-                          label: Text(
-                            _getTabLabel(selectedTab),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      _getTabLabel(selectedTab),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Icon(Icons.keyboard_arrow_down_rounded,
+                                        size: 20),
+                                  ],
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  side: BorderSide(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withValues(alpha: 0.4),
+                                  ),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 14),
+                                  backgroundColor: Colors.white,
+                                ),
+                                onPressed: () =>
+                                    _showFilterBottomSheet(context),
+                              ),
                             ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                            const SizedBox(width: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withValues(alpha: 0.4),
+                                ),
+                              ),
+                              child: IconButton(
+                                icon: Transform.scale(
+                                  scaleY: _isSortDescending ? 1.0 : -1.0,
+                                  child: Icon(
+                                    Icons.filter_list_rounded,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                tooltip: _isSortDescending
+                                    ? 'Terbaru di atas'
+                                    : 'Terlama di atas',
+                                onPressed: () {
+                                  setState(() {
+                                    _isSortDescending = !_isSortDescending;
+                                  });
+                                },
+                              ),
                             ),
-                            side: BorderSide(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.4),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            backgroundColor: Colors.white,
-                          ),
-                          onPressed: () => _showFilterBottomSheet(context),
+                          ],
                         ),
                       ),
                     ),
@@ -1872,7 +1951,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
         margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
               : null,
           borderRadius: BorderRadius.circular(12),
         ),
@@ -1908,937 +1987,6 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
     }
   }
 
-  // Payment History Tab Widget
-  Widget _buildPaymentHistoryTab() {
-    return BlocBuilder<PaymentTransactionsCubit, PaymentTransactionsState>(
-      builder: (context, state) {
-        if (state is PaymentTransactionsFetchSuccess) {
-          if (state.paymentTransactions.isEmpty) {
-            return Container(
-              child: Center(
-                child: Animate(
-                  effects: [
-                    FadeEffect(duration: Duration(milliseconds: 400)),
-                    ScaleEffect(duration: Duration(milliseconds: 400)),
-                  ],
-                  autoPlay: true,
-                  onComplete: (controller) => controller.stop(),
-                  child: NoDataContainer(
-                    titleKey: Utils.getTranslatedLabel(noTransactionsKey),
-                  ),
-                ),
-              ),
-            );
-          }
-
-          return RefreshIndicator(
-            color: Theme.of(context).colorScheme.primary,
-            onRefresh: () async {
-              context
-                  .read<PaymentTransactionsCubit>()
-                  .fetchPaymentTransactions(widget.child.id ?? 0);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
-              ),
-              child: ListView.builder(
-                itemCount: state.paymentTransactions.length,
-                padding: EdgeInsets.only(
-                  bottom: 25.0,
-                  top: Utils.getScrollViewTopPadding(
-                    context: context,
-                    appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
-                        (Utils.appBarBiggerHeightPercentage * 0.1),
-                  ),
-                  left: 0,
-                  right: 0,
-                ),
-                itemBuilder: (context, index) {
-                  return _buildTransactionCard(
-                      state.paymentTransactions[index], index);
-                },
-              ),
-            ),
-          );
-        }
-
-        if (state is PaymentTransactionsFetchFailure) {
-          return Container(
-            padding: EdgeInsets.only(
-              top: Utils.getScrollViewTopPadding(
-                    context: context,
-                    appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
-                        (Utils.appBarBiggerHeightPercentage * 0.1),
-                  ) +
-                  20,
-            ),
-            child: Center(
-              child: ErrorContainer(
-                errorMessageCode: state.errorMessage,
-                animate: true,
-                onTapRetry: () {
-                  context
-                      .read<PaymentTransactionsCubit>()
-                      .fetchPaymentTransactions(widget.child.id ?? 0);
-                },
-              ),
-            ),
-          );
-        }
-
-        // Loading state
-        return Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.grey.shade50,
-                Colors.white,
-              ],
-            ),
-          ),
-          child: ListView.builder(
-            itemCount: 5,
-            padding: EdgeInsets.only(
-              bottom: 25.0,
-              top: Utils.getScrollViewTopPadding(
-                    context: context,
-                    appBarHeightPercentage: Utils.appBarBiggerHeightPercentage -
-                        (Utils.appBarBiggerHeightPercentage * 0.1),
-                  ) +
-                  20,
-              left: 0,
-              right: 0,
-            ),
-            itemBuilder: (context, index) => _buildTransactionShimmer(),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildTransactionCard(dynamic paymentGroup, int index) {
-    final payments = paymentGroup['payments'] as List;
-    final totalAmount = paymentGroup['total_amount'] ?? 0;
-    final proofImageUrl = paymentGroup['proof_image_url'] ?? '';
-
-    // Get the first payment for common data like date, status
-    final firstPayment = payments.isNotEmpty ? payments[0] : {};
-    final status = firstPayment['status'] ?? '';
-    final statusColor = _getStatusColor(status);
-    final createdAt = firstPayment['created_at'] ?? '';
-
-    return Animate(
-      effects: [
-        FadeEffect(
-          duration: Duration(milliseconds: 400),
-          delay: Duration(milliseconds: 50 * index),
-        ),
-        SlideEffect(
-          begin: Offset(0.2, 0),
-          end: Offset.zero,
-          duration: Duration(milliseconds: 400),
-          delay: Duration(milliseconds: 50 * index),
-          curve: Curves.easeOutQuint,
-        ),
-      ],
-      autoPlay: true,
-      onComplete: (controller) => controller.stop(),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
-              blurRadius: 15,
-              offset: const Offset(0, 5),
-            )
-          ],
-        ),
-        child: Material(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: () {
-              _showPaymentDetails(paymentGroup);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      // Payment count badge
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          "${payments.length} Pembayaran",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      // Date and time
-                      if (createdAt.isNotEmpty) ...[
-                        Icon(
-                          Icons.access_time_rounded,
-                          size: 14,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.6),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          DateFormat('dd MMM yyyy', 'id_ID').format(
-                            DateTime.parse(createdAt).toLocal(),
-                          ),
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.6),
-                          ),
-                        ),
-                        const SizedBox(width: 5.0),
-                        Text(
-                          DateFormat('HH:mm', 'id_ID').format(
-                            DateTime.parse(createdAt).toLocal(),
-                          ),
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.6),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Fee names (show up to 2, then "and X more")
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (int i = 0;
-                          i < (payments.length > 2 ? 2 : payments.length);
-                          i++)
-                        Padding(
-                          padding: EdgeInsets.only(
-                              bottom: i < payments.length - 1 ? 4 : 0),
-                          child: Text(
-                            "${payments[i]['fee_name'] ?? 'Unknown Fee'}",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                          ),
-                        ),
-                      if (payments.length > 2)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Text(
-                            "dan ${payments.length - 2} tagihan lainnya",
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontStyle: FontStyle.italic,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondary
-                                  .withOpacity(0.7),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Student name
-                  Text(
-                    "${firstPayment['student_name'] ?? '-'}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(0.8),
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // Amount and status
-                  Row(
-                    children: [
-                      Text(
-                        "Rp ${NumberFormat("#,##0", 'id_ID').format(totalAmount)}",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      const Spacer(),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: statusColor.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          _getStatusText(status),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: statusColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 12),
-                  const Divider(height: 1),
-                  const SizedBox(height: 12),
-
-                  // Payment method info from first payment
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.payment_rounded,
-                        size: 16,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.6),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        "Metode:",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.6),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          "${firstPayment['payment_method_name'] ?? 'Unknown'}",
-                          style: TextStyle(
-                            fontSize: 13.0,
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      // Proof image indicator
-                      if (proofImageUrl.isNotEmpty)
-                        Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Icon(
-                            Icons.image,
-                            size: 14,
-                            color: Colors.green,
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Color _getStatusColor(String status) {
-    final softRedColor = Color(0xFFE57373);
-    switch (status.toLowerCase()) {
-      case 'approved':
-      case 'disetujui':
-        return Colors.green;
-      case 'rejected':
-      case 'ditolak':
-        return Colors.red;
-      case 'succeed':
-        return Colors.green;
-      case 'failed':
-        return softRedColor;
-      default:
-        return Theme.of(context).colorScheme.secondary.withOpacity(0.5);
-    }
-  }
-
-  String _getStatusText(String status) {
-    switch (status.toLowerCase()) {
-      case 'approved':
-        return 'Disetujui';
-      case 'rejected':
-        return 'Ditolak';
-      default:
-        return status;
-    }
-  }
-
-  void _showPaymentDetails(dynamic paymentGroup) {
-    final payments = paymentGroup['payments'] as List;
-    final totalAmount = paymentGroup['total_amount'] ?? 0;
-    final proofImageUrl = paymentGroup['proof_image_url'] ?? '';
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (context) => Container(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Handle bar
-            Container(
-              width: 40,
-              height: 4,
-              margin: EdgeInsets.only(top: 12, bottom: 16),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-
-            // Header
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Text(
-                    Utils.getTranslatedLabel(paymentDetailsKey),
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                  Spacer(),
-                  Text(
-                    'Total: Rp ${NumberFormat("#,##0", 'id_ID').format(totalAmount)}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Proof image
-            if (proofImageUrl.isNotEmpty) ...[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade300),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: CachedNetworkImage(
-                      imageUrl: _getFullImageUrl(proofImageUrl),
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            SizedBox(height: 12),
-                            Text(
-                              'Memuat gambar...',
-                              style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      errorWidget: (context, url, error) {
-                        return Container(
-                          color: Colors.grey.shade100,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.broken_image_outlined,
-                                  size: 48,
-                                  color: Colors.grey.shade600,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Gambar tidak dapat dimuat',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  'Periksa koneksi internet',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
-
-            // Payment list
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                itemCount: payments.length,
-                itemBuilder: (context, index) {
-                  final payment = payments[index];
-                  final status = payment['status'] ?? '';
-                  final statusColor = _getStatusColor(status);
-
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 12),
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade50,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade200),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                "${payment['fee_name'] ?? 'Unknown Fee'}",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: statusColor.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                _getStatusText(status),
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: statusColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          "Rp ${NumberFormat("#,##0", 'id_ID').format(payment['amount'] ?? 0)}",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "ID: ${payment['id']}",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            // Download Receipt and Close buttons
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  // Download Receipt button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => _downloadReceipt(payments),
-                      icon: Icon(Icons.download, size: 18),
-                      label: Text(
-                        'Unduh Struk',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // Close button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Text(
-                        'Tutup',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-// Future<void> _downloadReceipt(
-//   BuildContext context,
-//   List<dynamic> payments, {
-//   String? bearerToken, // opsional kalau API butuh auth
-// }) async {
-//   try {
-//     // 1) Susun URL dengan query yg rapi
-//     final ids = payments.map((p) => p['id'].toString()).toList();
-//     final qp = <String, String>{};
-//     for (var i = 0; i < ids.length; i++) {
-//       qp['payment_history_id[$i]'] = ids[i];
-//       debugPrint('payment_history_id[$i]: ${ids[i]}');
-//     }
-//     final url = Uri.parse(Api.downloadFeeReceipt).replace(queryParameters: qp).toString();
-
-//     // 2) Download bytes + header yang pas
-//     final dio = Dio(BaseOptions(
-//       headers: {
-//         if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
-//         'Accept': 'application/pdf',
-//       },
-//       responseType: ResponseType.bytes,
-//       followRedirects: true,
-//       // izinkan 2xx & 3xx
-//       validateStatus: (s) => s != null && s >= 200 && s < 400,
-//     ));
-
-//     final resp = await dio.get<List<int>>(url);
-//     final status = resp.statusCode ?? 0;
-//     if (status >= 400) throw Exception('HTTP $status');
-
-//     final bytes = resp.data ?? <int>[];
-//     if (bytes.isEmpty) throw Exception('File kosong');
-
-//     // 3) Validasi: harus PDF (magic header %PDF-)
-//     final isPdf = bytes.length > 5 && String.fromCharCodes(bytes.take(5)) == '%PDF-';
-//     final suggestedName = 'struk_pembayaran_${ids.join('_')}.pdf';
-
-//     if (!isPdf) {
-//       // simpan debug agar tahu isi respon server
-//       final appDir = await getApplicationDocumentsDirectory();
-//       final debugPath = '${appDir.path}/$suggestedName.debug.txt';
-//       await File(debugPath).writeAsBytes(bytes, flush: true);
-
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Server tidak mengirim PDF. Cek auth/URL. Debug: $debugPath')),
-//       );
-//       return;
-//     }
-
-//     // 4) Dialog "Save As" (SAF) -> user pilih /Download/ atau /Download/eSchool/
-//     final savePath = await FilePicker.platform.saveFile(
-//       dialogTitle: 'Simpan struk ke Download',
-//       fileName: suggestedName,
-//       type: FileType.custom,            // <- perbaiki ini
-//       allowedExtensions: ['pdf'],
-//     );
-//     if (savePath == null) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('Penyimpanan dibatalkan')),
-//       );
-//       return;
-//     }
-
-//     // 5) Tulis bytes ke lokasi yang dipilih user
-//     await File(savePath).writeAsBytes(bytes, flush: true);
-
-//     // 6) Buka di dalam aplikasi (pasti kebuka, tanpa viewer eksternal)
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (_) => Scaffold(
-//           appBar: AppBar(title: const Text('Struk Pembayaran')),
-//           body: SfPdfViewer.memory(Uint8List.fromList(bytes)),
-//         ),
-//       ),
-//     );
-
-//     // 7) (Opsional) juga coba buka lewat app eksternal
-//     final appDir = await getApplicationDocumentsDirectory();
-//     final tempPath = '${appDir.path}/$suggestedName';
-//     await File(tempPath).writeAsBytes(bytes, flush: true);
-//     final openRes = await OpenFilex.open(tempPath);
-//     if (openRes.type != ResultType.done) {
-//       debugPrint('OpenFilex gagal: ${openRes.message} (mungkin tidak ada PDF viewer).');
-//     }
-
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       const SnackBar(content: Text('Struk tersimpan di Download.')),
-//     );
-//   } catch (e, s) {
-//     debugPrint('ERR _downloadReceipt: $e\n$s');
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text('Gagal menyimpan/membuka struk: $e')),
-//     );
-//   }
-// }
-
-//debug
-  void _downloadReceipt(List<dynamic> payments) {
-    try {
-      // Generate payment IDs list
-      final paymentIds =
-          payments.map((payment) => payment['id'].toString()).toList();
-
-      // Create URL with payment_history_id parameters
-      String receiptUrl = Api.downloadFeeReceipt;
-      for (int i = 0; i < paymentIds.length; i++) {
-        if (i == 0) {
-          receiptUrl += '?payment_history_id[${i}]=${paymentIds[i]}';
-        } else {
-          receiptUrl += '&payment_history_id[${i}]=${paymentIds[i]}';
-        }
-      }
-
-      // Generate filename based on payment IDs
-      final fileName = 'struk_pembayaran_${paymentIds.join('_')}';
-
-      // Create StudyMaterial object for download
-      print('Downloading receipt from: $receiptUrl');
-      print('File name: $fileName');
-      final studyMaterial = StudyMaterial(
-        id: 0,
-        fileName: fileName,
-        fileUrl: receiptUrl,
-        fileExtension: 'pdf',
-        fileThumbnail: '',
-        studyMaterialType: StudyMaterialType.file,
-      );
-
-      Utils.openDownloadBottomsheet(
-        context: context,
-        storeInExternalStorage: true,
-        studyMaterial: studyMaterial,
-      );
-    } catch (e) {
-      Utils.showCustomSnackBar(
-        context: context,
-        errorMessage: 'Terjadi kesalahan saat mengunduh struk',
-        backgroundColor: Theme.of(context).colorScheme.error,
-      );
-    }
-  }
-
-  Widget _buildTransactionShimmer() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      height: 150,
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 16,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                Container(
-                  height: 12,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              height: 20,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 20,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                Container(
-                  height: 24,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              height: 1,
-              width: double.infinity,
-              color: Colors.grey.withOpacity(0.2),
-            ),
-            Container(
-              height: 16,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ).animate(
-      onPlay: (controller) => controller.repeat(),
-      effects: [
-        ShimmerEffect(
-          duration: Duration(seconds: 1),
-          color: Colors.white54,
-        ),
-      ],
-    );
-  }
-
-  String _getFullImageUrl(String imagePath) {
-    if (imagePath.isEmpty) return '';
-
-    // If the path already contains the base URL, return as is
-    if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-      return imagePath;
-    }
-
-    // Remove leading slash if present and add base URL
-    final cleanPath =
-        imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
-    return '$baseUrl/$cleanPath';
-  }
-
   String _formatCurrency(double amount) {
     final formatter = NumberFormat.currency(
       locale: 'id_ID',
@@ -2851,14 +1999,7 @@ class _ChildFeesScreenState extends State<ChildFeesScreen>
 
 // Helper method untuk format tanggal
 String _formatDueDate(String? dateString) {
-  if (dateString == null || dateString.isEmpty) return '-';
-
-  try {
-    final date = DateTime.parse(dateString);
-    return DateFormat('dd MMMM yyyy', "id_ID").format(date);
-  } catch (e) {
-    return dateString;
-  }
+  return Utils.formatDateFromStr(dateString);
 }
 
 class CustomHistoryButton extends StatelessWidget {
@@ -2877,7 +2018,8 @@ class CustomHistoryButton extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.25),
               blurRadius: 10,
               offset: Offset(0, 4),
             ),

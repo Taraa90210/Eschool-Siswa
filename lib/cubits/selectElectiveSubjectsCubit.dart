@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +34,7 @@ class SelectElectiveSubjectsCubit extends Cubit<SelectElectiveSubjectsState> {
       classSubjectIds.addAll(electedSubjectGroups[key]!.toList());
     }
 
-    print("Class subject ids : ${classSubjectIds}");
+    debugPrint("Class subject ids : ${classSubjectIds}");
     return classSubjectIds;
   }
 
@@ -54,3 +55,5 @@ class SelectElectiveSubjectsCubit extends Cubit<SelectElectiveSubjectsState> {
     ).catchError((e) => emit(SelectElectiveSubjectsFailure(e.toString())));
   }
 }
+
+

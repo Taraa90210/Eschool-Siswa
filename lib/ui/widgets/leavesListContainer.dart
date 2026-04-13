@@ -98,92 +98,6 @@ class _LeavesListContainerState extends State<LeavesListContainer>
     return !hasToday;
   }
 
-  Widget _buildFileTypeIcon(LeaveDetail detail) {
-    IconData iconData;
-    Color iconColor;
-
-    switch (detail.fileExtension?.toLowerCase()) {
-      case 'pdf':
-        iconData = Icons.picture_as_pdf_rounded;
-        iconColor = Theme.of(context).colorScheme.primary;
-        break;
-      case 'doc':
-      case 'docx':
-        iconData = Icons.description_rounded;
-        iconColor = Colors.blue;
-        break;
-      case 'jpg':
-      case 'jpeg':
-      case 'png':
-        iconData = Icons.image_rounded;
-        iconColor = Colors.green;
-        break;
-      default:
-        iconData = Icons.insert_drive_file_rounded;
-        iconColor = Colors.grey;
-    }
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(iconData, color: iconColor, size: 32),
-        if (detail.fileName != null) ...[
-          const SizedBox(height: 4),
-          Text(
-            detail.fileName!,
-            style: const TextStyle(fontSize: 10),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildAttachmentItem(LeaveDetail detail) {
-    final isImage = detail.fileExtension != null &&
-        ['jpg', 'jpeg', 'png', 'gif']
-            .contains(detail.fileExtension!.toLowerCase());
-
-    return GestureDetector(
-      onTap: () {
-        if (detail.fileUrl != null) {
-          if (isImage) {
-            _showFullScreenImage(context, detail);
-          } else {
-            _downloadFile(detail);
-          }
-        }
-      },
-      child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[300] ?? Colors.grey),
-        ),
-        child: isImage && detail.fileUrl != null
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: CachedNetworkImage(
-                  imageUrl: detail.fileUrl!,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) =>
-                      _buildFileTypeIcon(detail),
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.primary,
-                      strokeWidth: 2,
-                    ),
-                  ),
-                ),
-              )
-            : _buildFileTypeIcon(detail),
-      ),
-    );
-  }
-
   void _showFullScreenImage(BuildContext context, LeaveDetail detail) {
     Navigator.of(context).push(
       PageRouteBuilder(
@@ -282,7 +196,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(Icons.download,
@@ -295,7 +209,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.7),
+                                  color: Colors.white.withValues(alpha: 0.7),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(Icons.close,
@@ -314,7 +228,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: const Text(
@@ -374,7 +288,8 @@ class _LeavesListContainerState extends State<LeavesListContainer>
           formattedDate,
           style: TextStyle(
             fontSize: 13,
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+            color:
+                Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
             fontWeight: FontWeight.w500,
           ),
         );
@@ -388,7 +303,8 @@ class _LeavesListContainerState extends State<LeavesListContainer>
           formattedFromDate,
           style: TextStyle(
             fontSize: 13,
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+            color:
+                Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
           ),
         );
       } else {
@@ -420,44 +336,6 @@ class _LeavesListContainerState extends State<LeavesListContainer>
       _showFullScreenImage(context, detail);
     } else {
       _downloadFile(detail);
-    }
-  }
-
-  IconData _getFileIcon(String? extension) {
-    switch (extension?.toLowerCase()) {
-      case 'pdf':
-        return Icons.picture_as_pdf_rounded;
-      case 'doc':
-      case 'docx':
-        return Icons.description_rounded;
-      case 'xls':
-      case 'xlsx':
-        return Icons.table_chart_rounded;
-      case 'ppt':
-      case 'pptx':
-        return Icons.slideshow_rounded;
-      case 'txt':
-        return Icons.article_rounded;
-      default:
-        return Icons.insert_drive_file_rounded;
-    }
-  }
-
-  Color _getFileColor(String? extension) {
-    switch (extension?.toLowerCase()) {
-      case 'pdf':
-        return Theme.of(context).colorScheme.primary;
-      case 'doc':
-      case 'docx':
-        return Colors.blue;
-      case 'xls':
-      case 'xlsx':
-        return Colors.green;
-      case 'ppt':
-      case 'pptx':
-        return Colors.orange;
-      default:
-        return Colors.grey;
     }
   }
 
@@ -554,7 +432,10 @@ class _LeavesListContainerState extends State<LeavesListContainer>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.08),
+              color: Theme.of(context)
+                  .colorScheme
+                  .secondary
+                  .withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             )
@@ -595,7 +476,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                               width: 40,
                               height: 40,
                               decoration: BoxDecoration(
-                                color: typeColor.withOpacity(0.1),
+                                color: typeColor.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Icon(
@@ -626,7 +507,8 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8, vertical: 3),
                                         decoration: BoxDecoration(
-                                          color: typeColor.withOpacity(0.1),
+                                          color:
+                                              typeColor.withValues(alpha: 0.1),
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
@@ -689,7 +571,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                   /// Alasan izin (pemohon)
                   ReasonSection(
                     title: 'Alasan izin',
-                    text: (leave.reason ?? ''),
+                    text: leave.reason,
                     sourceLabel: 'Wali Murid',
                     icon: Icons.notes_rounded,
                     accent: typeColor,
@@ -720,7 +602,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                         ),
                         const SizedBox(width: 6),
                         Text(
@@ -730,7 +612,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.6),
+                                .withValues(alpha: 0.6),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -745,7 +627,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                           icon: const Icon(Icons.visibility_rounded, size: 16),
                           label: const Text("Lihat"),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: typeColor.withOpacity(0.1),
+                            backgroundColor: typeColor.withValues(alpha: 0.1),
                             foregroundColor: typeColor,
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(
@@ -909,7 +791,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.5),
+                                        .withValues(alpha: 0.5),
                                   ),
                                   const SizedBox(height: 24),
                                   Text(
@@ -919,7 +801,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary
-                                          .withOpacity(0.8),
+                                          .withValues(alpha: 0.8),
                                       fontWeight: FontWeight.w600,
                                     ),
                                     textAlign: TextAlign.center,
@@ -932,7 +814,7 @@ class _LeavesListContainerState extends State<LeavesListContainer>
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary
-                                          .withOpacity(0.6),
+                                          .withValues(alpha: 0.6),
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
@@ -1036,7 +918,7 @@ class ReasonSection extends StatelessWidget {
       margin: margin ?? const EdgeInsets.only(top: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: accent.withOpacity(0.06),
+        color: accent.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(12),
         border: Border(left: BorderSide(color: accent, width: 3)),
       ),
@@ -1049,7 +931,7 @@ class ReasonSection extends StatelessWidget {
                 width: 28,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: accent.withOpacity(0.12),
+                  color: accent.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(icon, size: 16, color: accent),
@@ -1068,7 +950,7 @@ class ReasonSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: cs.surface,
                   borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: accent.withOpacity(0.3)),
+                  border: Border.all(color: accent.withValues(alpha: 0.3)),
                 ),
                 child: Text(
                   sourceLabel,
@@ -1086,7 +968,10 @@ class ReasonSection extends StatelessWidget {
             text: text,
             style: TextStyle(
               height: 1.35,
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.85),
+              color: Theme.of(context)
+                  .colorScheme
+                  .secondary
+                  .withValues(alpha: 0.85),
               fontWeight: FontWeight.w400,
               fontSize: 14,
             ),

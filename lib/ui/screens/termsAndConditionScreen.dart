@@ -139,8 +139,8 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen>
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              primaryColor.withOpacity(0.9),
-                              primaryColor.withOpacity(1),
+                              primaryColor.withValues(alpha: 0.9),
+                              primaryColor.withValues(alpha: 1),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(20),
@@ -150,7 +150,7 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen>
                             Icon(
                               Icons.gavel_rounded,
                               size: 48,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -168,7 +168,7 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen>
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 fontSize: 14,
-                                color: Colors.white.withOpacity(0.9),
+                                color: Colors.white.withValues(alpha: 0.9),
                               ),
                             ),
                           ],
@@ -181,11 +181,11 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen>
                       margin: const EdgeInsets.all(20),
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withValues(alpha: 0.9),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
+                            color: Colors.black.withValues(alpha: 0.05),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),

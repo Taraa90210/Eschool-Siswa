@@ -107,7 +107,7 @@ class _SchoolGalleryWithSessionYearFilterContainerState
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.075),
+                            .withValues(alpha: 0.075),
                         offset: const Offset(2.5, 2.5),
                         blurRadius: 5,
                       )
@@ -263,7 +263,7 @@ class _SchoolGalleryWithSessionYearFilterContainerState
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.65),
+                          .withValues(alpha: 0.65),
                     );
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -466,7 +466,7 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
               color: backgroundColor,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 12,
                   spreadRadius: 2,
                   offset: const Offset(0, 4),
@@ -476,14 +476,14 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
             child: TextField(
               controller: _searchController,
               style: TextStyle(
-                color: primaryColor.withOpacity(0.9),
+                color: primaryColor.withValues(alpha: 0.9),
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(
                 hintText: Utils.getTranslatedLabel(searchKey),
                 hintStyle: TextStyle(
-                  color: primaryColor.withOpacity(0.5),
+                  color: primaryColor.withValues(alpha: 0.5),
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                 ),
@@ -524,7 +524,7 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
-                                        color: primaryColor.withOpacity(0.9),
+                                        color: primaryColor.withValues(alpha: 0.9),
                                       ),
                                     ),
                                   ),
@@ -544,7 +544,7 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
                               duration: const Duration(milliseconds: 300),
                               width: 1,
                               height: 20,
-                              color: primaryColor.withOpacity(0.3),
+                              color: primaryColor.withValues(alpha: 0.3),
                             ),
                           ),
                         ],
@@ -568,7 +568,7 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
               color: backgroundColor,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 12,
                   spreadRadius: 2,
                   offset: const Offset(0, 4),
@@ -603,7 +603,7 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
               color: backgroundColor,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 12,
                   spreadRadius: 2,
                   offset: const Offset(0, 4),

@@ -15,7 +15,7 @@ class PendingTransactionWarningDialog extends StatelessWidget {
         child: Text(
           Utils.getTranslatedLabel(pendingPaymentTransactionWarningKey),
           style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+              color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.9),
               fontSize: 16.0,
               fontWeight: FontWeight.w600),
         ),

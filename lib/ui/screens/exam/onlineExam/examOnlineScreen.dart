@@ -506,14 +506,14 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
                           inactiveTrackColor: Theme.of(context)
                               .colorScheme
                               .secondary
-                              .withOpacity(0.3), // warna track non-aktif
+                              .withValues(alpha: 0.3), // warna track non-aktif
                           thumbColor: Theme.of(context)
                               .colorScheme
                               .primary, // warna bulatan
                           overlayColor: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.2), // efek saat ditekan
+                              .withValues(alpha: 0.2), // efek saat ditekan
                           valueIndicatorColor: Theme.of(context)
                               .colorScheme
                               .primary, // background value label
@@ -721,7 +721,6 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
     _saveLocalExamData();
   }
 
-
   Future<void> submitExamAnswers({bool forced = false}) async {
     FocusScope.of(context).unfocus();
     await Future.delayed(Duration(milliseconds: 100));
@@ -875,8 +874,6 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
 
   Widget _buildNavigationControls(Question question, int totalQuestions) {
     final bool isDoubtful = _doubtfulQuestionIds.contains(question.id);
-    final bool isFirstQuestion = currentQuestionIndex == 0;
-    final bool isLastQuestion = currentQuestionIndex >= totalQuestions - 1;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
@@ -1180,7 +1177,7 @@ class ExamOnlineScreenState extends State<ExamOnlineScreen>
     isExamCompleted = true;
     return Container(
       alignment: Alignment.center,
-      color: Utils.getColorScheme(context).secondary.withOpacity(0.5),
+      color: Utils.getColorScheme(context).secondary.withValues(alpha: 0.5),
       child: AlertDialog(
         content: Column(
           mainAxisSize: MainAxisSize.min,

@@ -50,11 +50,10 @@ class _TimeTableContainerState extends State<TimeTableContainer>
   }
 
   List<TimeTableSlot> _buildTimeTableSlots(List<TimeTableSlot> timeTableSlot) {
-  final selectedDay = Utils.weekDaysFullForm[_currentSelectedDayIndex];
-  final dayWiseTimeTableSlots = timeTableSlot
-    .where((element) => element.day == selectedDay)
-    .toList();
-  return dayWiseTimeTableSlots;
+    final selectedDay = Utils.weekDaysFullForm[_currentSelectedDayIndex];
+    final dayWiseTimeTableSlots =
+        timeTableSlot.where((element) => element.day == selectedDay).toList();
+    return dayWiseTimeTableSlots;
   }
 
   Widget _buildTimeTableShimmerLoadingContainer() {
@@ -155,7 +154,7 @@ class _TimeTableContainerState extends State<TimeTableContainer>
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.075),
+                        .withValues(alpha: 0.075),
                     offset: const Offset(2.5, 2.5),
                     blurRadius: 5,
                   )
@@ -253,7 +252,9 @@ class _TimeTableContainerState extends State<TimeTableContainer>
       final nowSec = now.hour * 3600 + now.minute * 60 + now.second;
       final s = _toSecondsSinceMidnight(timeTableSlot.startTime);
       final e = _toSecondsSinceMidnight(timeTableSlot.endTime);
-      isActive = (s <= e) ? (nowSec >= s && nowSec <= e) : (nowSec >= s || nowSec <= e);
+      isActive = (s <= e)
+          ? (nowSec >= s && nowSec <= e)
+          : (nowSec >= s || nowSec <= e);
     }
 
     final double imageWidth = MediaQuery.of(context).size.width * 0.175;
@@ -264,13 +265,13 @@ class _TimeTableContainerState extends State<TimeTableContainer>
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: cs.secondary.withOpacity(0.075),
+            color: cs.secondary.withValues(alpha: 0.075),
             offset: const Offset(4, 4),
             blurRadius: 10,
           )
         ],
         color: isActive
-            ? cs.primary// background aktif
+            ? cs.primary // background aktif
             : theme.scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(10),
         border: isActive ? Border.all(color: cs.primary, width: 1) : null,
@@ -279,7 +280,6 @@ class _TimeTableContainerState extends State<TimeTableContainer>
       padding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 10.0),
       child: Row(
         children: [
-        
           isBreak
               ? Container(
                   height: imageHeight,
@@ -287,9 +287,9 @@ class _TimeTableContainerState extends State<TimeTableContainer>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7.5),
                     color: (isActive
-                        ? cs.primary.withOpacity(0.18)
-                        : cs.primary
-                            .withOpacity(0.10)), // bg icon break aktif/nonaktif
+                        ? cs.primary.withValues(alpha: 0.18)
+                        : cs.primary.withValues(
+                            alpha: 0.10)), // bg icon break aktif/nonaktif
                   ),
                   padding: EdgeInsets.symmetric(
                     horizontal: imageWidth * 0.15,
@@ -312,9 +312,7 @@ class _TimeTableContainerState extends State<TimeTableContainer>
                   radius: 7.5,
                   subject: timeTableSlot.subject,
                 ),
-
           const SizedBox(width: 20),
-
           Flexible(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -353,7 +351,7 @@ class _TimeTableContainerState extends State<TimeTableContainer>
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color:isActive ? cs.surface : cs.secondary,
+                    color: isActive ? cs.surface : cs.secondary,
                     fontWeight: FontWeight.w400,
                     fontSize: 12.0,
                   ),
@@ -474,16 +472,4 @@ int _toSecondsSinceMidnight(dynamic t) {
     return h * 3600 + m * 60 + s;
   }
   throw ArgumentError('Unsupported time type: ${t.runtimeType}');
-}
-
-bool _isNowWithin(dynamic start, dynamic end) {
-  final now = DateTime.now();
-  final nowSec = now.hour * 3600 + now.minute * 60 + now.second;
-
-  final s = _toSecondsSinceMidnight(start);
-  final e = _toSecondsSinceMidnight(end);
-
-  // Non-overnight: s <= e  -> s <= now <= e
-  // Overnight (melewati 00:00): s > e -> now >= s  OR  now <= e
-  return (s <= e) ? (nowSec >= s && nowSec <= e) : (nowSec >= s || nowSec <= e);
 }

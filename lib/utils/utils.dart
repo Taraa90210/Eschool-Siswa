@@ -215,71 +215,6 @@ class Utils {
     return result;
   }
 
-  // Custom show Bottom Sheet untuk memperbaiki maslah ketika keyboard virtual muncul - Galang - Alief
-  // static Future<dynamic> showBottomSheet({
-  //   required Widget child,
-  //   required BuildContext context,
-  //   bool? enableDrag,
-  // }) async {
-  //   final mediaQuery = MediaQuery.of(context);
-
-  //   final result = await Get.bottomSheet(
-  //     LayoutBuilder(
-  //       builder: (context, constraints) {
-  //         return SingleChildScrollView(
-  //           // Menghindari konten tertutup keyboard
-  //           padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
-  //           child: ConstrainedBox(
-  //             constraints: BoxConstraints(
-  //               maxHeight:
-  //                   constraints.maxHeight, // Menyesuaikan tinggi maksimal
-  //             ),
-  //             child: Flexible(
-  //               child: child,
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //     enableDrag: enableDrag ?? true,
-  //     isScrollControlled: true, // Mengontrol tinggi bottom sheet
-  //     isDismissible: true,
-  //     barrierColor: Colors.black54,
-  //     backgroundColor: Colors.white,
-  //     clipBehavior: Clip.antiAlias,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(20),
-  //         topRight: Radius.circular(20),
-  //       ),
-  //     ),
-  //   );
-
-  //   return result;
-  // }
-
-  // static Future<dynamic> showBottomSheet({
-  //   required Widget child,
-  //   required BuildContext context,
-  //   bool? enableDrag,
-  // }) async {
-  //   final result = await Get.bottomSheet(
-  //     child,
-  //     enableDrag: enableDrag ?? false,
-  //     isScrollControlled: true,
-  //     barrierColor: Colors.black54, // Tambahkan ini untuk membuat background redup
-  //     backgroundColor: Colors.transparent, // Tambahkan ini agar bottom sheet transparan
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(bottomSheetTopRadius),
-  //         topRight: Radius.circular(bottomSheetTopRadius),
-  //       ),
-  //     ),
-  //   );
-
-  //   return result;
-  // }
-
   static bool isTodayInSessionYear(DateTime firstDate, DateTime lastDate) {
     final currentDate = DateTime.now();
 
@@ -316,31 +251,12 @@ class Utils {
     return dateTimes.toSet().toList();
   }
 
-  // static String formatTime(String time) {
-  //   final hourMinuteSecond = time.split(":");
-  //   final hour = int.parse(hourMinuteSecond.first) < 13
-  //       ? int.parse(hourMinuteSecond.first)
-  //       : int.parse(hourMinuteSecond.first) - 12;
-  //   final amOrPm = int.parse(hourMinuteSecond.first) > 12 ? "PM" : "AM";
-  //   return "${hour.toString().padLeft(2, '0')}:${hourMinuteSecond[1]} $amOrPm";
-  // }
-
   // Custom Format Time - Galang
   static String formatTime(String time) {
     final hourMinuteSecond = time.split(":");
     final hour = int.parse(hourMinuteSecond.first);
     return "${hour.toString().padLeft(2, '0')}:${hourMinuteSecond[1]}";
   }
-
-  // static String formatAssignmentDueDate(
-  //   DateTime dateTime,
-  //   BuildContext context,
-  // ) {
-  //   final monthName = Utils.getMonthName(dateTime.month);
-  //   final hour = dateTime.hour < 13 ? dateTime.hour : dateTime.hour - 12;
-  //   final amOrPm = hour > 12 ? "PM" : "AM";
-  //   return "${Utils.getTranslatedLabel(dueKey)}, ${dateTime.day} $monthName ${dateTime.year}, ${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $amOrPm";
-  // }
 
   // Custom Nama Bulan - Galang
   static String formatAssignmentDueDate(
@@ -454,12 +370,39 @@ class Utils {
   // Ganti Format ke Indonesia - Galang
   static intl.DateFormat hourMinutesDateFormat = intl.DateFormat('HH:mm');
 
+  static DateTime? parseUtcDate(String dateString) {
+    if (dateString.isEmpty) return null;
+
+    // If it doesn't contain 'Z' and has no explicit timezone (+07:00 or -05:00)
+    if (!dateString.endsWith('Z') &&
+        !dateString.contains(RegExp(r'[+\-]\d{2}:\d{2}$'))) {
+      if (dateString.contains(' ') && !dateString.contains('T')) {
+        dateString = dateString.replaceFirst(' ', 'T') + 'Z';
+      } else if (!dateString.contains('Z')) {
+        dateString += 'Z';
+      }
+    }
+
+    try {
+      return DateTime.parse(dateString).toLocal();
+    } catch (e) {
+      return null;
+    }
+  }
+
   static String formatDateAndTime(DateTime dateTime) {
     return intl.DateFormat("dd-MM-yyyy  kk:mm").format(dateTime);
   }
 
   static String formatDate(DateTime dateTime) {
-    return "${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year}";
+    return intl.DateFormat('dd MMMM yyyy', 'id_ID').format(dateTime);
+  }
+
+  static String formatDateFromStr(String? dateStr) {
+    if (dateStr == null || dateStr.isEmpty) return '-';
+    final date = parseUtcDate(dateStr);
+    if (date == null) return dateStr;
+    return formatDate(date);
   }
 
   static String dateConverter(

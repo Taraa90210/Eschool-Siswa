@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
@@ -66,7 +67,7 @@ class DownloadFileCubit extends Cubit<DownloadFileState> {
 
     if (!await permission.isGranted) {
       if (!await permission.request().isGranted) {
-        print('Izin akses penyimpanan ditolak');
+        debugPrint('Izin akses penyimpanan ditolak');
         return null;
       }
     }
@@ -76,7 +77,7 @@ class DownloadFileCubit extends Cubit<DownloadFileState> {
 
     if (!await eSchoolDir.exists()) {
       await eSchoolDir.create(recursive: true);
-      print('Folder eSchool dibuat di $eSchoolPath');
+      debugPrint('Folder eSchool dibuat di $eSchoolPath');
     }
 
     return eSchoolDir;
@@ -155,3 +156,5 @@ class DownloadFileCubit extends Cubit<DownloadFileState> {
     _cancelToken.cancel();
   }
 }
+
+

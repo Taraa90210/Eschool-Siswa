@@ -308,7 +308,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen>
             color: Theme.of(context).scaffoldBackgroundColor,
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.1),
                 offset: const Offset(5, 5),
                 blurRadius: 10,
               )
@@ -339,7 +339,7 @@ class _PlayVideoScreenState extends State<PlayVideoScreen>
                               height: 65,
                               width: boxConstraints.maxWidth * (0.3),
                               decoration: BoxDecoration(
-                                color: const Color(0xff212121).withOpacity(0.5),
+                                color: const Color(0xff212121).withValues(alpha: 0.5),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Lottie.asset(

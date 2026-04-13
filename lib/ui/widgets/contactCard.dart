@@ -41,20 +41,20 @@ class _ContactCardState extends State<ContactCard> {
             end: Alignment.bottomRight,
             colors: [
               Colors.white,
-              Colors.grey.shade50.withOpacity(0.3),
+              Colors.grey.shade50.withValues(alpha: 0.3),
             ],
           ),
           borderRadius: BorderRadius.circular(20.0),
           border: Border.all(
             color: hasAdminReply 
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.25)
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.25)
                 : Colors.grey.shade100,
             width: hasAdminReply ? 2.0 : 1.5,
           ),
           boxShadow: [
             // Outer shadow
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 12,
               offset: const Offset(0, 4),
               spreadRadius: 0,
@@ -62,7 +62,7 @@ class _ContactCardState extends State<ContactCard> {
             // Inner glow untuk card yang sudah dibalas
             if (hasAdminReply)
               BoxShadow(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
                 blurRadius: 8,
                 offset: const Offset(0, 0),
                 spreadRadius: -3,
@@ -247,7 +247,7 @@ class _ContactCardState extends State<ContactCard> {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: gradientColors[1].withOpacity(0.3),
+            color: gradientColors[1].withValues(alpha: 0.3),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -292,7 +292,7 @@ class _ContactCardState extends State<ContactCard> {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: badgeColor.withOpacity(0.4),
+            color: badgeColor.withValues(alpha: 0.4),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -305,7 +305,7 @@ class _ContactCardState extends State<ContactCard> {
           Container(
             padding: const EdgeInsets.all(3.0),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -337,7 +337,7 @@ class _ContactCardState extends State<ContactCard> {
         gradient: LinearGradient(
           colors: [
             Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withOpacity(0.85),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.85),
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
@@ -345,7 +345,7 @@ class _ContactCardState extends State<ContactCard> {
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.35),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.35),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -374,7 +374,7 @@ class _ContactCardState extends State<ContactCard> {
                 Container(
                   padding: const EdgeInsets.all(3.0),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -420,7 +420,7 @@ class _ContactCardState extends State<ContactCard> {
         gradient: LinearGradient(
           colors: [
             badgeColor,
-            badgeColor.withOpacity(0.85),
+            badgeColor.withValues(alpha: 0.85),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -428,7 +428,7 @@ class _ContactCardState extends State<ContactCard> {
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: badgeColor.withOpacity(0.3),
+            color: badgeColor.withValues(alpha: 0.3),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),

@@ -43,9 +43,9 @@ void showPushBanner({
         width: 44,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: base.withOpacity(o),
+          color: base.withValues(alpha: o),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: base.withOpacity(0.22), width: 1),
+          border: Border.all(color: base.withValues(alpha: 0.22), width: 1),
         ),
         child: Icon(icon, color: base, size: 20),
       ),
@@ -73,7 +73,7 @@ void showPushBanner({
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: cs.onSurface.withOpacity(0.75),
+                  color: cs.onSurface.withValues(alpha: 0.75),
                   fontSize: 13,
                   height: 1.25,
                 ),
@@ -89,7 +89,7 @@ void showPushBanner({
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Icon(Icons.close_rounded,
-              color: cs.onSurface.withOpacity(0.6), size: 20),
+              color: cs.onSurface.withValues(alpha: 0.6), size: 20),
         ),
       ),
     ],
@@ -108,12 +108,12 @@ void showPushBanner({
       decoration: BoxDecoration(
         color: cs.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: base.withOpacity(o * 1.1), width: 1),
+        border: Border.all(color: base.withValues(alpha: o * 1.1), width: 1),
         boxShadow: [
           BoxShadow(
             color: theme.brightness == Brightness.dark
-                ? Colors.black.withOpacity(0.35)
-                : Colors.black.withOpacity(0.06),
+                ? Colors.black.withValues(alpha: 0.35)
+                : Colors.black.withValues(alpha: 0.06),
             offset: const Offset(2, 2),
             blurRadius: 12,
           ),

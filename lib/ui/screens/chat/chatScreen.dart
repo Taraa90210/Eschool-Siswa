@@ -621,7 +621,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 5.0),
                                   child: Column(
-                                    crossAxisAlignment:CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
@@ -714,7 +715,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildDownloadButton(String imageUrl, bool sendByMe) {
-    final isLocalFile = imageUrl.startsWith('/');
     final colorScheme = Theme.of(context).colorScheme;
 
     if (_downloadedFiles.contains(imageUrl)) {
@@ -976,7 +976,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   //               child: Container(
                                   //             decoration: BoxDecoration(
                                   //               color: Colors.black
-                                  //                   .withOpacity(0.3),
+                                  //                   .withValues(alpha: 0.3),
                                   //               borderRadius:
                                   //                   BorderRadius.circular(8),
                                   //             ),
@@ -1069,7 +1069,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       .format(message.createdAt.toLocal()),
                   style: TextStyle(
                     fontSize: 12.0,
-                    color: colorScheme.secondary.withOpacity(0.75),
+                    color: colorScheme.secondary.withValues(alpha: 0.75),
                   ),
                 ),
                 const SizedBox(width: 2.5),
@@ -1218,7 +1218,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.75),
+                        .withValues(alpha: 0.75),
                   ),
                 ),
               ),
@@ -1231,8 +1231,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 backgroundColor: Colors.transparent,
                 child: Icon(
                   Icons.send,
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.75),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withValues(alpha: 0.75),
                 ),
               ),
             ),

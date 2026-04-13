@@ -69,7 +69,7 @@ class StudyMaterialWithDownloadButtonContainer extends StatelessWidget {
             borderType: BorderType.RRect,
             dashPattern: const [10, 10],
             radius: const Radius.circular(10.0),
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.25),
             child: Container(
               alignment: Alignment.center,
               padding:

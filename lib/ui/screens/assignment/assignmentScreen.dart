@@ -59,8 +59,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
 
   // Enhanced color palette with opacity variations
   final Color primaryColor = Color(0xFFD22F3C);
-  final Color primaryLight = Color(0xFFD22F3C).withOpacity(0.8);
-  final Color primaryLighter = Color(0xFFD22F3C).withOpacity(0.6);
+  final Color primaryLight = Color(0xFFD22F3C).withValues(alpha: 0.8);
+  final Color primaryLighter = Color(0xFFD22F3C).withValues(alpha: 0.6);
   final Color accentColor = Color(0xFF2F80ED);
   final Color backgroundColor = Color(0xFFFAF8F9);
   final Color cardColor = Colors.white;
@@ -186,38 +186,6 @@ class _AssignmentScreenState extends State<AssignmentScreen>
     });
   }
 
-  TextStyle _getTitleStyle() {
-    return GoogleFonts.poppins(
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
-      color: primaryColor,
-    );
-  }
-
-  TextStyle _getSectionTitleStyle(Color color) {
-    return GoogleFonts.poppins(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      color: color,
-    );
-  }
-
-  TextStyle _getLabelStyle() {
-    return GoogleFonts.poppins(
-      color: textColor.withOpacity(0.7),
-      fontSize: 13,
-      fontWeight: FontWeight.w500,
-    );
-  }
-
-  TextStyle _getValueStyle() {
-    return GoogleFonts.poppins(
-      color: textColor,
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-    );
-  }
-
   bool _showUploadAssignmentButton() {
     if (context.read<AuthCubit>().isParent()) {
       print("ELOL 1");
@@ -285,10 +253,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
         dueDate.year == now.year;
     final hasPassed = dueDate.isBefore(now) && !isToday;
 
-    // Responsive breakpoints
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 400;
-    final isMediumScreen = screenWidth < 500;
 
     return Column(
       children: [
@@ -303,7 +269,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 15,
                   spreadRadius: 1,
                   offset: Offset(0, 8),
@@ -321,8 +287,14 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                        Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.9),
+                        Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.only(
@@ -378,10 +350,12 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                         vertical: isSmallScreen ? 6 : 8,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.15),
+                                        color: Colors.white
+                                            .withValues(alpha: 0.15),
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                          color: Colors.white.withOpacity(0.25),
+                                          color: Colors.white
+                                              .withValues(alpha: 0.25),
                                           width: 1,
                                         ),
                                       ),
@@ -391,8 +365,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                           Icon(
                                             Icons.auto_stories_rounded,
                                             size: isSmallScreen ? 14 : 16,
-                                            color:
-                                                Colors.white.withOpacity(0.9),
+                                            color: Colors.white
+                                                .withValues(alpha: 0.9),
                                           ),
                                           SizedBox(width: 8),
                                           Flexible(
@@ -405,7 +379,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                                     isSmallScreen ? 12 : 14,
                                                 fontWeight: FontWeight.w600,
                                                 color: Colors.white
-                                                    .withOpacity(0.9),
+                                                    .withValues(alpha: 0.9),
                                                 letterSpacing: 0.1,
                                               ),
                                               overflow: TextOverflow.ellipsis,
@@ -472,13 +446,14 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                         padding: EdgeInsets.all(
                                             isSmallScreen ? 10 : 12),
                                         decoration: BoxDecoration(
-                                          color: questionColor.withOpacity(0.1),
+                                          color: questionColor.withValues(
+                                              alpha: 0.1),
                                           borderRadius:
                                               BorderRadius.circular(14),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: questionColor
-                                                  .withOpacity(0.1),
+                                              color: questionColor.withValues(
+                                                  alpha: 0.1),
                                               blurRadius: 10,
                                               spreadRadius: 0,
                                               offset: Offset(0, 2),
@@ -541,12 +516,13 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                       padding: EdgeInsets.all(
                                           isSmallScreen ? 10 : 12),
                                       decoration: BoxDecoration(
-                                        color: materialColor.withOpacity(0.1),
+                                        color: materialColor.withValues(
+                                            alpha: 0.1),
                                         borderRadius: BorderRadius.circular(14),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                materialColor.withOpacity(0.1),
+                                            color: materialColor.withValues(
+                                                alpha: 0.1),
                                             blurRadius: 10,
                                             spreadRadius: 0,
                                             offset: Offset(0, 2),
@@ -613,7 +589,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color: materialColor
-                                                        .withOpacity(0.1),
+                                                        .withValues(alpha: 0.1),
                                                     blurRadius: 8,
                                                     spreadRadius: 1,
                                                     offset: Offset(0, 3),
@@ -621,7 +597,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                                 ],
                                                 border: Border.all(
                                                   color: materialColor
-                                                      .withOpacity(0.2),
+                                                      .withValues(alpha: 0.2),
                                                   width: 1,
                                                 ),
                                               ),
@@ -676,12 +652,13 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                       padding: EdgeInsets.all(
                                           isSmallScreen ? 10 : 12),
                                       decoration: BoxDecoration(
-                                        color: fileTypeColor.withOpacity(0.1),
+                                        color: fileTypeColor.withValues(
+                                            alpha: 0.1),
                                         borderRadius: BorderRadius.circular(14),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                fileTypeColor.withOpacity(0.1),
+                                            color: fileTypeColor.withValues(
+                                                alpha: 0.1),
                                             blurRadius: 10,
                                             spreadRadius: 0,
                                             offset: Offset(0, 2),
@@ -741,13 +718,13 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                                   isSmallScreen ? 10 : 14,
                                               vertical: isSmallScreen ? 6 : 8),
                                           decoration: BoxDecoration(
-                                            color:
-                                                fileTypeColor.withOpacity(0.08),
+                                            color: fileTypeColor.withValues(
+                                                alpha: 0.08),
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             border: Border.all(
-                                              color: fileTypeColor
-                                                  .withOpacity(0.15),
+                                              color: fileTypeColor.withValues(
+                                                  alpha: 0.15),
                                               width: 1,
                                             ),
                                           ),
@@ -802,14 +779,14 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 15,
                     spreadRadius: 1,
                     offset: Offset(0, 8),
                   ),
                 ],
                 border: Border.all(
-                  color: submissionColor.withOpacity(0.2),
+                  color: submissionColor.withValues(alpha: 0.2),
                   width: 1.5,
                 ),
               ),
@@ -825,7 +802,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         end: Alignment.bottomRight,
                         colors: [
                           submissionColor,
-                          submissionColor.withOpacity(0.8)
+                          submissionColor.withValues(alpha: 0.8)
                         ],
                       ),
                       borderRadius: BorderRadius.only(
@@ -858,10 +835,11 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                               horizontal: isSmallScreen ? 8 : 12,
                               vertical: isSmallScreen ? 4 : 6),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                                color: Colors.white.withOpacity(0.3), width: 1),
+                                color: Colors.white.withValues(alpha: 0.3),
+                                width: 1),
                           ),
                           child: Text(
                             getAssignmentSubmissionStatus(),
@@ -895,7 +873,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                 Text(
                                   Utils.getTranslatedLabel(myWorkFileKey),
                                   style: GoogleFonts.poppins(
-                                    color: textColor.withOpacity(0.7),
+                                    color: textColor.withValues(alpha: 0.7),
                                     fontSize: isSmallScreen ? 12 : 13,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -953,7 +931,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                 Text(
                                   Utils.getTranslatedLabel(myWorkTextKey),
                                   style: GoogleFonts.poppins(
-                                    color: textColor.withOpacity(0.7),
+                                    color: textColor.withValues(alpha: 0.7),
                                     fontSize: isSmallScreen ? 12 : 13,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -992,7 +970,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                       padding: EdgeInsets.all(
                                           isSmallScreen ? 8 : 10),
                                       decoration: BoxDecoration(
-                                        color: feedbackColor.withOpacity(0.1),
+                                        color: feedbackColor.withValues(
+                                            alpha: 0.1),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(
@@ -1026,7 +1005,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                         .assignmentSubmission.feedback,
                                     style: GoogleFonts.poppins(
                                       fontStyle: FontStyle.italic,
-                                      color: textColor.withOpacity(0.8),
+                                      color: textColor.withValues(alpha: 0.8),
                                       fontSize: isSmallScreen ? 13 : 14,
                                       fontWeight: FontWeight.w500,
                                       height: 1.5,
@@ -1084,8 +1063,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     BoxShadow(
                       blurRadius: _isHoveringUpload ? 15 : 10,
                       offset: const Offset(0, 4),
-                      color: primaryColor
-                          .withOpacity(_isHoveringUpload ? 0.5 : 0.4),
+                      color: primaryColor.withValues(
+                          alpha: _isHoveringUpload ? 0.5 : 0.4),
                     )
                   ],
                   gradient: LinearGradient(
@@ -1093,7 +1072,8 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     end: Alignment.bottomRight,
                     colors: [
                       primaryColor,
-                      primaryColor.withOpacity(_isHoveringUpload ? 0.9 : 0.8)
+                      primaryColor.withValues(
+                          alpha: _isHoveringUpload ? 0.9 : 0.8)
                     ],
                   ),
                   shape: BoxShape.circle,
@@ -1117,8 +1097,9 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                                 shape: BoxShape.circle,
                                 gradient: RadialGradient(
                                   colors: [
-                                    primaryColor.withOpacity(0.6 * (1 - value)),
-                                    primaryColor.withOpacity(0.0),
+                                    primaryColor.withValues(
+                                        alpha: 0.6 * (1 - value)),
+                                    primaryColor.withValues(alpha: 0.0),
                                   ],
                                 ),
                               ),
@@ -1206,18 +1187,18 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.white.withOpacity(0.2),
-                  Colors.white.withOpacity(0.1),
+                  Colors.white.withValues(alpha: 0.2),
+                  Colors.white.withValues(alpha: 0.1),
                 ],
               ),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withValues(alpha: 0.3),
                 width: 1.5,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: Offset(0, 4),
                 ),
@@ -1258,7 +1239,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                           "${submittedAssignment.assignmentSubmission.points}/${submittedAssignment.points}",
                           style: GoogleFonts.inter(
                             fontSize: isSmallScreen ? 10 : 12,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha: 0.8),
                             fontWeight: FontWeight.w500,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -1281,10 +1262,10 @@ class _AssignmentScreenState extends State<AssignmentScreen>
     return Container(
       padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -1299,7 +1280,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                 style: GoogleFonts.inter(
                   fontSize: isSmallScreen ? 12 : 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha: 0.9),
                   letterSpacing: 0.1,
                 ),
               ),
@@ -1320,22 +1301,24 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                         ),
                         decoration: BoxDecoration(
                           color: hasPassed
-                              ? Colors.red.withOpacity(0.8)
-                              : Colors.amber.withOpacity(0.3),
+                              ? Colors.red.withValues(alpha: 0.8)
+                              : Colors.amber.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: hasPassed
-                                ? Colors.white.withOpacity(0.6)
-                                : Colors.amber.withOpacity(0.5),
+                                ? Colors.white.withValues(alpha: 0.6)
+                                : Colors.amber.withValues(alpha: 0.5),
                             width: 1,
                           ),
-                          boxShadow: hasPassed ? [
-                            BoxShadow(
-                              color: Colors.red.withOpacity(0.3),
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                            ),
-                          ] : null,
+                          boxShadow: hasPassed
+                              ? [
+                                  BoxShadow(
+                                    color: Colors.red.withValues(alpha: 0.3),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ]
+                              : null,
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -1394,7 +1377,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                   Icon(
                     Icons.access_time_rounded,
                     size: isSmallScreen ? 14 : 16,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                   ),
                   SizedBox(width: 6),
                   Text(
@@ -1402,7 +1385,7 @@ class _AssignmentScreenState extends State<AssignmentScreen>
                     style: GoogleFonts.inter(
                       fontSize: isSmallScreen ? 13 : 15,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                     ),
                   ),
                 ],

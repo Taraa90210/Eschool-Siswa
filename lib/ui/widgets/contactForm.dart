@@ -104,7 +104,7 @@ class _ContactFormState extends State<ContactForm> {
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -233,7 +233,7 @@ class _ContactFormState extends State<ContactForm> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _isFormValid && !widget.isLoading
                       ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+                      : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -315,7 +315,7 @@ class _ContactFormState extends State<ContactForm> {
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: isSelected
-              ? color.withOpacity(0.1)
+              ? color.withValues(alpha: 0.1)
               : Colors.grey.shade50,
           borderRadius: BorderRadius.circular(12.0),
           border: Border.all(
@@ -387,7 +387,7 @@ class _ContactFormState extends State<ContactForm> {
           autocorrect: false,
           style: TextStyle(
             color: readOnly 
-                ? Theme.of(context).colorScheme.onSurface.withOpacity(0.6)
+                ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6)
                 : Theme.of(context).colorScheme.onSurface,
             fontSize: 16.0,
           ),

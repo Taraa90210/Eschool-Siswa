@@ -1,4 +1,3 @@
-
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/appConfigurationCubit.dart';
 import 'package:eschool/cubits/authCubit.dart';
@@ -78,7 +77,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                         border: Border.all(
                           color: Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                         ),
                         shape: BoxShape.circle,
                       ),
@@ -89,7 +88,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                           border: Border.all(
                             color: Theme.of(context)
                                 .scaffoldBackgroundColor
-                                .withOpacity(0.1),
+                                .withValues(alpha: 0.1),
                           ),
                           shape: BoxShape.circle,
                         ),
@@ -104,7 +103,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                       decoration: BoxDecoration(
                         color: Theme.of(context)
                             .scaffoldBackgroundColor
-                            .withOpacity(0.1),
+                            .withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       width: MediaQuery.of(context).size.width * (0.4),
@@ -200,7 +199,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                                             fontWeight: FontWeight.w400,
                                             color: Theme.of(context)
                                                 .scaffoldBackgroundColor
-                                                .withOpacity(0.85),
+                                                .withValues(alpha: 0.85),
                                           ),
                                         )
                                       ],
@@ -235,7 +234,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                                   decoration: BoxDecoration(
                                     color: Theme.of(context)
                                         .scaffoldBackgroundColor
-                                        .withOpacity(0.2),
+                                        .withValues(alpha: 0.2),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
@@ -291,8 +290,8 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -300,7 +299,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).shadowColor.withOpacity(0.1),
+                color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -325,7 +324,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                         decoration: BoxDecoration(
                           color: Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -339,7 +338,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                         decoration: BoxDecoration(
                           color: Theme.of(context)
                               .scaffoldBackgroundColor
-                              .withOpacity(0.1),
+                              .withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -382,21 +381,20 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
-                                    .withOpacity(0.9),
+                                    .withValues(alpha: 0.9),
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
                               ),
                               maxLines: 1,
                               textAlign: TextAlign.center,
                             ),
-
                             const SizedBox(height: 5),
                             Text(
                               "${student.classSection?.name}",
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .scaffoldBackgroundColor
-                                    .withOpacity(0.9),
+                                    .withValues(alpha: 0.9),
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
                               ),
@@ -419,7 +417,9 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
           )
           .shimmer(
             duration: const Duration(seconds: 3),
-            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.2),
+            color: Theme.of(context)
+                .scaffoldBackgroundColor
+                .withValues(alpha: 0.2),
             size: 0.1,
             curve: Curves.easeInOutSine,
             delay: Duration(milliseconds: 1000 + (index * 500)),
@@ -460,8 +460,10 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   decoration: BoxDecoration(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Row(
@@ -518,9 +520,6 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
   }
 
   Widget _buildWelcomeMessage() {
-    final parentName =
-        context.read<AuthCubit>().getParentDetails().firstName ?? "";
-
     return Animate(
       effects: [
         FadeEffect(duration: const Duration(milliseconds: 600)),
@@ -531,15 +530,14 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
         ),
       ],
       child: InkWell(
-
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(0.85),
-                Theme.of(context).colorScheme.primary.withOpacity(0.89),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.85),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.89),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -547,7 +545,10 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withValues(alpha: 0.3),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -570,7 +571,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
                 style: TextStyle(
                   color: Theme.of(context)
                       .scaffoldBackgroundColor
-                      .withOpacity(0.9),
+                      .withValues(alpha: 0.9),
                   fontWeight: FontWeight.w400,
                   fontSize: 13,
                 ),
@@ -584,7 +585,9 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
           )
           .shimmer(
             duration: const Duration(seconds: 5),
-            color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.2),
+            color: Theme.of(context)
+                .scaffoldBackgroundColor
+                .withValues(alpha: 0.2),
             size: 0.1,
             curve: Curves.easeInOutSine,
             delay: Duration(milliseconds: 1000),
@@ -602,7 +605,7 @@ class _ParentHomeScreenState extends State<ParentHomeScreen>
     }
     return Scaffold(
       backgroundColor:
-          Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+          Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.9),
       body: context.read<AppConfigurationCubit>().appUnderMaintenance()
           ? const AppUnderMaintenanceContainer()
           : Stack(

@@ -15,7 +15,7 @@ class Installments extends StatelessWidget {
   TextStyle getPaidOnTextStyle({required BuildContext context}) {
     return TextStyle(
         fontSize: 12.0,
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.75));
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.75));
   }
 
   TextStyle getPaymentInfoTitleStyle({required BuildContext context}) {
@@ -69,7 +69,7 @@ class Installments extends StatelessWidget {
                         color: Theme.of(context)
                             .colorScheme
                             .secondary
-                            .withOpacity(0.25)))),
+                            .withValues(alpha: 0.25)))),
             margin: const EdgeInsets.only(bottom: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +117,7 @@ class Installments extends StatelessWidget {
                                           : Theme.of(context)
                                               .colorScheme
                                               .secondary
-                                              .withOpacity(0.75)),
+                                              .withValues(alpha: 0.75)),
                                 )
                         ],
                       ),
@@ -155,7 +155,7 @@ class Installments extends StatelessWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .secondary
-                                    .withOpacity(0.75)),
+                                    .withValues(alpha: 0.75)),
                           )
                         : const SizedBox(),
                 advanceFees.isEmpty

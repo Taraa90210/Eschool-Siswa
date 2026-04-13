@@ -147,9 +147,6 @@ class AssignmentRepository {
       // Target kompres super kecil ~10 KB
       const int kTargetBytes = 10 * 1024; // 10 KB
       const int kStartMaxDim = 720; // start resize
-      const int kMinQuality = 20; // min JPEG quality
-      const int kFloorDim = 96; // min dimension
-      const bool kAllowGray = true; // boleh grayscale
 
       final formData = FormData();
 

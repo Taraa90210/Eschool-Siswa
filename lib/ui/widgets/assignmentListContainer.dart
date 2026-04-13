@@ -370,10 +370,6 @@ class AssignmentListContainer extends StatelessWidget {
     required bool hasMoreAssignmentsInProgress,
     required bool fetchMoreAssignmentsFailure,
   }) {
-    final bool assignmentSubmitted = assignment.assignmentSubmission.id != 0;
-    final Color softRedColor = Color(0xFFF5DCDC);
-    final Color darkRedColor = Theme.of(context).colorScheme.secondary;
-
     return Column(
       children: [
         Animate(
@@ -393,7 +389,7 @@ class AssignmentListContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.12),
+                    color: Colors.black.withValues(alpha: 0.12),
                     blurRadius: 12,
                     spreadRadius: 2,
                     offset: const Offset(0, 4),
@@ -466,7 +462,7 @@ class AssignmentListContainer extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSurface
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12.0,
                                 ),
@@ -481,7 +477,7 @@ class AssignmentListContainer extends StatelessWidget {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.1),
+                              color: Colors.blue.withValues(alpha: 0.1),
                               // Light blue background for subject tag
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -519,7 +515,7 @@ class AssignmentListContainer extends StatelessWidget {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.9),
+                                        .withValues(alpha: 0.9),
                                     fontWeight: FontWeight.w500,
                                     fontSize: 11.0,
                                   ),
@@ -571,38 +567,6 @@ class AssignmentListContainer extends StatelessWidget {
             ),
           )
       ],
-    );
-  }
-
-  // Custom Submission Status -- Galang
-  Widget _buildSubmissionStatus(BuildContext context, Assignment assignment) {
-    final assignmentSubmittedStatusKey = Utils.getAssignmentSubmissionStatusKey(
-      assignment.assignmentSubmission.status,
-    );
-
-    if (assignmentSubmittedStatusKey.isEmpty) return const SizedBox();
-
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: assignmentSubmittedStatusKey == acceptedKey
-            ? Theme.of(context).colorScheme.onPrimary
-            : assignmentSubmittedStatusKey == inReviewKey ||
-                    assignmentSubmittedStatusKey == resubmittedKey
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.error,
-        borderRadius: BorderRadius.circular(2.5),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-      child: Text(
-        Utils.getTranslatedLabel(assignmentSubmittedStatusKey),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          fontSize: 10.75,
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
-      ),
     );
   }
 

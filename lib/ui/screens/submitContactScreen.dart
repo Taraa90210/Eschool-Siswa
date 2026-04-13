@@ -125,7 +125,7 @@ class _SubmitContactScreenState extends State<SubmitContactScreen>
               Container(
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
+                  color: Colors.green.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: const Icon(
@@ -225,8 +225,8 @@ class _SubmitContactScreenState extends State<SubmitContactScreen>
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                                    Theme.of(context).colorScheme.secondary.withOpacity(0.05),
+                                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                                    Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -267,7 +267,7 @@ class _SubmitContactScreenState extends State<SubmitContactScreen>
                                             Text(
                                               'Kirim pertanyaan atau laporkan masalah aplikasi',
                                               style: TextStyle(
-                                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                                                 fontSize: 14.0,
                                               ),
                                             ),
@@ -358,10 +358,10 @@ class _SubmitContactScreenState extends State<SubmitContactScreen>
                             child: Container(
                               padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
                                 borderRadius: BorderRadius.circular(16.0),
                                 border: Border.all(
-                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                                 ),
                               ),
                               child: Row(
@@ -376,7 +376,7 @@ class _SubmitContactScreenState extends State<SubmitContactScreen>
                                       child: Text(
                                         'Pesan Anda akan diproses dalam 1-2 hari kerja. Tim support kami siap membantu masalah teknis dan pertanyaan seputar aplikasi.',
                                         style: TextStyle(
-                                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
+                                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                                           fontSize: 13.0,
                                           height: 1.4,
                                         ),

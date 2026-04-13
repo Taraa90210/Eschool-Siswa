@@ -221,7 +221,7 @@ class _NewChatContactsScreenState extends State<NewChatContactsScreen> {
             left: BorderSide.none,
             right: BorderSide.none,
             bottom: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(.1),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: .1),
             ),
           ),
         ),

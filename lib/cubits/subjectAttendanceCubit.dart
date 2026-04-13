@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/models/subjectAttendanceModel.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
@@ -62,8 +63,10 @@ class SubjectAttendanceCubit extends Cubit<SubjectAttendanceState> {
         date: date,
       ));
     } catch (e) {
-      print("Error in cubit: $e"); // Untuk debugging
+      debugPrint("Error in cubit: $e"); // Untuk debugging
       emit(SubjectAttendanceFetchFailure(e.toString()));
     }
   }
 }
+
+

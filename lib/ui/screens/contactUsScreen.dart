@@ -144,14 +144,14 @@ class _ContactUsScreenState extends State<ContactUsScreen>
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            primaryColor.withOpacity(0.9),
-                            primaryColor.withOpacity(1),
+                            primaryColor.withValues(alpha: 0.9),
+                            primaryColor.withValues(alpha: 1),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor.withOpacity(0.2),
+                            color: primaryColor.withValues(alpha: 0.2),
                             blurRadius: 10,
                             offset: const Offset(0, 5),
                           ),
@@ -186,7 +186,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
                             Utils.getTranslatedLabel(howWeCanHelpDescKey),
                             style: GoogleFonts.poppins(
                               fontSize: 14,
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
                           ),
                         ],
@@ -329,7 +329,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -340,7 +340,7 @@ class _ContactUsScreenState extends State<ContactUsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, size: 30, color: primaryColor),

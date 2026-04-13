@@ -62,7 +62,7 @@ class EnvSwitcherUtil {
         if (isActive) {
           Get.back();
           return;
-        }
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
         final authState = dialogCtx.read<AuthCubit>().state;
         final isLoggedIn = authState is Authenticated ||

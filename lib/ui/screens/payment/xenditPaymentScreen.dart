@@ -122,7 +122,7 @@ class _XenditPaymentScreenContentState
             paymentMethod: 'xendit',
             feeIds: widget.feeIds!,
             status: 'paid',
-            amount: widget.invoice.amount,
+            amount: widget.invoice.baseAmount,
           );
 
       // Note: Success/failure will be handled by BlocListener in build method

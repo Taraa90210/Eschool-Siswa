@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class PaymentMethodSelectionScreen extends StatefulWidget {
   final double baseAmount;
   final String description;
-  final Function(PaymentMethod) onMethodSelected;
+  final Function(XenditPaymentMethod) onMethodSelected;
 
   const PaymentMethodSelectionScreen({
     Key? key,
@@ -24,8 +24,9 @@ class PaymentMethodSelectionScreen extends StatefulWidget {
 
 class _PaymentMethodSelectionScreenState
     extends State<PaymentMethodSelectionScreen> {
-  PaymentMethod? _selectedMethod;
-  final List<PaymentMethod> _methods = PaymentMethod.getAllMethods();
+  XenditPaymentMethod? _selectedMethod;
+  final List<XenditPaymentMethod> _methods =
+      XenditPaymentMethod.getAllMethods();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class _PaymentMethodSelectionScreenState
                           Text(
                             widget.description,
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withValues(alpha: 0.9),
                               fontSize: 12,
                             ),
                             textAlign: TextAlign.center,
@@ -157,7 +158,7 @@ class _PaymentMethodSelectionScreenState
   }
 
   Widget _buildMethodCard({
-    required PaymentMethod method,
+    required XenditPaymentMethod method,
     required bool isSelected,
     required double fee,
     required double total,
@@ -182,7 +183,7 @@ class _PaymentMethodSelectionScreenState
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 4,
               offset: Offset(0, 2),
             ),

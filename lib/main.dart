@@ -16,8 +16,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
 ///[V.1.4.1]
 ///
 ///
@@ -64,13 +62,14 @@ Future<void> setupFCM() async {
     try {
       final authBox = Hive.box(authBoxKey);
       final isLoggedIn = authBox.get(isLogInKey) ?? false;
-      
+
       if (!isLoggedIn) {
         debugPrint('🚫 FCM: User belum login, notifikasi tidak ditampilkan');
-        debugPrint('📨 FCM: Notifikasi diterima: ${message.notification?.title}');
+        debugPrint(
+            '📨 FCM: Notifikasi diterima: ${message.notification?.title}');
         return; // Skip tampilkan notifikasi
       }
-      
+
       debugPrint('✅ FCM: User sudah login, tampilkan notifikasi');
     } catch (e) {
       debugPrint('⚠️ FCM: Error saat cek status login: $e');
@@ -80,7 +79,6 @@ Future<void> setupFCM() async {
 
     // Use VibrationHelper that respects user settings
     await VibrationHelper.notificationVibration();
-    final data = message.notification;
     final type = (message.data['type'] ?? '')
         .toString(); // 'announcement' | 'izin' | 'tagihan' | 'tugas' | ...
     final title = (message.notification?.title ?? 'Notifikasi').toString();
@@ -132,24 +130,28 @@ void _handleNotificationClick(RemoteMessage message) {
       try {
         final authBox = Hive.box(authBoxKey);
         final isLoggedIn = authBox.get(isLogInKey) ?? false;
-        
+
         if (!isLoggedIn) {
           debugPrint('🚫 FCM-CLICK: User belum login, navigasi dibatalkan');
-          debugPrint('📨 FCM-CLICK: Notifikasi: ${message.notification?.title}');
-          
+          debugPrint(
+              '📨 FCM-CLICK: Notifikasi: ${message.notification?.title}');
+
           // ✅ SIMPAN notifikasi untuk dibuka setelah login
           if (route != null) {
-            final enhancedArguments = _enhanceNotificationArguments(message.data);
+            final enhancedArguments =
+                _enhanceNotificationArguments(message.data);
             authBox.put(pendingNotificationRouteKey, route);
             authBox.put(pendingNotificationArgumentsKey, enhancedArguments);
-            debugPrint('💾 FCM-CLICK: Notifikasi disimpan untuk dibuka setelah login');
-            debugPrint('💾 FCM-CLICK: Route: $route, Arguments: $enhancedArguments');
+            debugPrint(
+                '💾 FCM-CLICK: Notifikasi disimpan untuk dibuka setelah login');
+            debugPrint(
+                '💾 FCM-CLICK: Route: $route, Arguments: $enhancedArguments');
           }
-          
+
           // Jangan navigasi ke route, biarkan user tetap di halaman login
           return;
         }
-        
+
         debugPrint('✅ FCM-CLICK: User sudah login, lanjut navigasi ke: $route');
       } catch (e) {
         debugPrint('⚠️ FCM-CLICK: Error saat cek status login: $e');
@@ -174,25 +176,25 @@ Map<String, dynamic> _enhanceNotificationArguments(Map<String, dynamic> data) {
   try {
     final authBox = Hive.box(authBoxKey);
     final isStudent = authBox.get(isStudentLogInKey) ?? false;
-    
+
     // Jika student, return data as is
     if (isStudent) {
       debugPrint('📱 User adalah student, tidak perlu enhance');
       return data;
     }
-    
+
     // Jika parent, inject childId dari active child
     debugPrint('👨‍👩‍👧 User adalah parent, inject childId...');
-    
+
     // Ambil data children dari Hive
     final childrenData = authBox.get(childrenDataKey) ?? [];
     if (childrenData is List && childrenData.isNotEmpty) {
       // Ambil child pertama sebagai default (atau bisa ambil active child)
       final firstChild = childrenData.first;
       final childId = firstChild['id'];
-      
+
       debugPrint('✅ ChildId ditemukan: $childId');
-      
+
       // Return enhanced arguments dengan childId
       return {
         ...data,
@@ -204,7 +206,7 @@ Map<String, dynamic> _enhanceNotificationArguments(Map<String, dynamic> data) {
   } catch (e) {
     debugPrint('⚠️ Error saat enhance arguments: $e');
   }
-  
+
   // Fallback: return data as is
   return data;
 }

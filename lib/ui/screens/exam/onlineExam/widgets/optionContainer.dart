@@ -68,12 +68,12 @@ class _OptionContainerState extends State<OptionContainer>
   Color _getTextColor() {
     return widget.submittedAnswerIds == widget.answerOption.id
         ? Colors.white
-        : Colors.black.withOpacity(0.9);
+        : Colors.black.withValues(alpha: 0.9);
   }
 
   Color _getBorderColor() {
     return widget.submittedAnswerIds == widget.answerOption.id
-        ? Theme.of(context).colorScheme.primary.withOpacity(0.9)
+        ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.9)
         : Colors.grey.shade300;
   }
 
@@ -97,7 +97,7 @@ class _OptionContainerState extends State<OptionContainer>
                 ? LinearGradient(
                     colors: [
                       Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -106,7 +106,7 @@ class _OptionContainerState extends State<OptionContainer>
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 8,
                 offset: const Offset(0, 3),
               ),
@@ -137,13 +137,13 @@ class _OptionContainerState extends State<OptionContainer>
                         gradient: LinearGradient(
                           colors: widget.submittedAnswerIds ==
                                   widget.answerOption.id
-                              ? [Colors.white, Colors.white.withOpacity(0.9)]
+                              ? [Colors.white, Colors.white.withValues(alpha: 0.9)]
                               : [
                                   Theme.of(context).colorScheme.primary,
                                   Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.8),
+                                      .withValues(alpha: 0.8),
                                 ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -151,7 +151,7 @@ class _OptionContainerState extends State<OptionContainer>
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 3,
                             offset: const Offset(0, 1),
                           ),
@@ -203,7 +203,7 @@ class _OptionContainerState extends State<OptionContainer>
                       padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                       ),
                       child: const Icon(
                         Icons.check,

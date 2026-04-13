@@ -55,7 +55,7 @@ class ExamContainer extends StatelessWidget {
                   width: boxConstraints.maxWidth * (0.7),
                   height: 45,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE).withOpacity(0.3),
+                    color: const Color(0xFFEEEEEE).withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Row(

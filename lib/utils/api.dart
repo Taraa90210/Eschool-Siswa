@@ -479,25 +479,6 @@ class Api {
     }
   }
 
-// Simple helper untuk set mimeType berdasarkan ekstensi
-  static String _getMimeType(String fileName) {
-    print("File name: $fileName");
-    final ext = fileName.split('.').last.toLowerCase();
-    switch (ext) {
-      case 'pdf':
-        return 'application/pdf';
-      case 'jpg':
-      case 'jpeg':
-        return 'image/jpeg';
-      case 'png':
-        return 'image/png';
-      case 'mp4':
-        return 'video/mp4';
-      default:
-        return 'application/octet-stream';
-    }
-  }
-
   static String sanitizeFileName(String fileName) {
     final parts = fileName.split('.');
     if (parts.length > 1) {

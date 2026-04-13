@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:eschool/data/models/leave.dart';
 import 'package:eschool/data/repositories/leavesRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,23 +40,24 @@ class LeavesCubit extends Cubit<LeavesState> {
   LeavesCubit(this._leavesRepository) : super(LeavesInitial());
 
   void fetchLeaves({required int childId}) {
-    print("Fetching leaves for childId: $childId");
+    debugPrint("Fetching leaves for childId: $childId");
     emit(LeavesFetchInProgress());
 
     _leavesRepository
         .fetchChildLeaves(childId: childId)
         .then((value) {
-          print("Fetch successful, leaves: $value");
+          debugPrint("Fetch successful, leaves: $value");
           emit(LeavesFetchSuccess(leaves: value));
         })
         .catchError((e) {
-          print("Fetch failed, error: ${e.toString()}");
+          debugPrint("Fetch failed, error: ${e.toString()}");
           emit(LeavesFetchFailure(e.toString()));
         });
   }
 
   void refreshLeaves({required int childId}) {
-    print("Refreshing leaves for childId: $childId");
+    debugPrint("Refreshing leaves for childId: $childId");
     fetchLeaves(childId: childId);
   }
 }
+

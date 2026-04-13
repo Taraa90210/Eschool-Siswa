@@ -18,6 +18,8 @@ class PaymentHistory {
   final String? status;
   final String? proofImage;
   final String? paymentMethod;
+  final double? adminFeeAmount;
+  final double? totalAmount;
 
   PaymentHistory({
     this.id,
@@ -28,6 +30,8 @@ class PaymentHistory {
     this.status,
     this.proofImage,
     this.paymentMethod,
+    this.adminFeeAmount,
+    this.totalAmount,
   });
 
   PaymentHistory.fromJson(Map<String, dynamic> json)
@@ -35,12 +39,23 @@ class PaymentHistory {
         amount = json['amount'] != null
             ? double.parse(json['amount'].toString())
             : null,
-        date = json['date'] as String?,
-        method = json['method'] as String?,
+        date = (json['confirmed_at'] ?? json['created_at'] ?? json['date'])
+            as String?,
+        method = (json['method'] ??
+            json['payment_method'] ??
+            json['payment_gateway']) as String?,
         reference = json['reference'] as String?,
         status = json['status'] as String?,
         proofImage = json['proof_image'] as String?,
-        paymentMethod = json['payment_method'] as String?;
+        paymentMethod = (json['payment_method'] ??
+            json['payment_gateway'] ??
+            json['method']) as String?,
+        adminFeeAmount = json['admin_fee_amount'] != null
+            ? double.parse(json['admin_fee_amount'].toString())
+            : null,
+        totalAmount = json['total_amount'] != null
+            ? double.parse(json['total_amount'].toString())
+            : null;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -51,6 +66,8 @@ class PaymentHistory {
         'status': status,
         'proof_image': proofImage,
         'payment_method': paymentMethod,
+        'admin_fee_amount': adminFeeAmount,
+        'total_amount': totalAmount,
       };
 }
 
@@ -628,8 +645,8 @@ class ChildFeeDetails {
 
       try {
         final now = DateTime.now();
-        final due = DateTime.parse(bill.dueDate!);
-        return now.isAfter(due) && bill.status != 'paid';
+        final due = Utils.parseUtcDate(bill.dueDate!);
+        return due != null && now.isAfter(due) && bill.status != 'paid';
       } catch (e) {
         return false;
       }

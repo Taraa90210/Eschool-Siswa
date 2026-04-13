@@ -49,13 +49,13 @@ class TopicsContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
               ],
               border: Border.all(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.grey.withValues(alpha: 0.1),
                 width: 1,
               ),
             ),
@@ -69,8 +69,8 @@ class TopicsContainer extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        accentColor.withOpacity(1),
-                        accentColor.withOpacity(0.9)
+                        accentColor.withValues(alpha: 1),
+                        accentColor.withValues(alpha: 0.9)
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -112,7 +112,7 @@ class TopicsContainer extends StatelessWidget {
                           color: Theme.of(context)
                               .colorScheme
                               .onSurface
-                              .withOpacity(0.6),
+                              .withValues(alpha: 0.6),
                           fontWeight: FontWeight.w500,
                           fontSize: 12.0,
                         ),

@@ -136,7 +136,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: badgeColor.withOpacity(0.35),
+            color: badgeColor.withValues(alpha: 0.35),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -177,26 +177,26 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
           end: Alignment.bottomRight,
           colors: [
             Colors.white,
-            Colors.grey.shade50.withOpacity(0.3),
+            Colors.grey.shade50.withValues(alpha: 0.3),
           ],
         ),
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(
           color: hasAdminReply 
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.25)
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.25)
               : Colors.grey.shade100,
           width: hasAdminReply ? 2.0 : 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 12,
             offset: const Offset(0, 4),
             spreadRadius: 0,
           ),
           if (hasAdminReply)
             BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
               blurRadius: 8,
               offset: const Offset(0, 0),
               spreadRadius: -3,
@@ -213,7 +213,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
               Container(
                 padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Icon(
@@ -315,12 +315,12 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
               gradient: LinearGradient(
                 colors: [
                   Theme.of(context).scaffoldBackgroundColor,
-                  Theme.of(context).scaffoldBackgroundColor.withOpacity(0.7),
+                  Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.7),
                 ],
               ),
               borderRadius: BorderRadius.circular(16.0),
               border: Border.all(
-                color: Theme.of(context).dividerColor.withOpacity(0.1),
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
               ),
             ),
             child: Column(
@@ -356,7 +356,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
         Container(
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Icon(
@@ -373,7 +373,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
               Text(
                 label,
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                   fontSize: 11.0,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
@@ -406,20 +406,20 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.05),
-            Theme.of(context).colorScheme.primary.withOpacity(0.02),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.02),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(20.0),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.25),
           width: 2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.12),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.12),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -439,7 +439,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
                   gradient: LinearGradient(
                     colors: [
                       Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.85),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -447,7 +447,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
                   borderRadius: BorderRadius.circular(14.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 3),
                     ),
@@ -479,13 +479,13 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
                           Icon(
                             Icons.access_time_rounded,
                             size: 12.0,
-                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                           ),
                           const SizedBox(width: 4.0),
                           Text(
                             DateFormat('dd MMMM yyyy, HH:mm', 'id_ID').format(contact.repliedAt!),
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                               fontSize: 11.0,
                               fontWeight: FontWeight.w600,
                             ),
@@ -506,7 +506,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
               gradient: LinearGradient(
                 colors: [
                   Colors.transparent,
-                  Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
                   Colors.transparent,
                 ],
               ),
@@ -522,7 +522,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
               color: Colors.white,
               borderRadius: BorderRadius.circular(14.0),
               border: Border.all(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
                 width: 1.5,
               ),
             ),
@@ -590,7 +590,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
               borderRadius: BorderRadius.circular(20.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
+                  color: Colors.black.withValues(alpha: 0.03),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -734,7 +734,7 @@ class _ContactDetailScreenState extends State<ContactDetailScreen>
                     state.errorMessage,
                     style: TextStyle(
                       fontSize: 14.0,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                     textAlign: TextAlign.center,
                   ),

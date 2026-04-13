@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/models/guardian.dart';
 import 'package:eschool/data/models/student.dart';
@@ -52,25 +53,25 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void _checkIsAuthenticated() {
-    print("DEBUG: _checkIsAuthenticated called");
-    print("DEBUG: getIsLogIn() = ${authRepository.getIsLogIn()}");
+    debugPrint("DEBUG: _checkIsAuthenticated called");
+    debugPrint("DEBUG: getIsLogIn() = ${authRepository.getIsLogIn()}");
 
     if (authRepository.getIsLogIn()) {
       // Load children data from persistence storage
       final storedChildren = AuthRepository.getChildrenData();
-      print("DEBUG: storedChildren count = ${storedChildren.length}");
+    debugPrint("DEBUG: storedChildren count = ${storedChildren.length}");
 
       // For parent login, get the current active child's token and school code
       String currentSchoolCode = authRepository.schoolCode;
       String currentJwtToken = authRepository.getJwtToken();
-      print("DEBUG: currentSchoolCode from storage = '$currentSchoolCode'");
-      print(
+    debugPrint("DEBUG: currentSchoolCode from storage = '$currentSchoolCode'");
+    debugPrint(
           "DEBUG: currentJwtToken from storage = '${currentJwtToken.isEmpty ? 'EMPTY' : 'HAS_VALUE'}'");
 
       Student currentStudent = Student.fromJson({});
 
       if (!AuthRepository.getIsStudentLogIn() && storedChildren.isNotEmpty) {
-        print(
+    debugPrint(
             "DEBUG: Processing parent login with ${storedChildren.length} children");
 
         // Find the active child based on stored token/schoolCode or use first child
@@ -80,44 +81,42 @@ class AuthCubit extends Cubit<AuthState> {
               child.schoolCode == currentSchoolCode,
           orElse: () => storedChildren.first,
         );
-
-        print(
+    debugPrint(
             "DEBUG: activeChild = ${activeChild.getFullName()}, token=${activeChild.token?.isEmpty == true ? 'EMPTY' : 'HAS_VALUE'}, schoolCode=${activeChild.schoolCode}");
 
         // Update with active child's credentials if they exist
         if (activeChild.token != null && activeChild.token!.isNotEmpty) {
           currentJwtToken = activeChild.token!;
           authRepository.setJwtToken(currentJwtToken);
-          print("DEBUG: Updated token to active child's token");
+    debugPrint("DEBUG: Updated token to active child's token");
         } else {
-          print("DEBUG: Active child has no token!");
+    debugPrint("DEBUG: Active child has no token!");
         }
 
         if (activeChild.schoolCode != null &&
             activeChild.schoolCode!.isNotEmpty) {
           currentSchoolCode = activeChild.schoolCode!;
           authRepository.schoolCode = currentSchoolCode;
-          print(
+    debugPrint(
               "DEBUG: Updated schoolCode to active child's schoolCode: $currentSchoolCode");
         } else if (activeChild.school?.code != null &&
             activeChild.school!.code!.isNotEmpty) {
           currentSchoolCode = activeChild.school!.code!;
           authRepository.schoolCode = currentSchoolCode;
-          print(
+    debugPrint(
               "DEBUG: Updated schoolCode from school object: $currentSchoolCode");
         } else {
-          print("DEBUG: Active child has no school code!");
+    debugPrint("DEBUG: Active child has no school code!");
         }
 
         currentStudent = activeChild;
       } else if (AuthRepository.getIsStudentLogIn()) {
-        print("DEBUG: Processing student login");
+    debugPrint("DEBUG: Processing student login");
         currentStudent = AuthRepository.getStudentDetails();
       } else {
-        print("DEBUG: No children found or not parent login");
+    debugPrint("DEBUG: No children found or not parent login");
       }
-
-      print(
+    debugPrint(
           "DEBUG: Final values - schoolCode: '$currentSchoolCode', token: '${currentJwtToken.isEmpty ? 'EMPTY' : 'HAS_VALUE'}'");
 
       emit(
@@ -133,7 +132,7 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
     } else {
-      print("DEBUG: User not logged in");
+    debugPrint("DEBUG: User not logged in");
       emit(Unauthenticated());
     }
   }
@@ -146,9 +145,9 @@ class AuthCubit extends Cubit<AuthState> {
     required Student student,
     List<Student> children = const [],
   }) {
-    print(
+    debugPrint(
         "DEBUG authenticateUser: schoolCode='$schoolCode', jwtToken='${jwtToken.isEmpty ? 'EMPTY' : 'HAS_VALUE'}', isStudent=$isStudent");
-    print("DEBUG authenticateUser: children count=${children.length}");
+    debugPrint("DEBUG authenticateUser: children count=${children.length}");
 
     //
     authRepository.schoolCode = schoolCode;
@@ -160,10 +159,10 @@ class AuthCubit extends Cubit<AuthState> {
 
     // Save children data to persistence storage
     if (children.isNotEmpty) {
-      print("DEBUG authenticateUser: Saving children to persistence...");
+    debugPrint("DEBUG authenticateUser: Saving children to persistence...");
       authRepository.setChildrenData(children);
     } else {
-      print("DEBUG authenticateUser: No children to save");
+    debugPrint("DEBUG authenticateUser: No children to save");
     }
 
     //emit new state
@@ -177,15 +176,14 @@ class AuthCubit extends Cubit<AuthState> {
         children: children,
       ),
     );
-
-    print("DEBUG authenticateUser: Authentication completed");
+    debugPrint("DEBUG authenticateUser: Authentication completed");
   }
 
   // Method to switch to a specific child session
   void switchToChildSession(Student child) {
-    print(
+    debugPrint(
         "DEBUG switchToChildSession: Switching to child ${child.getFullName()}");
-    print(
+    debugPrint(
         "DEBUG switchToChildSession: Child token='${child.token}', schoolCode='${child.schoolCode}', school.code='${child.school?.code}'");
 
     if (state is Authenticated) {
@@ -195,8 +193,7 @@ class AuthCubit extends Cubit<AuthState> {
       // Use schoolCode field first, then fallback to school?.code
       final childSchoolCode = child.schoolCode ?? child.school?.code ?? '';
       final childToken = child.token ?? '';
-
-      print(
+    debugPrint(
           "DEBUG switchToChildSession: Setting token='$childToken', schoolCode='$childSchoolCode'");
 
       // Set the token and school code synchronously
@@ -216,8 +213,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       // Save updated children data immediately
       authRepository.setChildrenData(updatedChildren);
-
-      print(
+    debugPrint(
           "DEBUG switchToChildSession: Verifying persistence - token='${authRepository.getJwtToken()}', schoolCode='${authRepository.schoolCode}'");
 
       emit(
@@ -230,8 +226,7 @@ class AuthCubit extends Cubit<AuthState> {
           children: updatedChildren,
         ),
       );
-
-      print("DEBUG switchToChildSession: Switch completed");
+    debugPrint("DEBUG switchToChildSession: Switch completed");
     }
   }
 
@@ -292,7 +287,7 @@ class AuthCubit extends Cubit<AuthState> {
   void updateParentProfile(Guardian updated) {
     if (state is! Authenticated) return;
     final s = state as Authenticated;
-    print("UBAH PROFILE PARENT DI AUTH CUBIT");
+    debugPrint("UBAH PROFILE PARENT DI AUTH CUBIT");
     // merge semua field: gunakan copyWith
     final merged = s.parent.copyWith(
       id: updated.id,
@@ -348,3 +343,5 @@ class AuthCubit extends Cubit<AuthState> {
     ));
   }
 }
+
+

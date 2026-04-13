@@ -57,7 +57,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 5,
             // offset: Offset(0, 2),
           ),
@@ -78,8 +78,10 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                 height: boxConstraints.maxHeight - 10,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.15),
                 ),
               ),
             ),
@@ -270,7 +272,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.download,
@@ -284,7 +286,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.close,
@@ -304,7 +306,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.7),
+                                color: Colors.black.withValues(alpha: 0.7),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -348,147 +350,149 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
         pageBuilder: (BuildContext context, _, __) {
           return StatefulBuilder(
             builder: (context, setState) {
-              return WillPopScope(
-                onWillPop: () async {
+              return PopScope(
+                canPop: true,
+                onPopInvokedWithResult: (didPop, result) async {
                   // ✅ Reset orientation ke portrait saat back button
                   SystemChrome.setPreferredOrientations([
                     DeviceOrientation.portraitUp,
                   ]);
-                  return true;
                 },
                 child: GestureDetector(
-                onTap: () {
-                  // Close on tap anywhere on the screen
+                  onTap: () {
+                    // Close on tap anywhere on the screen
                     // ✅ Reset orientation sebelum pop
                     SystemChrome.setPreferredOrientations([
                       DeviceOrientation.portraitUp,
                     ]);
-                  Navigator.of(context).pop();
-                },
-                child: Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: SafeArea(
-                    child: Stack(
-                      children: [
-                        PageView.builder(
-                          controller: pageController,
-                          itemCount: videos.length,
-                          onPageChanged: (page) {
-                            setState(() {
-                              currentPage = page;
-                            });
-                          },
-                          itemBuilder: (context, currentIndex) {
-                            final galleryFile = videos[currentIndex];
-                            if (galleryFile.fileUrl == null ||
-                                galleryFile.fileUrl!.isEmpty) {
-                              return Center(
-                                  child: Text("Invalid video URL",
-                                      style: TextStyle(color: Colors.white)));
-                            }
+                    Navigator.of(context).pop();
+                  },
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: SafeArea(
+                      child: Stack(
+                        children: [
+                          PageView.builder(
+                            controller: pageController,
+                            itemCount: videos.length,
+                            onPageChanged: (page) {
+                              setState(() {
+                                currentPage = page;
+                              });
+                            },
+                            itemBuilder: (context, currentIndex) {
+                              final galleryFile = videos[currentIndex];
+                              if (galleryFile.fileUrl == null ||
+                                  galleryFile.fileUrl!.isEmpty) {
+                                return Center(
+                                    child: Text("Invalid video URL",
+                                        style: TextStyle(color: Colors.white)));
+                              }
 
-                            // Extract YouTube ID from URL
-                            String? youtubeId = YoutubePlayer.convertUrlToId(
-                                galleryFile.fileUrl!);
-                            if (youtubeId == null) {
-                              return Center(
-                                  child: Text("Invalid YouTube URL",
-                                      style: TextStyle(color: Colors.white)));
-                            }
+                              // Extract YouTube ID from URL
+                              String? youtubeId = YoutubePlayer.convertUrlToId(
+                                  galleryFile.fileUrl!);
+                              if (youtubeId == null) {
+                                return Center(
+                                    child: Text("Invalid YouTube URL",
+                                        style: TextStyle(color: Colors.white)));
+                              }
 
-                            return Center(
-                              child: GestureDetector(
-                                // Prevent taps on the video from closing
-                                onTap: () {
-                                  // Stop propagation by doing nothing
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.width *
-                                      9 /
-                                      16, // 16:9 aspect ratio
-                                  child: YoutubePlayer(
-                                    controller: YoutubePlayerController(
-                                      initialVideoId: youtubeId,
-                                      flags: const YoutubePlayerFlags(
-                                        autoPlay: false,
-                                        mute: false,
+                              return Center(
+                                child: GestureDetector(
+                                  // Prevent taps on the video from closing
+                                  onTap: () {
+                                    // Stop propagation by doing nothing
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.width *
+                                        9 /
+                                        16, // 16:9 aspect ratio
+                                    child: YoutubePlayer(
+                                      controller: YoutubePlayerController(
+                                        initialVideoId: youtubeId,
+                                        flags: const YoutubePlayerFlags(
+                                          autoPlay: false,
+                                          mute: false,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        // Title and controls
-                        Positioned(
-                          top: 16,
-                          right: 16,
-                          child: Row(
-                            children: [
-                              // Copy link button
-                              GestureDetector(
-                                onTap: () {
-                                  Clipboard.setData(ClipboardData(
-                                      text: videos[currentPage].fileUrl!));
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.link,
-                                      color: Colors.black),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              // Close button
-                              GestureDetector(
-                                onTap: () {
-                                  // ✅ Reset orientation sebelum pop
-                                  SystemChrome.setPreferredOrientations([
-                                    DeviceOrientation.portraitUp,
-                                  ]);
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.close,
-                                      color: Colors.black),
-                                ),
-                              ),
-                            ],
+                              );
+                            },
                           ),
-                        ),
-                        // Video counter
-                        Positioned(
-                          bottom: 16,
-                          left: 0,
-                          right: 0,
-                          child: Center(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                "${currentPage + 1}/${videos.length}",
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                          // Title and controls
+                          Positioned(
+                            top: 16,
+                            right: 16,
+                            child: Row(
+                              children: [
+                                // Copy link button
+                                GestureDetector(
+                                  onTap: () {
+                                    Clipboard.setData(ClipboardData(
+                                        text: videos[currentPage].fileUrl!));
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Colors.white.withValues(alpha: 0.7),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(Icons.link,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                // Close button
+                                GestureDetector(
+                                  onTap: () {
+                                    // ✅ Reset orientation sebelum pop
+                                    SystemChrome.setPreferredOrientations([
+                                      DeviceOrientation.portraitUp,
+                                    ]);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Colors.white.withValues(alpha: 0.7),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(Icons.close,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Video counter
+                          Positioned(
+                            bottom: 16,
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withValues(alpha: 0.7),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  "${currentPage + 1}/${videos.length}",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
                       ),
                     ),
                   ),
@@ -544,7 +548,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 4,
                           offset: Offset(0, 2),
                         ),
@@ -617,7 +621,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 6,
                       offset: Offset(0, 2),
                     ),
@@ -641,16 +645,6 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                       )),
                       GestureDetector(
                         onTap: () {
-                          final StudyMaterial currentPlayingVideo =
-                              StudyMaterial(
-                                  fileExtension: "",
-                                  fileUrl: galleryFile.fileUrl ?? "",
-                                  fileThumbnail: "",
-                                  fileName: "",
-                                  id: galleryFile.id ?? 0,
-                                  studyMaterialType:
-                                      StudyMaterialType.youtubeVideo);
-
                           _showFullScreenVideo(
                             context,
                             widget.gallery.getVideos().indexWhere(
@@ -722,7 +716,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: Offset(0, 3),
                       ),
@@ -764,7 +758,10 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                 ),
 
                 Divider(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.2),
                   thickness: 1,
                 ),
 

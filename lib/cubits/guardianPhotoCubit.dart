@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:eschool/data/models/guardian.dart';
@@ -33,7 +34,7 @@ class GuardianPhotoCubit extends Cubit<GuardianPhotoState> {
     XFile? file,
   }) {
     emit(GuardianPhotoInProgress());
-    print("dicubit");
+    debugPrint("dicubit");
     _repository
         .updateGuardianPhoto(
             guardianData: guardian, filePath: file != null ? file.path : "")
@@ -41,6 +42,8 @@ class GuardianPhotoCubit extends Cubit<GuardianPhotoState> {
         .catchError(
           (e) => emit(GuardianPhotoFailure(e.toString())),
         );
-    print("dicubit2");
+    debugPrint("dicubit2");
   }
 }
+
+

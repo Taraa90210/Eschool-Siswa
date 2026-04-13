@@ -1,8 +1,5 @@
-import 'package:eschool/cubits/discountCubit.dart';
-import 'package:eschool/cubits/penaltyCubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
-
 
 abstract class StudentFeesState {}
 
@@ -70,7 +67,8 @@ class StudentFeesCubit extends Cubit<StudentFeesState> {
 
       // Parse bills
       List<Bill> bills = [];
-      if (responseData['data'] != null && responseData['data']['bills'] != null) {
+      if (responseData['data'] != null &&
+          responseData['data']['bills'] != null) {
         final billsList = responseData['data']['bills'] as List;
         for (var billData in billsList) {
           try {
@@ -78,47 +76,19 @@ class StudentFeesCubit extends Cubit<StudentFeesState> {
             final int id = billData['id'] as int;
             final String name = billData['name'] as String? ?? '';
             final String? dueDate = billData['due_date'] as String?;
-            final String originalAmountStr = billData['original_amount'] as String? ?? '0';
-            final double originalAmount = double.tryParse(originalAmountStr) ?? 0.0;
+            final String originalAmountStr =
+                billData['original_amount'] as String? ?? '0';
+            final double originalAmount =
+                double.tryParse(originalAmountStr) ?? 0.0;
             final String type = billData['type'] as String? ?? '';
             final int totalAmount = billData['total_amount'] as int? ?? 0;
             final int paidAmount = billData['paid_amount'] as int? ?? 0;
-            final int remainingAmount = billData['remaining_amount'] as int? ?? 0;
+            final int remainingAmount =
+                billData['remaining_amount'] as int? ?? 0;
             final String status = billData['status'] as String? ?? 'unpaid';
 
-            // Parse discount
-            Discount? discount;
-            if (billData['discount'] != null) {
-              final discountData = billData['discount'] as Map<String, dynamic>;
-              final int percent = discountData['percent'] as int? ?? 0;
-              final int amount = discountData['amount'] as int? ?? 0;
-              final String? notes = discountData['notes'] as String?;
-              final bool hasDiscount = discountData['has_discount'] as bool? ?? false;
-              
-              discount = Discount(
-                percent: percent,
-                amount: amount,
-                notes: notes,
-                hasDiscount: hasDiscount,
-              );
-            }
-
-            // Parse penalty
-            Penalty? penalty;
-            if (billData['penalty'] != null) {
-              final penaltyData = billData['penalty'] as Map<String, dynamic>;
-              final bool isOverdue = penaltyData['is_overdue'] as bool? ?? false;
-              final int percent = penaltyData['percent'] as int? ?? 0;
-              final int amount = penaltyData['amount'] as int? ?? 0;
-              final bool hasPenalty = penaltyData['has_penalty'] as bool? ?? false;
-              
-              penalty = Penalty(
-                isOverdue: isOverdue,
-                percent: percent,
-                amount: amount,
-                hasPenalty: hasPenalty,
-              );
-            }
+            // Note: discount and penalty are passed as raw Map to Bill constructor
+            // (same format used by Bill.fromJson for consistency)
 
             // Parse payment history
             // Parse payment history
@@ -130,9 +100,11 @@ class StudentFeesCubit extends Cubit<StudentFeesState> {
                   final String? date = paymentData['date'] as String?;
                   final String? amountStr = paymentData['amount'] as String?;
                   final double? amount = double.tryParse(amountStr ?? '0');
-                  final String? paymentMethod = paymentData['payment_method'] as String?;
+                  final String? paymentMethod =
+                      paymentData['payment_method'] as String?;
                   final String? status = paymentData['status'] as String?;
-                  final String? proofImage = paymentData['proof_image'] as String?;
+                  final String? proofImage =
+                      paymentData['proof_image'] as String?;
 
                   paymentHistory.add(PaymentHistory(
                     date: date,
@@ -169,8 +141,10 @@ class StudentFeesCubit extends Cubit<StudentFeesState> {
 
       // Parse payment methods
       List<PaymentMethod> paymentMethods = [];
-      if (responseData['data'] != null && responseData['data']['payment_method'] != null) {
-        final paymentMethodsList = responseData['data']['payment_method'] as List;
+      if (responseData['data'] != null &&
+          responseData['data']['payment_method'] != null) {
+        final paymentMethodsList =
+            responseData['data']['payment_method'] as List;
         for (var methodData in paymentMethodsList) {
           try {
             paymentMethods.add(PaymentMethod.fromJson(methodData));

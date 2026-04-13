@@ -10,9 +10,6 @@ class PaymentSubmissionRepository {
   // ====== Konfigurasi kompres global (target 10 KB) ======
   static const int _kTargetBytes = 10 * 1024; // 10 KB
   static const int _kStartMaxDim = 720; // mulai resize dari 720 px
-  static const int _kMinQuality = 20; // kualitas minimum JPEG
-  static const int _kFloorDim = 96; // sisi terpanjang minimum
-  static const bool _kAllowGray = true; // boleh grayscale jika mentok
 
   // Formatter ukuran untuk logging
   String _fmtBytes(int bytes) {

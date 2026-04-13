@@ -136,7 +136,7 @@ class ExamOnlineKeyBottomsheetContainerState
         vertical: 10,
       ),
       child: Divider(
-        color: Utils.getColorScheme(context).secondary.withOpacity(0.3),
+        color: Utils.getColorScheme(context).secondary.withValues(alpha: 0.3),
         thickness: 1,
       ),
     );
@@ -171,7 +171,7 @@ class ExamOnlineKeyBottomsheetContainerState
         color: Utils.getColorScheme(context).surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -205,12 +205,12 @@ class ExamOnlineKeyBottomsheetContainerState
               border: InputBorder.none,
               prefixIcon: Icon(
                 Icons.vpn_key_rounded,
-                color: Utils.getColorScheme(context).primary.withOpacity(0.7),
+                color: Utils.getColorScheme(context).primary.withValues(alpha: 0.7),
                 size: 20,
               ),
               hintText: "XX...",
               hintStyle: TextStyle(
-                color: Theme.of(context).hintColor.withOpacity(0.5),
+                color: Theme.of(context).hintColor.withValues(alpha: 0.5),
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -336,7 +336,7 @@ class ExamOnlineKeyBottomsheetContainerState
             color: Theme.of(context).scaffoldBackgroundColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 10,
                 spreadRadius: 1,
               ),
@@ -422,7 +422,7 @@ class ExamOnlineKeyBottomsheetContainerState
                                           decoration: BoxDecoration(
                                             color: Utils.getColorScheme(context)
                                                 .error
-                                                .withOpacity(0.1),
+                                                .withValues(alpha: 0.1),
                                             borderRadius:
                                                 BorderRadius.circular(15),
                                           ),

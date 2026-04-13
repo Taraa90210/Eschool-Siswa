@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> {
         print("Error getting token: $e");
       }
     }
-    // TODO: kirim token ke backend Laravel
+    // Note: kirim token ke backend Laravel
   }
 
   @override

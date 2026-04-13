@@ -1,52 +1,47 @@
+/// FeeType Model
+///
+/// Maps to the 'fees_types' table in the database.
+/// Used for dynamic fee configuration from the backend.
 class FeeType {
-  final int? id;
-  final String? name;
-  final String? description;
-  final int? schoolId;
-  final String? createdAt;
-  final String? updatedAt;
+  final int id;
+  final String name;
+  final String code; // e.g., 'VA', 'QRIS', 'EW'
+  final double flatFee;
+  final double percentFee;
+  final bool isActive;
 
   FeeType({
-    this.id,
-    this.name,
-    this.description,
-    this.schoolId,
-    this.createdAt,
-    this.updatedAt,
+    required this.id,
+    required this.name,
+    required this.code,
+    this.flatFee = 0.0,
+    this.percentFee = 0.0,
+    this.isActive = true,
   });
 
-  FeeType copyWith({
-    int? id,
-    String? name,
-    String? description,
-    int? schoolId,
-    String? createdAt,
-    String? updatedAt,
-  }) {
+  factory FeeType.fromJson(Map<String, dynamic> json) {
     return FeeType(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      schoolId: schoolId ?? this.schoolId,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      id: json['id'],
+      name: json['name'] ?? '',
+      code: json['code'] ?? '',
+      flatFee: double.tryParse(json['flat_fee'].toString()) ?? 0.0,
+      percentFee: double.tryParse(json['percent_fee'].toString()) ?? 0.0,
+      isActive: json['is_active'] == 1 || json['is_active'] == true,
     );
   }
 
-  FeeType.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as int?,
-        name = json['name'] as String?,
-        description = json['description'] as String?,
-        schoolId = json['school_id'] as int?,
-        createdAt = json['created_at'] as String?,
-        updatedAt = json['updated_at'] as String?;
+  double calculateFee(double amount) {
+    return flatFee + (amount * (percentFee / 100));
+  }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'description': description,
-        'school_id': schoolId,
-        'created_at': createdAt,
-        'updated_at': updatedAt
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'code': code,
+      'flat_fee': flatFee,
+      'percent_fee': percentFee,
+      'is_active': isActive ? 1 : 0,
+    };
+  }
 }

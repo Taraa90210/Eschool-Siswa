@@ -87,7 +87,7 @@ class _RequestResetPasswordBottomsheetState
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: 10,
             offset: const Offset(0, -2),
@@ -330,12 +330,12 @@ class _RequestResetPasswordBottomsheetState
                   icon: Icon(
                     Icons.arrow_back_rounded,
                     size: 18,
-                    color: _primaryRed.withOpacity(0.8),
+                    color: _primaryRed.withValues(alpha: 0.8),
                   ),
                   label: Text(
                     "Kembali",
                     style: TextStyle(
-                      color: _primaryRed.withOpacity(0.8),
+                      color: _primaryRed.withValues(alpha: 0.8),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -372,7 +372,7 @@ class _RequestResetPasswordBottomsheetState
         boxShadow: isFocused
             ? [
                 BoxShadow(
-                  color: _primaryRed.withOpacity(0.2),
+                  color: _primaryRed.withValues(alpha: 0.2),
                   spreadRadius: 2,
                   blurRadius: 8,
                   offset: const Offset(0, 2),
@@ -380,7 +380,7 @@ class _RequestResetPasswordBottomsheetState
               ]
             : [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: 0.1),
                   spreadRadius: 1,
                   blurRadius: 3,
                   offset: const Offset(0, 1),
@@ -475,7 +475,7 @@ class _RequestResetPasswordBottomsheetState
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: _primaryRed.withOpacity(0.2),
+                    color: _primaryRed.withValues(alpha: 0.2),
                     spreadRadius: 2,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -483,7 +483,7 @@ class _RequestResetPasswordBottomsheetState
                 ]
               : [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withValues(alpha: 0.1),
                     spreadRadius: 1,
                     blurRadius: 3,
                     offset: const Offset(0, 1),
@@ -576,7 +576,7 @@ class _RequestResetPasswordBottomsheetState
           borderRadius: BorderRadius.circular(50),
         ),
         elevation: isLoading ? 0 : 5,
-        shadowColor: _primaryRed.withOpacity(0.5),
+        shadowColor: _primaryRed.withValues(alpha: 0.5),
         minimumSize: const Size(200, 55),
       ),
       child: isLoading

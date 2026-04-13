@@ -47,7 +47,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
 
   // Animations for background elements
   late final Animation<double> _backgroundFadeAnimation;
-  late final Animation<double> _blurAnimation;
 
   // Animations for form elements
   late final Animation<Offset> _formSlideAnimation;
@@ -62,7 +61,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
 
   // Logo animation
   late final Animation<double> _logoScaleAnimation;
-  late final Animation<double> _logoRotateAnimation;
+
   late final Animation<double> _pulseAnimation;
 
   // Text controllers
@@ -96,8 +95,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
   // Colors
   final Color _primaryRed = const Color(0xFFE63946);
   final Color _secondaryRed = const Color(0xFFFF8A80);
-  final Color _lightRed = const Color(0xFFF8EDED);
-  final Color _textDark = const Color(0xFF1D3557);
+
   final Color _bgWhite = const Color(0xFFF1FAEE);
 
   @override
@@ -116,8 +114,10 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       setState(() {
         _rememberMe = true;
         _schoolCodeController.text = _authRepository.getSavedSchoolCode();
-        _grNumberTextEditingController.text = _authRepository.getSavedGrNumber();
-        _passwordTextEditingController.text = _authRepository.getSavedStudentPassword();
+        _grNumberTextEditingController.text =
+            _authRepository.getSavedGrNumber();
+        _passwordTextEditingController.text =
+            _authRepository.getSavedStudentPassword();
       });
     }
   }
@@ -154,13 +154,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       CurvedAnimation(
         parent: _backgroundAnimationController,
         curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-      ),
-    );
-
-    _blurAnimation = Tween<double>(begin: 0.0, end: 3.0).animate(
-      CurvedAnimation(
-        parent: _backgroundAnimationController,
-        curve: const Interval(0.3, 1.0, curve: Curves.easeOut),
       ),
     );
 
@@ -247,13 +240,6 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
       CurvedAnimation(
         parent: _logoAnimationController,
         curve: const Interval(0.0, 0.6, curve: Curves.easeInOut),
-      ),
-    );
-
-    _logoRotateAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
-      CurvedAnimation(
-        parent: _logoAnimationController,
-        curve: const Interval(0.3, 0.6, curve: Curves.elasticOut),
       ),
     );
 
@@ -345,8 +331,10 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
     if (_rememberMe) {
       _authRepository.setRememberMeStudent(true);
       _authRepository.setSavedSchoolCode(_schoolCodeController.text.trim());
-      _authRepository.setSavedGrNumber(_grNumberTextEditingController.text.trim());
-      _authRepository.setSavedStudentPassword(_passwordTextEditingController.text.trim());
+      _authRepository
+          .setSavedGrNumber(_grNumberTextEditingController.text.trim());
+      _authRepository
+          .setSavedStudentPassword(_passwordTextEditingController.text.trim());
     } else {
       _authRepository.clearStudentCredentials();
     }
@@ -411,9 +399,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                _primaryRed.withOpacity(0.9),
-                _primaryRed.withRed((_primaryRed.red * 0.85).round()),
-                _secondaryRed.withOpacity(0.9),
+                _primaryRed.withValues(alpha: 0.9),
+                _primaryRed.withRed((_primaryRed.r * 255.0 * 0.85).round()),
+                _secondaryRed.withValues(alpha: 0.9),
               ],
               stops: const [0.0, 0.6, 1.0],
             ),
@@ -425,7 +413,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                 opacity: _backgroundFadeAnimation.value * 0.7,
                 child: CustomPaint(
                   painter: ModernBackgroundPatternPainter(
-                    color: Colors.white.withOpacity(0.09),
+                    color: Colors.white.withValues(alpha: 0.09),
                   ),
                   size: Size.infinite,
                 ),
@@ -438,7 +426,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               //     return CustomPaint(
               //       painter: EnhancedFloatingParticlesPainter(
               //         animation: _floatingParticlesController.value,
-              //         particleColor: Colors.white.withOpacity(0.09),
+              //         particleColor: Colors.white.withValues(alpha: 0.09),
               //       ),
               //       size: Size.infinite,
               //     );
@@ -459,9 +447,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                         height: 200,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _secondaryRed.withOpacity(0.3),
+                          color: _secondaryRed.withValues(alpha: 0.3),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             width: 3,
                           ),
                         ),
@@ -484,9 +472,9 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                         height: 100,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _secondaryRed.withOpacity(0.3),
+                          color: _secondaryRed.withValues(alpha: 0.3),
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             width: 3,
                           ),
                         ),
@@ -510,11 +498,11 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.85),
+            color: Colors.white.withValues(alpha: 0.85),
             borderRadius: BorderRadius.circular(24.0),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 10,
                 spreadRadius: 1,
                 offset: const Offset(0, 5),
@@ -554,7 +542,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               color: _bgWhite,
               boxShadow: [
                 BoxShadow(
-                  color: _primaryRed.withOpacity(0.3),
+                  color: _primaryRed.withValues(alpha: 0.3),
                   blurRadius: 15,
                   spreadRadius: 3,
                   offset: const Offset(0, 5),
@@ -569,7 +557,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
                     colors: [
-                      _primaryRed.withOpacity(0.9),
+                      _primaryRed.withValues(alpha: 0.9),
                       _primaryRed,
                     ],
                     center: Alignment.topLeft,
@@ -690,19 +678,21 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
             try {
               final authBox = Hive.box(authBoxKey);
               final pendingRoute = authBox.get(pendingNotificationRouteKey);
-              final pendingArguments = authBox.get(pendingNotificationArgumentsKey);
-              
+              final pendingArguments =
+                  authBox.get(pendingNotificationArgumentsKey);
+
               if (pendingRoute != null && pendingRoute is String) {
-                debugPrint('🔔 Login berhasil! Redirect ke pending notification: $pendingRoute');
+                debugPrint(
+                    '🔔 Login berhasil! Redirect ke pending notification: $pendingRoute');
                 debugPrint('🔔 Arguments: $pendingArguments');
-                
+
                 // Clear pending notification
                 authBox.delete(pendingNotificationRouteKey);
                 authBox.delete(pendingNotificationArgumentsKey);
-                
+
                 // Navigate to home first, then to pending notification
                 Get.offNamedUntil(Routes.home, (Route<dynamic> route) => false);
-                
+
                 // Delay untuk memastikan home screen sudah ready
                 Future.delayed(const Duration(milliseconds: 500), () {
                   if (pendingArguments != null && pendingArguments is Map) {
@@ -723,7 +713,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
           } else if (state is SignInFailure) {
             Utils.showCustomSnackBar(
               context: context,
-              errorMessage: double.tryParse(state.errorMessage ?? "") != null
+              errorMessage: double.tryParse(state.errorMessage) != null
                   ? Utils.getErrorMessageFromErrorCode(
                       context, state.errorMessage)
                   : state.errorMessage,
@@ -740,7 +730,7 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: _primaryRed.withOpacity(0.3),
+                  color: _primaryRed.withValues(alpha: 0.3),
                   blurRadius: 15,
                   offset: const Offset(0, 8),
                   spreadRadius: 1,
@@ -873,14 +863,14 @@ class _StudentLoginScreenState extends State<StudentLoginScreen>
           boxShadow: isFocused
               ? [
                   BoxShadow(
-                    color: _primaryRed.withOpacity(0.25),
+                    color: _primaryRed.withValues(alpha: 0.25),
                     blurRadius: 15,
                     offset: const Offset(0, 5),
                   )
                 ]
               : [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   )
@@ -1112,7 +1102,7 @@ class ModernBackgroundPatternPainter extends CustomPainter {
       final double radius = 25 + (i % 3) * 15;
 
       final circlePaint = Paint()
-        ..color = color.withOpacity(0.08)
+        ..color = color.withValues(alpha: 0.08)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 0.8;
 
@@ -1136,7 +1126,7 @@ class EnhancedFloatingParticlesPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final random = Random(42);
+    // final custom random = Random(42);
 
     for (int i = 0; i < particleCount; i++) {
       final seed = i * 10;
@@ -1155,7 +1145,7 @@ class EnhancedFloatingParticlesPainter extends CustomPainter {
       final opacity = randomSize.nextDouble() * 0.5 + 0.3;
 
       final paint = Paint()
-        ..color = particleColor.withOpacity(opacity)
+        ..color = particleColor.withValues(alpha: opacity)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(Offset(x, y), radius, paint);
@@ -1163,7 +1153,7 @@ class EnhancedFloatingParticlesPainter extends CustomPainter {
       // Add glow effect to some particles
       if (i % 3 == 0) {
         final glowPaint = Paint()
-          ..color = particleColor.withOpacity(opacity * 0.3)
+          ..color = particleColor.withValues(alpha: opacity * 0.3)
           ..style = PaintingStyle.fill
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
 

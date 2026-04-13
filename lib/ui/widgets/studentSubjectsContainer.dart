@@ -58,7 +58,7 @@ class StudentSubjectsContainer extends StatelessWidget {
                 // Menambahkan ikon untuk memperjelas bagian
                 Icon(
                   FontAwesomeIcons.bookOpen,
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                   size: 22.0,
                 ),
                 SizedBox(width: 10),
@@ -79,7 +79,7 @@ class StudentSubjectsContainer extends StatelessWidget {
             children: [
               Icon(
                 FontAwesomeIcons.bookOpen,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
                 size: 22.0,
               ),
               SizedBox(width: 10),
@@ -168,7 +168,7 @@ class StudentSubjectsContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
+                    color: Colors.black.withValues(alpha: 0.25),
                     blurRadius: 7,
                     spreadRadius: 1,
                     offset: const Offset(0, 1),

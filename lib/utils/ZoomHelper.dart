@@ -13,7 +13,7 @@ void showBlurZoomImagePreview(
     context: context,
     barrierLabel: 'ImagePreview',
     barrierDismissible: true, // tap di luar untuk tutup
-    barrierColor: Colors.black.withOpacity(0.25), // gelapkan latar
+    barrierColor: Colors.black.withValues(alpha: 0.25), // gelapkan latar
     transitionDuration: const Duration(milliseconds: 220),
     pageBuilder: (ctx, anim1, anim2) {
       return GestureDetector(
@@ -25,7 +25,7 @@ void showBlurZoomImagePreview(
             Positioned.fill(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-                child: Container(color: Colors.black.withOpacity(0.20)),
+                child: Container(color: Colors.black.withValues(alpha: 0.20)),
               ),
             ),
 
@@ -50,7 +50,7 @@ void showBlurZoomImagePreview(
               child: IconButton(
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
-                    Colors.black.withOpacity(0.5),
+                    Colors.black.withValues(alpha: 0.5),
                   ),
                 ),
                 icon: const Icon(Icons.close, color: Colors.white),

@@ -24,7 +24,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
       required Menu menu}) {
     final Color primaryRed = const Color(0xFFE57373);
     final Color lightRed = const Color(0xFFFFCDD2);
-    final Color darkRed = const Color(0xFFD32F2F);
+    // final Color darkRed = const Color(0xFFD32F2F);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -42,7 +42,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                 border: Border.all(
                   color: primaryRed,
                 ),
-                color: lightRed.withOpacity(0.2),
+                color: lightRed.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(15.0),
               ),
               margin: EdgeInsets.symmetric(
@@ -56,7 +56,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               width: boxConstraints.maxWidth * (0.3),
-                child: Text(
+              child: Text(
                 Utils.getTranslatedLabel(menu.title),
                 maxLines: 1,
                 textAlign: TextAlign.center,
@@ -66,7 +66,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                   wordSpacing: 0.0,
                 ),
                 softWrap: false,
-                ),
+              ),
             )
           ],
         ),
@@ -77,14 +77,16 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color primaryRed = const Color(0xFFE57373);
-    
+
     // Hitung tinggi navbar yang lebih akurat
-    final double navbarTotalHeight = 80.0; // 64px (container) + 16px (margin bottom)
+    final double navbarTotalHeight =
+        80.0; // 64px (container) + 16px (margin bottom)
 
     return Container(
       constraints: BoxConstraints(
         // maxHeight: MediaQuery.of(context).size.height * (0.7), // Dikurangi dari 0.95 ke 0.7
-        minHeight: MediaQuery.of(context).size.height * (0.25), // Dikurangi dari 0.3 ke 0.25
+        minHeight: MediaQuery.of(context).size.height *
+            (0.25), // Dikurangi dari 0.3 ke 0.25
       ),
       padding: EdgeInsets.only(
         top: 15.0, // Dikurangi dari 20.0 ke 15.0
@@ -101,7 +103,8 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, -3),
           ),
@@ -110,7 +113,8 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, boxConstraints) {
           return SingleChildScrollView(
-            physics: const ClampingScrollPhysics(), // Ubah ke ClampingScrollPhysics
+            physics:
+                const ClampingScrollPhysics(), // Ubah ke ClampingScrollPhysics
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -120,12 +124,13 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                   child: Container(
                     width: 40,
                     height: 4,
-                    margin: const EdgeInsets.only(bottom: 15), // Dikurangi dari 20 ke 15
+                    margin: const EdgeInsets.only(
+                        bottom: 15), // Dikurangi dari 20 ke 15
                     decoration: BoxDecoration(
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
@@ -140,13 +145,14 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                     color: Theme.of(context)
                         .colorScheme
                         .primary
-                        .withOpacity(0.05),
+                        .withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
                     children: [
                       Container(
-                        height: boxConstraints.maxWidth * (0.15), // Dikurangi dari 0.18 ke 0.15
+                        height: boxConstraints.maxWidth *
+                            (0.15), // Dikurangi dari 0.18 ke 0.15
                         width: boxConstraints.maxWidth * (0.15),
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -154,17 +160,18 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.5),
+                                .withValues(alpha: 0.5),
                           ),
                           borderRadius: BorderRadius.circular(
-                            boxConstraints.maxWidth * (0.075), // Sesuaikan dengan ukuran baru
+                            boxConstraints.maxWidth *
+                                (0.075), // Sesuaikan dengan ukuran baru
                           ),
                           boxShadow: [
                             BoxShadow(
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.15),
+                                  .withValues(alpha: 0.15),
                               blurRadius: 8,
                               spreadRadius: 1,
                             ),
@@ -180,7 +187,8 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        width: boxConstraints.maxWidth * (0.04), // Dikurangi dari 0.05 ke 0.04
+                        width: boxConstraints.maxWidth *
+                            (0.04), // Dikurangi dari 0.05 ke 0.04
                       ),
                       Expanded(
                         child: Column(
@@ -194,9 +202,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .secondary,
+                                color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15.0, // Dikurangi dari 16.0 ke 15.0
                               ),
@@ -210,7 +216,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -224,7 +230,8 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 13.0, // Dikurangi dari 14.0 ke 13.0
+                                      fontSize:
+                                          13.0, // Dikurangi dari 14.0 ke 13.0
                                       fontWeight: FontWeight.w400,
                                       color: Theme.of(context)
                                           .colorScheme
@@ -243,7 +250,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -252,7 +259,8 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 13.0, // Dikurangi dari 14.0 ke 13.0
+                                      fontSize:
+                                          13.0, // Dikurangi dari 14.0 ke 13.0
                                       fontWeight: FontWeight.w400,
                                       color: Theme.of(context)
                                           .colorScheme
@@ -269,7 +277,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.1),
+                            .withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
                         child: InkWell(
                           onTap: () async {
@@ -292,7 +300,8 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                 ),
 
                 SizedBox(
-                  height: boxConstraints.maxWidth * (0.04), // Dikurangi dari 0.05 ke 0.04
+                  height: boxConstraints.maxWidth *
+                      (0.04), // Dikurangi dari 0.05 ke 0.04
                 ),
 
                 // Menu items dengan padding yang lebih kecil
@@ -311,7 +320,7 @@ class MoreMenuBottomsheetContainer extends StatelessWidget {
                       )
                       .toList(),
                 ),
-                
+
                 const SizedBox(height: 15), // Spacing tambahan yang lebih kecil
               ],
             ),

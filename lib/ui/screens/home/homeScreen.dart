@@ -140,7 +140,6 @@ class HomeScreenState extends State<HomeScreen>
   );
 
   late int _currentSelectedBottomNavIndex = 0;
-  late int _previousSelectedBottmNavIndex = -1;
 
   //index of opened homeBottomsheet menu
   late int _currentlyOpenMenuIndex = -1;
@@ -271,7 +270,7 @@ class HomeScreenState extends State<HomeScreen>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    final bottomInset = View.of(context).viewInsets.bottom;
     final newValue = bottomInset > 0.0;
 
     if (newValue != _isKeyboardVisible) {
@@ -346,11 +345,6 @@ class HomeScreenState extends State<HomeScreen>
     _bottomNavItemTitlesAnimationController[_currentSelectedBottomNavIndex]
         .forward();
 
-    // Need to assign previous selected bottom index only if menu is close
-    if (!_isMoreMenuOpen && _currentlyOpenMenuIndex == -1) {
-      _previousSelectedBottmNavIndex = _currentSelectedBottomNavIndex;
-    }
-
     // Change current selected bottom index
     setState(() {
       _currentSelectedBottomNavIndex = index;
@@ -407,7 +401,7 @@ class HomeScreenState extends State<HomeScreen>
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 offset: const Offset(0, 3),
                 blurRadius: 15,
                 spreadRadius: 1,
@@ -416,7 +410,7 @@ class HomeScreenState extends State<HomeScreen>
             gradient: LinearGradient(
               colors: [
                 Colors.white,
-                Theme.of(context).colorScheme.surface.withOpacity(0.9),
+                Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -469,9 +463,9 @@ class HomeScreenState extends State<HomeScreen>
                                 index == _bottomNavItems.length - 1;
                             final bool isActiveTab =
                                 index == _currentSelectedBottomNavIndex;
-                            final bool isMenuActive = isMenuIcon &&
-                                (_isMoreMenuOpen ||
-                                    _currentlyOpenMenuIndex != -1);
+                            // final bool isMenuActive = isMenuIcon &&
+                            //     (_isMoreMenuOpen ||
+                            //         _currentlyOpenMenuIndex != -1);
 
                             // Only hide the icon that has the floating bubble
                             final bool shouldHideIcon = (_isMoreMenuOpen ||
@@ -492,9 +486,11 @@ class HomeScreenState extends State<HomeScreen>
                                   opacity: shouldHideIcon ? 0.0 : 1.0,
                                   child: SvgPicture.asset(
                                     _bottomNavItems[index].disableImageUrl,
-                                    color: shouldHideIcon
-                                        ? Colors.transparent
-                                        : Colors.grey[400],
+                                    colorFilter: ColorFilter.mode(
+                                        shouldHideIcon
+                                            ? Colors.transparent
+                                            : Colors.grey[400]!,
+                                        BlendMode.srcIn),
                                     width: 24,
                                     height: 24,
                                   ),
@@ -530,7 +526,7 @@ class HomeScreenState extends State<HomeScreen>
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.3),
+                                        .withValues(alpha: 0.3),
                                     blurRadius: 12,
                                     spreadRadius: 0,
                                     offset: const Offset(0, 4),
@@ -550,11 +546,11 @@ class HomeScreenState extends State<HomeScreen>
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.75),
+                                        .withValues(alpha: 0.75),
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.9),
+                                        .withValues(alpha: 0.9),
                                   ],
                                 ),
                                 shape: BoxShape.circle,
@@ -566,7 +562,8 @@ class HomeScreenState extends State<HomeScreen>
                                           ? _bottomNavItems.length - 1
                                           : _currentSelectedBottomNavIndex]
                                       .activeImageUrl,
-                                  color: Colors.white,
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.white, BlendMode.srcIn),
                                   fit: BoxFit.contain,
                                   width: 26,
                                   height: 26,
@@ -595,7 +592,7 @@ class HomeScreenState extends State<HomeScreen>
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.75),
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.75),
       ),
     );
   }
@@ -694,13 +691,7 @@ class HomeScreenState extends State<HomeScreen>
 
   // This method is no longer used after refactoring
   // Kept for backward compatibility if needed
-  @Deprecated('No longer needed after IndexedStack refactoring')
-  Widget _buildBottomSheetBackgroundContent() {
-    if (_currentlyOpenMenuIndex != -1) {
-      return _buildMenuItemContainer();
-    }
-    return const SizedBox();
-  }
+  // _buildBottomSheetBackgroundContent removed
 
   @override
   Widget build(BuildContext context) {
@@ -891,8 +882,8 @@ class HomeScreenState extends State<HomeScreen>
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              primaryColor.withOpacity(0.9),
-                              primaryColor.withOpacity(0.8),
+                              primaryColor.withValues(alpha: 0.9),
+                              primaryColor.withValues(alpha: 0.8),
                               primaryColor,
                             ],
                             stops: [0.0, 0.5, 1.0],
@@ -912,7 +903,7 @@ class HomeScreenState extends State<HomeScreen>
                           shadowColor: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           color: Theme.of(context).scaffoldBackgroundColor,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(

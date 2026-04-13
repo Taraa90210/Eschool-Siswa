@@ -241,9 +241,6 @@ class StudentRepository {
         useAuthToken: true,
       );
 
-      var jsonString = jsonEncode(queryParameters);
-      var prettyJson = JsonEncoder.withIndent('  ').convert(queryParameters);
-
       return {
         "attendanceDays": (result['data']['attendance'] as List)
             .map((attendance) => AttendanceDay.fromJson(Map.from(attendance)))

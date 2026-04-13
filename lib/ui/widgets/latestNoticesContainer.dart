@@ -33,7 +33,7 @@ class LatestNoticiesContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       color: Colors.white,
-      shadowColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+      shadowColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Stack(
@@ -54,7 +54,7 @@ class LatestNoticiesContainer extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(isEmpty ? 0.02 : 0.05),
+                          .withValues(alpha: isEmpty ? 0.02 : 0.05),
                     ),
                   );
                 },
@@ -75,7 +75,7 @@ class LatestNoticiesContainer extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .primary
-                          .withOpacity(isEmpty ? 0.03 : 0.08),
+                          .withValues(alpha: isEmpty ? 0.03 : 0.08),
                     ),
                   );
                 },
@@ -107,7 +107,7 @@ class LatestNoticiesContainer extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.1),
+                                .withValues(alpha: 0.1),
                             thickness: 1,
                           ),
                         ),
@@ -134,7 +134,7 @@ class LatestNoticiesContainer extends StatelessWidget {
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary
-                                          .withOpacity(0.7),
+                                          .withValues(alpha: 0.7),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -198,7 +198,7 @@ class LatestNoticiesContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 6,
               offset: const Offset(0, 2),
             ),
@@ -220,7 +220,7 @@ class LatestNoticiesContainer extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -249,7 +249,7 @@ class LatestNoticiesContainer extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -332,7 +332,7 @@ class LatestNoticiesContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
+                  color: Colors.black.withValues(alpha: 0.03),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),

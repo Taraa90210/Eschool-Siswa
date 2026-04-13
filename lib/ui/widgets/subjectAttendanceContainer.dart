@@ -187,7 +187,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.7),
+                                    color: Colors.white.withValues(alpha: 0.7),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(Icons.close,
@@ -215,394 +215,6 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
     );
   }
 
-  Widget _buildDateSelector() {
-    // If fixedDate is provided, show a simpler header without date picker
-    if (widget.fixedDate != null) {
-      return Container(
-        margin: EdgeInsets.fromLTRB(20, 0, 20, 16),
-        decoration: BoxDecoration(
-          color: surfaceColor,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 15,
-              spreadRadius: 2,
-              offset: Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: lightColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(Icons.calendar_today,
-                        color: primaryColor, size: 20),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          Utils.getTranslatedLabel(subjectAttendanceKey),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: accentColor,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          dateFormatter.format(selectedDate),
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    // Original interactive date selector
-    return Container(
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 16),
-      decoration: BoxDecoration(
-        color: surfaceColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 15,
-            spreadRadius: 2,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 20, top: 20, right: 20),
-            child: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: lightColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child:
-                      Icon(Icons.calendar_today, color: primaryColor, size: 20),
-                ),
-                SizedBox(width: 12),
-                Text(
-                  'Jadwal Pelajaran',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: accentColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 16),
-          Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            child: Row(
-              children: [
-                _buildDateNavigationButton(
-                  icon: Icons.chevron_left,
-                  onTap: () {
-                    setState(() {
-                      selectedDate = selectedDate.subtract(Duration(days: 1));
-                      _fetchSubjectAttendance();
-                    });
-                    _animationController.forward(from: 0.0);
-                  },
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () async {
-                      final DateTime? picked = await showDatePicker(
-                        context: context,
-                        initialDate: selectedDate,
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime.now(),
-                        builder: (context, child) {
-                          return Theme(
-                            data: ThemeData.light().copyWith(
-                              colorScheme: ColorScheme.light(
-                                primary: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.8),
-                                onPrimary: Colors.white,
-                                surface: surfaceColor,
-                                onSurface: Colors.grey[800] ?? Colors.grey,
-                              ),
-                              textButtonTheme: TextButtonThemeData(
-                                style: TextButton.styleFrom(
-                                  foregroundColor: primaryColor,
-                                  textStyle: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                  ),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 8),
-                                ),
-                              ),
-                              datePickerTheme: DatePickerThemeData(
-                                headerBackgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                headerForegroundColor: Colors.white,
-                                headerHeadlineStyle: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                dayOverlayColor:
-                                    WidgetStateProperty.resolveWith(
-                                  (states) =>
-                                      states.contains(WidgetState.selected)
-                                          ? primaryColor.withOpacity(0.2)
-                                          : null,
-                                ),
-                                dayStyle:
-                                    TextStyle(fontWeight: FontWeight.w500),
-                                todayForegroundColor:
-                                    WidgetStateProperty.all(primaryColor),
-                                todayBackgroundColor: WidgetStateProperty.all(
-                                    lightColor.withOpacity(0.7)),
-                                yearOverlayColor:
-                                    WidgetStateProperty.resolveWith(
-                                  (states) =>
-                                      states.contains(WidgetState.selected)
-                                          ? primaryColor.withOpacity(0.2)
-                                          : null,
-                                ),
-                                yearStyle:
-                                    TextStyle(fontWeight: FontWeight.w500),
-                                surfaceTintColor: Colors.transparent,
-                                backgroundColor: Colors.white,
-                                shadowColor: Colors.black.withOpacity(0.1),
-                                dividerColor: Colors.transparent,
-                                // Move buttons higher with button bar theme
-                                rangePickerBackgroundColor: Colors.white,
-                                rangeSelectionBackgroundColor: lightColor,
-                                rangeSelectionOverlayColor:
-                                    WidgetStateProperty.all(
-                                        primaryColor.withOpacity(0.1)),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                // Adjust the input decoration theme
-                                inputDecorationTheme: InputDecorationTheme(
-                                  constraints: BoxConstraints(
-                                    maxWidth:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 12),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        color: Colors.grey.withOpacity(0.3)),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  errorStyle: TextStyle(
-                                    fontSize: 12,
-                                    height: 0.8,
-                                  ),
-                                ),
-                              ), dialogTheme: DialogThemeData(backgroundColor: Colors.transparent),
-                            ),
-                            child: MediaQuery(
-                              data: MediaQuery.of(context).copyWith(
-                                textScaler: TextScaler.linear(1.0),
-                              ),
-                              child: Builder(
-                                builder: (context) => Dialog(
-                                  insetPadding: EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                    vertical: MediaQuery.of(context)
-                                                .viewInsets
-                                                .bottom >
-                                            0
-                                        ? 16.0
-                                        : 24.0,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxHeight:
-                                          MediaQuery.of(context).size.height *
-                                              (MediaQuery.of(context)
-                                                          .viewInsets
-                                                          .bottom >
-                                                      0
-                                                  ? 0.7
-                                                  : 0.85),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Flexible(
-                                          child: SingleChildScrollView(
-                                            physics:
-                                                const ClampingScrollPhysics(),
-                                            child: child,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                      if (picked != null && picked != selectedDate) {
-                        setState(() {
-                          selectedDate = picked;
-                          _fetchSubjectAttendance();
-                        });
-                        _animationController.forward(from: 0.0);
-                      }
-                    },
-                    child: AnimatedBuilder(
-                      animation: _animationController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: 1.0 + _animationController.value * 0.05,
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              gradient: LinearGradient(
-                                colors: [
-                                  lightColor,
-                                  Colors.white,
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: primaryColor.withOpacity(0.1),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                              border: Border.all(
-                                  color: primaryColor.withOpacity(0.15)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: primaryColor.withOpacity(0.1),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.event_outlined,
-                                    color: primaryColor,
-                                    size: 16,
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  dateFormatter.format(selectedDate),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: accentColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                _buildDateNavigationButton(
-                  icon: Icons.chevron_right,
-                  isEnabled: selectedDate.isBefore(DateTime.now()),
-                  onTap: selectedDate.isBefore(DateTime.now())
-                      ? () {
-                          setState(() {
-                            selectedDate = selectedDate.add(Duration(days: 1));
-                            _fetchSubjectAttendance();
-                          });
-                          _animationController.forward(from: 0.0);
-                        }
-                      : null,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDateNavigationButton({
-    required IconData icon,
-    bool isEnabled = true,
-    VoidCallback? onTap,
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: isEnabled ? lightColor : Colors.grey.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: isEnabled
-                  ? primaryColor.withOpacity(0.2)
-                  : Colors.grey.withOpacity(0.2),
-            ),
-          ),
-          child: Icon(
-            icon,
-            color: isEnabled ? primaryColor : Colors.grey,
-            size: 20,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildSubjectAttendanceItem(SubjectAttendance attendance, int index) {
     return AnimationConfiguration.staggeredList(
       position: index,
@@ -613,7 +225,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
           child: Card(
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             elevation: 4,
-            shadowColor: Colors.black.withOpacity(0.1),
+            shadowColor: Colors.black.withValues(alpha: 0.1),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: Container(
@@ -621,7 +233,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 8,
                     spreadRadius: 1,
                     offset: Offset(0, 2),
@@ -648,7 +260,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
+                                color: Colors.black.withValues(alpha: 0.2),
                                 blurRadius: 10,
                                 spreadRadius: 1,
                                 offset: Offset(0, 3),
@@ -735,7 +347,9 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
           Padding(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: Divider(
-                height: 1, thickness: 1, color: Colors.grey.withOpacity(0.1)),
+                height: 1,
+                thickness: 1,
+                color: Colors.grey.withValues(alpha: 0.1)),
           ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8),
@@ -803,7 +417,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: lightColor,
-              border: Border.all(color: primaryColor.withOpacity(0.3)),
+              border: Border.all(color: primaryColor.withValues(alpha: 0.3)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -862,9 +476,9 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -880,80 +494,6 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyState(String message, IconData icon) {
-    return AnimatedOpacity(
-      opacity: 1.0,
-      duration: Duration(milliseconds: 500),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.all(32),
-          padding: EdgeInsets.all(32),
-          decoration: BoxDecoration(
-            color: surfaceColor,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 20,
-                spreadRadius: 2,
-                offset: Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                    color: lightColor,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: primaryColor.withOpacity(0.2),
-                        blurRadius: 12,
-                        spreadRadius: 1,
-                        offset: Offset(0, 3),
-                      )
-                    ]),
-                child: Icon(
-                  icon,
-                  size: 56,
-                  color: primaryColor,
-                ),
-              ),
-              SizedBox(height: 32),
-              Text(
-                message,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[700],
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColor,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () => _fetchSubjectAttendance(),
-                child: Text('Muat Ulang', style: TextStyle(fontSize: 15)),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -1026,7 +566,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 10,
                                     spreadRadius: 1,
                                     offset: Offset(0, 4),
@@ -1163,7 +703,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                     color: Theme.of(context)
                         .colorScheme
                         .secondary
-                        .withOpacity(0.075),
+                        .withValues(alpha: 0.075),
                     offset: const Offset(2.5, 2.5),
                     blurRadius: 5,
                   )
@@ -1212,36 +752,37 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                   ),
                                   dayOverlayColor:
                                       WidgetStateProperty.resolveWith(
-                                    (states) =>
-                                        states.contains(WidgetState.selected)
-                                            ? primaryColor.withOpacity(0.2)
-                                            : null,
+                                    (states) => states
+                                            .contains(WidgetState.selected)
+                                        ? primaryColor.withValues(alpha: 0.2)
+                                        : null,
                                   ),
                                   dayStyle:
                                       TextStyle(fontWeight: FontWeight.w500),
                                   todayForegroundColor:
                                       WidgetStateProperty.all(primaryColor),
                                   todayBackgroundColor: WidgetStateProperty.all(
-                                      lightColor.withOpacity(0.7)),
+                                      lightColor.withValues(alpha: 0.7)),
                                   yearOverlayColor:
                                       WidgetStateProperty.resolveWith(
-                                    (states) =>
-                                        states.contains(WidgetState.selected)
-                                            ? primaryColor.withOpacity(0.2)
-                                            : null,
+                                    (states) => states
+                                            .contains(WidgetState.selected)
+                                        ? primaryColor.withValues(alpha: 0.2)
+                                        : null,
                                   ),
                                   yearStyle:
                                       TextStyle(fontWeight: FontWeight.w500),
                                   surfaceTintColor: Colors.transparent,
                                   backgroundColor: Colors.white,
-                                  shadowColor: Colors.black.withOpacity(0.1),
+                                  shadowColor:
+                                      Colors.black.withValues(alpha: 0.1),
                                   dividerColor: Colors.transparent,
                                   // Move buttons higher with button bar theme
                                   rangePickerBackgroundColor: Colors.white,
                                   rangeSelectionBackgroundColor: lightColor,
                                   rangeSelectionOverlayColor:
                                       WidgetStateProperty.all(
-                                          primaryColor.withOpacity(0.1)),
+                                          primaryColor.withValues(alpha: 0.1)),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16)),
                                   // Adjust the input decoration theme
@@ -1256,7 +797,8 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(
-                                          color: Colors.grey.withOpacity(0.3)),
+                                          color: Colors.grey
+                                              .withValues(alpha: 0.3)),
                                     ),
                                     filled: true,
                                     fillColor: Colors.white,
@@ -1265,7 +807,9 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
                                       height: 0.8,
                                     ),
                                   ),
-                                ), dialogTheme: DialogThemeData(backgroundColor: Colors.transparent),
+                                ),
+                                dialogTheme: DialogThemeData(
+                                    backgroundColor: Colors.transparent),
                               ),
                               child: MediaQuery(
                                 data: MediaQuery.of(context).copyWith(
@@ -1386,7 +930,7 @@ class _SubjectAttendanceContainerState extends State<SubjectAttendanceContainer>
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             elevation: 3,
-            shadowColor: Colors.black.withOpacity(0.1),
+            shadowColor: Colors.black.withValues(alpha: 0.1),
             child: Container(
               height: 140,
               padding: EdgeInsets.all(16),

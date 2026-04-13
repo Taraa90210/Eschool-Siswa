@@ -44,7 +44,6 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
   bool _isSearchFocused = false;
   final TextEditingController _searchController = TextEditingController();
   late AnimationController _animationController;
-  late Animation<double> _animation;
 
   late List<int> examDone;
   final FocusNode _searchFocusNode = FocusNode();
@@ -86,11 +85,6 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
-    );
-
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
     );
 
     _searchFocusNode.addListener(() {
@@ -147,31 +141,6 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
     );
   }
 
-  Widget _buildPopupMenuItem(String text, IconData icon, bool isSelected) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.secondary.withOpacity(0.6),
-          size: 20,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: isSelected
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.secondary.withOpacity(0.6),
-          ),
-        ),
-      ],
-    );
-  }
-
   Icon _getFilterIcon(String filter, bool selected) {
     Color selectedColor =
         selected ? Colors.white : Theme.of(context).colorScheme.primary;
@@ -194,13 +163,13 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
           color: selectedColor,
           size: 20,
         );
-      case 'process' :
+      case 'process':
         return Icon(
           Icons.hourglass_bottom,
           color: selectedColor,
           size: 20,
         );
-      case 'not_Yet' :
+      case 'not_Yet':
         return Icon(
           Icons.cancel,
           color: selectedColor,
@@ -213,34 +182,6 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
           color: selectedColor,
           size: 20,
         );
-    }
-  }
-
-  String _getFilterText(String filter) {
-    switch (filter) {
-      case 'ongoing':
-        return Utils.getTranslatedLabel(onGoingKey);
-      case 'completed':
-        return Utils.getTranslatedLabel(completedKey);
-      case 'upcoming':
-        return Utils.getTranslatedLabel(commingSoonKey);
-      case 'all':
-      default:
-        return Utils.getTranslatedLabel(allKey);
-    }
-  }
-
-  String _getFilterTextSiswa(String filter) {
-    switch (filter) {
-      case 'ongoing':
-        return Utils.getTranslatedLabel(onGoingKey);
-      case 'completed':
-        return Utils.getTranslatedLabel(completedKey);
-      case 'upcoming':
-        return Utils.getTranslatedLabel(commingSoonKey);
-      case 'all':
-      default:
-        return Utils.getTranslatedLabel(allKey);
     }
   }
 
@@ -273,7 +214,11 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.filter_list_alt, size: 20,color: Theme.of(context).colorScheme.primary,),
+                      Icon(
+                        Icons.filter_list_alt,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       const SizedBox(width: 10),
                       Text(
                         Utils.getTranslatedLabel(filterUjianKey),
@@ -288,7 +233,10 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.4),
                     ),
                   ),
                   GridView.count(
@@ -344,7 +292,11 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      Icon(Icons.filter_list_alt, size: 20,color: Theme.of(context).colorScheme.primary,),
+                      Icon(
+                        Icons.filter_list_alt,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       const SizedBox(width: 10),
                       Text(
                         Utils.getTranslatedLabel(filterUjianSiswaKey),
@@ -359,7 +311,10 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Divider(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.4),
                     ),
                   ),
                   GridView.count(
@@ -419,13 +374,14 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                            _selectedFilter = tempSelectedFilter;
-                            _selectedFilterSiswa = tempSelectedFilterSiswa;
-                          });
+                              _selectedFilter = tempSelectedFilter;
+                              _selectedFilterSiswa = tempSelectedFilterSiswa;
+                            });
                             Navigator.pop(context); // Tutup modal
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -478,12 +434,13 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
         border: Border.all(
           color: isSelected
               ? Colors.red
-              : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -535,12 +492,13 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
         border: Border.all(
           color: isSelected
               ? Colors.red
-              : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              : Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+            color:
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -578,9 +536,9 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
 
   Widget _buildExamOnlineList(ExamsOnlineFetchSuccess state) {
     final List<ExamOnline> examList = state.examList;
-    
+
     // ini sudah saya perbaiki
-    // perlu tambahan untuk pagination 
+    // perlu tambahan untuk pagination
     return SingleChildScrollView(
       child: Align(
         alignment: Alignment.topCenter,
@@ -668,24 +626,6 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
 
               // Show a message if no exams match the filter
               if (filteredExams.isEmpty) {
-                Icon icon = _searchQuery.isNotEmpty
-                    ? Icon(
-                        Icons.search_off_rounded,
-                        size: 48,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.5),
-                      )
-                    : Icon(
-                        Icons.event_busy_rounded,
-                        size: 48,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.5),
-                      );
-
                 return [
                   NoDataContainer(
                       titleKey: Utils.getTranslatedLabel(noExamsFoundKey)),
@@ -731,8 +671,8 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                           // Ujian belum selesai dikerjakan
                           Utils.showCustomSnackBar(
                             context: context,
-                            errorMessage:
-                                Utils.getTranslatedLabel(examNotCompletedYetKey),
+                            errorMessage: Utils.getTranslatedLabel(
+                                examNotCompletedYetKey),
                             backgroundColor:
                                 Utils.getColorScheme(context).error,
                             icon: Icons.error_outline_rounded,
@@ -941,7 +881,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.3),
+                              .withValues(alpha: 0.3),
                           width: 1.5,
                         ),
                         boxShadow: [
@@ -949,7 +889,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.08),
+                                .withValues(alpha: 0.08),
                             blurRadius: _isSearchFocused ? 8 : 4,
                             offset: const Offset(0, 3),
                           ),
@@ -986,7 +926,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.7),
+                                      .withValues(alpha: 0.7),
                                   fontSize: 14,
                                 ),
                                 border: InputBorder.none,
@@ -1020,7 +960,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                                           color: Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.1),
+                                              .withValues(alpha: 0.1),
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(
@@ -1049,7 +989,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.3),
                         width: 1.5,
                       ),
                       boxShadow: [
@@ -1057,7 +997,7 @@ class _ExamOnlineListContainerState extends State<ExamOnlineListContainer>
                           color: Theme.of(context)
                               .colorScheme
                               .primary
-                              .withOpacity(0.08),
+                              .withValues(alpha: 0.08),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),

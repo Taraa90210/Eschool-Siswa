@@ -35,7 +35,7 @@ class SelectPaymentMethodBottomsheet extends StatelessWidget {
                     Get.back(result: paymentGateway);
                   },
                   tileColor:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.05),
+                      Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
                   dense: false,
                   title: Text(
                     "${Utils.getTranslatedLabel(payUsingKey)} ${paymentGateway.paymentMethod}",

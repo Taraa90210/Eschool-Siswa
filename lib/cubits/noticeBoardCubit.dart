@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 
 import 'package:eschool/data/models/announcement.dart';
 import 'package:eschool/data/repositories/announcementRepository.dart';
@@ -58,7 +59,7 @@ class NoticeBoardCubit extends Cubit<NoticeBoardState> {
       {required bool useParentApi, int? childId}) async {
     try {
       emit(NoticeBoardFetchInProgress());
-      print(">>>>");
+      debugPrint(">>>>");
       final result = await _announcementRepository.fetchAnnouncements(
         isGeneralAnnouncement: true,
         childId: childId ?? 0,
@@ -97,7 +98,7 @@ class NoticeBoardCubit extends Cubit<NoticeBoardState> {
           (state as NoticeBoardFetchSuccess)
               .copyWith(newFetchMoreAnnouncementsInProgress: true),
         );
-        print("<<<<");
+        debugPrint("<<<<");
         //fetch more announcements
         //more announcements result
         final moreAssignmentsResult =
@@ -134,3 +135,5 @@ class NoticeBoardCubit extends Cubit<NoticeBoardState> {
     }
   }
 }
+
+

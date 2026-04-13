@@ -89,7 +89,7 @@ class _DownloadFileBottomsheetContainerState
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 8,
                 offset: const Offset(0, -2),
               ),
@@ -120,21 +120,21 @@ class _DownloadFileBottomsheetContainerState
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                  border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
                 ),
                 child: Row(
                   children: [
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.15),
+                        color: Colors.grey.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Icon(
                         Icons.file_present_rounded,
-                        color: colorScheme.primary.withOpacity(0.8),
+                        color: colorScheme.primary.withValues(alpha: 0.8),
                         size: 20,
                       ),
                     ),
@@ -218,9 +218,9 @@ class _DownloadFileBottomsheetContainerState
                           child: LinearProgressIndicator(
                             value:
                                 progress, // <— ini yang bikin animasi indeterminate kalau -1
-                            backgroundColor: Colors.grey.withOpacity(0.1),
+                            backgroundColor: Colors.grey.withValues(alpha: 0.1),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              colorScheme.primary.withOpacity(0.8),
+                              colorScheme.primary.withValues(alpha: 0.8),
                             ),
                             minHeight: 5,
                           ),
@@ -237,7 +237,7 @@ class _DownloadFileBottomsheetContainerState
                 onPressed: _closeBottomSheet,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.grey[700],
-                  side: BorderSide(color: Colors.grey.withOpacity(0.3)),
+                  side: BorderSide(color: Colors.grey.withValues(alpha: 0.3)),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   minimumSize: const Size(100, 36),

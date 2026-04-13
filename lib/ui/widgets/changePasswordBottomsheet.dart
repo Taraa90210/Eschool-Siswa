@@ -47,7 +47,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -146,7 +146,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.8),
+                                        .withValues(alpha: 0.8),
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
@@ -157,7 +157,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.3),
+                                        .withValues(alpha: 0.3),
                                     blurRadius: 8,
                                     offset: const Offset(0, 2),
                                   ),
@@ -207,7 +207,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
         decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
             ),
           ),
         ),
@@ -235,7 +235,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+                      Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
                 ),
                 child: Icon(
                   Icons.close,
@@ -262,7 +262,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -279,7 +279,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
           hintText: Utils.getTranslatedLabel(hintKey),
           hintStyle: GoogleFonts.poppins(
             fontSize: 14,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
@@ -292,7 +292,7 @@ class _ChangePasswordBottomsheetState extends State<ChangePasswordBottomsheet> {
           suffixIcon: IconButton(
             icon: Icon(
               hideText ? Icons.visibility_off : Icons.visibility,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
               size: 20,
             ),
             onPressed: toggleVisibility,

@@ -65,8 +65,8 @@ class _ExpandableTextState extends State<ExpandableText> {
               isExpanded = !isExpanded;
             });
           },
-          splashColor: Colors.red.withOpacity(0.8),
-          highlightColor: Colors.red.withOpacity(0.1),
+          splashColor: Colors.red.withValues(alpha: 0.8),
+          highlightColor: Colors.red.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(  4),
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 4.0),

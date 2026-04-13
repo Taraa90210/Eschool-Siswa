@@ -266,12 +266,12 @@ class ChildDetailMenuScreenState extends State<ChildDetailMenuScreen> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: isHovered
-                      ? lightRed.withOpacity(0.3)
+                      ? lightRed.withValues(alpha: 0.3)
                       : Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       spreadRadius: isHovered ? 2 : 0,
                     ),
@@ -279,7 +279,7 @@ class ChildDetailMenuScreenState extends State<ChildDetailMenuScreen> {
                   border: Border.all(
                     color: isHovered
                         ? primaryRed
-                        : Theme.of(context).dividerColor.withOpacity(0.3),
+                        : Theme.of(context).dividerColor.withValues(alpha: 0.3),
                     width: isHovered ? 2 : 1,
                   ),
                 ),
@@ -292,7 +292,7 @@ class ChildDetailMenuScreenState extends State<ChildDetailMenuScreen> {
                       width: isHovered ? 70 : 65, // Increased from 50/45
                       padding: const EdgeInsets.all(12), // Adjusted padding
                       decoration: BoxDecoration(
-                        color: lightRed.withOpacity(0.5),
+                        color: lightRed.withValues(alpha: 0.5),
                         borderRadius:
                             BorderRadius.circular(18), // Increased radius
                       ),

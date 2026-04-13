@@ -16,9 +16,6 @@ class AnnouncementDetailsContainer extends StatelessWidget {
   static const Color lightColor = Color(0xFFFFEBEE); // Light red
   static const Color surfaceColor = Colors.white;
 
-  // Maximum description length before truncating
-  static const int _maxDescriptionLength = 150;
-
   const AnnouncementDetailsContainer({Key? key, required this.announcement})
       : super(key: key);
 
@@ -28,7 +25,7 @@ class AnnouncementDetailsContainer extends StatelessWidget {
       context: context,
       barrierDismissible: true,
       barrierLabel: 'Tutup',
-      barrierColor: Colors.black.withOpacity(0.28),
+      barrierColor: Colors.black.withValues(alpha: 0.28),
       transitionDuration: const Duration(milliseconds: 260),
       pageBuilder: (_, __, ___) => const SizedBox.shrink(),
       transitionBuilder: (context, anim, _, child) {
@@ -94,7 +91,8 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                           colors: [
                                             cs.surface,
                                             Color.alphaBlend(
-                                                cs.primary.withOpacity(0.03),
+                                                cs.primary
+                                                    .withValues(alpha: 0.03),
                                                 cs.surface),
                                           ],
                                         ),
@@ -112,8 +110,8 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         gradient: RadialGradient(
                                           colors: [
-                                            cs.primary.withOpacity(0.12),
-                                            cs.primary.withOpacity(0.0)
+                                            cs.primary.withValues(alpha: 0.12),
+                                            cs.primary.withValues(alpha: 0.0)
                                           ],
                                         ),
                                       ),
@@ -130,8 +128,9 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         gradient: RadialGradient(
                                           colors: [
-                                            cs.secondary.withOpacity(0.10),
-                                            cs.secondary.withOpacity(0.0)
+                                            cs.secondary
+                                                .withValues(alpha: 0.10),
+                                            cs.secondary.withValues(alpha: 0.0)
                                           ],
                                         ),
                                       ),
@@ -170,7 +169,7 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                             border: Border(
                                               bottom: BorderSide(
                                                 color: cs.outlineVariant
-                                                    .withOpacity(0.45),
+                                                    .withValues(alpha: 0.45),
                                                 width: 0.6,
                                               ),
                                             ),
@@ -215,8 +214,8 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                                           .bodySmall
                                                           ?.copyWith(
                                                             color: Colors.white
-                                                                .withOpacity(
-                                                                    0.9),
+                                                                .withValues(
+                                                                    alpha: 0.9),
                                                           ),
                                                     ),
                                                   ],
@@ -231,7 +230,7 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                                     Icons.close_rounded),
                                                 style: IconButton.styleFrom(
                                                   backgroundColor: Colors.white
-                                                      .withOpacity(0.12),
+                                                      .withValues(alpha: 0.12),
                                                   foregroundColor: Colors.white,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -252,17 +251,17 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                         height: 1,
                                         decoration: BoxDecoration(
                                           color: cs.outlineVariant
-                                              .withOpacity(0.3),
+                                              .withValues(alpha: 0.3),
                                           // gradient: LinearGradient(
                                           //   begin: Alignment.centerLeft,
                                           //   end: Alignment.centerRight,
                                           //   colors: [
                                           //     cs.outlineVariant
-                                          //         .withOpacity(0.0),
+                                          //         .withValues(alpha: 0.0),
                                           //     cs.outlineVariant
-                                          //         .withOpacity(0.6),
+                                          //         .withValues(alpha: 0.6),
                                           //     cs.outlineVariant
-                                          //         .withOpacity(0.0),
+                                          //         .withValues(alpha: 0.0),
                                           //   ],
                                           // ),
                                         ),
@@ -333,11 +332,11 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                                                 gradient:
                                                                     LinearGradient(
                                                                   colors: [
-                                                                    cs.primary
-                                                                        .withOpacity(
+                                                                    cs.primary.withValues(
+                                                                        alpha:
                                                                             0.5),
-                                                                    cs.primary
-                                                                        .withOpacity(
+                                                                    cs.primary.withValues(
+                                                                        alpha:
                                                                             0.0),
                                                                   ],
                                                                 ),
@@ -426,17 +425,9 @@ class AnnouncementDetailsContainer extends StatelessWidget {
     );
   }
 
-  String _truncateDescription(String text, int maxLength) {
-    if (text.length <= maxLength) return text;
-    return '${text.substring(0, maxLength)}...';
-  }
-
   @override
   Widget build(BuildContext context) {
     timeago.setLocaleMessages('id', timeago.IdMessages());
-
-    bool isDescriptionTruncated =
-        announcement.description.length > _maxDescriptionLength;
 
     return Container(
       width: double.infinity,
@@ -530,8 +521,8 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.8)
-                                .withOpacity(0.3),
+                                .withValues(alpha: 0.8)
+                                .withValues(alpha: 0.3),
                             width: 1.0,
                           ),
                         ),
@@ -544,7 +535,7 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.8),
+                                  .withValues(alpha: 0.8),
                             ),
                             const SizedBox(width: 4),
                             Text(
@@ -553,7 +544,7 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .primary
-                                    .withOpacity(0.8),
+                                    .withValues(alpha: 0.8),
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                               ),
@@ -563,46 +554,6 @@ class AnnouncementDetailsContainer extends StatelessWidget {
                       ),
                   ],
                 ),
-                // if (announcement.description.isNotEmpty) ...[
-                //   const SizedBox(height: 12),
-                //   Container(
-                //     width: double.infinity,
-                //     padding: const EdgeInsets.all(16.0),
-                //     decoration: BoxDecoration(
-                //       color: Colors.grey.shade50,
-                //       borderRadius: BorderRadius.circular(12.0),
-                //       border: Border.all(
-                //         color: Colors.grey.shade200,
-                //         width: 1.0,
-                //       ),
-                //     ),
-                //     child: Animate(
-                //       effects: [
-                //         FadeEffect(
-                //           duration: const Duration(milliseconds: 400),
-                //           delay: const Duration(milliseconds: 100),
-                //         ),
-                //       ],
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             isDescriptionTruncated
-                //                 ? _truncateDescription(announcement.description,
-                //                     _maxDescriptionLength)
-                //                 : announcement.description,
-                //             style: TextStyle(
-                //               color: Colors.black54,
-                //               fontSize: 14.0,
-                //               height: 1.6,
-                //               letterSpacing: 0.2,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ],
               ],
             ),
           ),

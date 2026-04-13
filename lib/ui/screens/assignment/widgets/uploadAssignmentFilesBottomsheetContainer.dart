@@ -193,7 +193,7 @@ class _UploadAssignmentFilesBottomsheetContainerState
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.1),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -212,7 +212,7 @@ class _UploadAssignmentFilesBottomsheetContainerState
         decoration: InputDecoration(
           hintText: Utils.getTranslatedLabel(fillAssignmentTextKey),
           hintStyle: TextStyle(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.5),
           ),
           contentPadding: const EdgeInsets.all(15.0),
           border: OutlineInputBorder(
@@ -222,7 +222,7 @@ class _UploadAssignmentFilesBottomsheetContainerState
           filled: true,
           fillColor: Theme.of(context).colorScheme.surface,
           counterStyle: TextStyle(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.7),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:eschool/cubits/xenditInvoiceCubit.dart';
+import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/childFeeDetailsCubit.dart';
 import 'package:eschool/data/models/childFeeDetails.dart';
 import 'package:flutter/foundation.dart';
@@ -8,8 +9,11 @@ import 'package:eschool/ui/screens/payment/xenditPaymentScreen.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/CurencyFormater.dart';
+import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eschool/ui/widgets/payment/paymentMethodSelectionSheet.dart';
+import 'package:eschool/data/models/paymentMethod.dart';
 import 'package:intl/intl.dart';
 
 class XenditInstallmentPaymentScreen extends StatefulWidget {
@@ -94,6 +98,26 @@ class _XenditInstallmentPaymentScreenState
 
     final amount = _parseAmount(_amountController.text);
 
+    // Fetch allowed methods for this school dynamically from configuration
+    final allowedMethods = context
+        .read<SchoolConfigurationCubit>()
+        .getSchoolConfiguration()
+        .getXenditAllowedMethods();
+
+    // Show selection sheet first
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PaymentMethodSelectionSheet(
+        baseAmount: amount,
+        allowedMethods: allowedMethods, // Pass the parsed list of methods
+        onSelected: (method) => _createInvoice(amount, method),
+      ),
+    );
+  }
+
+  void _createInvoice(double amount, XenditPaymentMethod method) async {
     setState(() {
       _isProcessing = true;
     });
@@ -106,15 +130,16 @@ class _XenditInstallmentPaymentScreenState
       final description =
           'Pembayaran Cicilan: ${widget.feeDetails.name} - ${_formatCurrency(amount)}';
 
-      // Create Xendit invoice
+      // Create Xendit invoice with selected method
       await context.read<XenditInvoiceCubit>().createInvoice(
-        schoolId: 1, // TODO: Get from school data
-        studentId: widget.child.id!,
-        amount: amount,
-        email: email,
-        description: description,
-        feeIds: [widget.feeDetails.id!],
-      );
+            schoolId: 1, // Note: Get from school data
+            studentId: widget.child.id!,
+            amount: amount,
+            email: email,
+            description: description,
+            feeIds: [widget.feeDetails.id!],
+            paymentMethod: method,
+          );
     } catch (e) {
       setState(() {
         _isProcessing = false;
@@ -123,8 +148,11 @@ class _XenditInstallmentPaymentScreenState
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Terjadi kesalahan: $e'),
+            content: Text(ErrorMessageMapper.getUserFriendlyMessage(e)),
             backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
         );
       }
@@ -221,14 +249,15 @@ class _XenditInstallmentPaymentScreenState
   }
 
   void _handleXenditFailure(String errorMessage) {
-    setState(() {
-      _isProcessing = false;
-    });
-
+    setState(() => _isProcessing = false);
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Gagal membuat invoice: $errorMessage'),
+        content: Text(ErrorMessageMapper.getUserFriendlyMessage(errorMessage)),
         backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: const Duration(seconds: 4),
       ),
     );
   }
@@ -308,7 +337,7 @@ class _XenditInstallmentPaymentScreenState
             // Loading overlay
             if (_isProcessing)
               Container(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 child: Center(
                   child: Card(
                     child: Padding(
@@ -345,7 +374,7 @@ class _XenditInstallmentPaymentScreenState
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: Offset(0, 2),
           ),
@@ -475,7 +504,7 @@ class _XenditInstallmentPaymentScreenState
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: Offset(0, 2),
           ),
@@ -565,7 +594,8 @@ class _XenditInstallmentPaymentScreenState
           Container(
             padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
@@ -600,15 +630,15 @@ class _XenditInstallmentPaymentScreenState
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.1),
-            Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -662,7 +692,7 @@ class _XenditInstallmentPaymentScreenState
           Icon(
             icon,
             size: 18,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
           ),
           SizedBox(width: 12),
           Expanded(

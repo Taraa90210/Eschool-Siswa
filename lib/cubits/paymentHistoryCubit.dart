@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/data/models/paymentHistory.dart';
 import 'dart:convert';
@@ -46,10 +47,10 @@ class PaymentHistoryCubit extends Cubit<PaymentHistoryState> {
           // Split by lines and print each line
           final List<String> lines = jsonString.split('\n');
           for (String line in lines) {
-            print(line);
+            debugPrint(line);
           }
 
-          print("***");
+          debugPrint("***");
 
           // Handle JSON Map data from API
           if (payment is Map<String, dynamic>) {
@@ -221,3 +222,5 @@ class PaymentHistoryCubit extends Cubit<PaymentHistoryState> {
     emit(PaymentHistoryInitial());
   }
 }
+
+

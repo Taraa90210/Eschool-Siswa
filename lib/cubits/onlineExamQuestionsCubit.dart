@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 import 'package:eschool/data/models/examOnline.dart';
 import 'package:eschool/data/models/question.dart';
 import 'package:eschool/data/repositories/onlineExamRepository.dart';
@@ -53,7 +54,7 @@ class OnlineExamQuestionsCubit extends Cubit<OnlineExamQuestionsState> {
         ),
       );
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       emit(OnlineExamQuestionsFetchFailure(e.toString()));
     }
   }

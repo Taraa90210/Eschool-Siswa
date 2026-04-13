@@ -45,7 +45,7 @@ class TermsAndConditionAndPrivacyPolicyContainer extends StatelessWidget {
               ),
               style: TextStyle(
                 fontSize: 13,
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.8),
+                color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.8),
                 fontWeight: FontWeight.bold,
               ),
             ),

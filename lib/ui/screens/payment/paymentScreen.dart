@@ -14,6 +14,7 @@ import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 
 // Payment type enum
 enum PaymentType { manual, xendit }
@@ -177,7 +178,8 @@ class _PaymentScreenState extends State<PaymentScreen>
       _uploadController.reset();
     } catch (e) {
       setState(() {
-        uploadError = failedToPickFile + e.toString();
+        uploadError =
+            failedToPickFile + ErrorMessageMapper.getUserFriendlyMessage(e);
         isUploading = false;
       });
       _uploadController.reset();
@@ -224,7 +226,8 @@ class _PaymentScreenState extends State<PaymentScreen>
       _uploadController.reset();
     } catch (e) {
       setState(() {
-        uploadError = failedToTakePhoto + e.toString();
+        uploadError =
+            failedToTakePhoto + ErrorMessageMapper.getUserFriendlyMessage(e);
         isUploading = false;
       });
       _uploadController.reset();
@@ -321,10 +324,10 @@ class _PaymentScreenState extends State<PaymentScreen>
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.06),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.06),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -402,8 +405,11 @@ class _PaymentScreenState extends State<PaymentScreen>
             boxShadow: [
               BoxShadow(
                 color: isSelected
-                    ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.04),
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.04),
                 blurRadius: isSelected ? 8 : 4,
                 offset: Offset(0, isSelected ? 4 : 2),
               ),
@@ -419,7 +425,10 @@ class _PaymentScreenState extends State<PaymentScreen>
                   borderRadius: BorderRadius.circular(12),
                   color: method.hasImage
                       ? Colors.white
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      : Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.9),
                   border: method.hasImage
                       ? Border.all(color: Colors.grey.shade200, width: 1)
                       : null,
@@ -460,11 +469,11 @@ class _PaymentScreenState extends State<PaymentScreen>
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.9),
+                                        .withValues(alpha: 0.9),
                                     Theme.of(context)
                                         .colorScheme
                                         .primary
-                                        .withOpacity(0.7),
+                                        .withValues(alpha: 0.7),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(12),
@@ -576,7 +585,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -703,140 +712,6 @@ class _PaymentScreenState extends State<PaymentScreen>
     );
   }
 
-  Widget _buildPaymentTypeSelector() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 24),
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.payment,
-                color: Theme.of(context).colorScheme.primary,
-                size: 20,
-              ),
-              SizedBox(width: 8),
-              Text(
-                'Pilih Metode Pembayaran',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: _buildPaymentTypeOption(
-                  type: PaymentType.xendit,
-                  icon: Icons.account_balance_wallet,
-                  title: 'Bayar Otomatis',
-                  subtitle: 'Via Xendit (VA, E-wallet, QRIS)',
-                ),
-              ),
-              SizedBox(width: 12),
-              Expanded(
-                child: _buildPaymentTypeOption(
-                  type: PaymentType.manual,
-                  icon: Icons.upload_file,
-                  title: 'Upload Bukti',
-                  subtitle: 'Transfer manual + upload',
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPaymentTypeOption({
-    required PaymentType type,
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    final isSelected = selectedPaymentType == type;
-    return InkWell(
-      onTap: () {
-        setState(() {
-          selectedPaymentType = type;
-          // Reset selections when changing payment type
-          if (type == PaymentType.xendit) {
-            selectedProofFile = null;
-            uploadError = null;
-          }
-        });
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
-              : Colors.grey.shade50,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected
-                ? Theme.of(context).colorScheme.primary
-                : Colors.grey.shade300,
-            width: isSelected ? 2 : 1,
-          ),
-        ),
-        child: Column(
-          children: [
-            Icon(
-              icon,
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.grey.shade600,
-              size: 32,
-            ),
-            SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.grey.shade800,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 4),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.grey.shade600,
-              ),
-              textAlign: TextAlign.center,
-              maxLines: 2,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildUploadSection() {
     return Container(
       margin: EdgeInsets.only(bottom: 24),
@@ -847,7 +722,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -1019,12 +894,16 @@ class _PaymentScreenState extends State<PaymentScreen>
                 width: double.infinity,
                 height: 120,
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.04),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.04),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.3),
                     width: 2,
                     style: BorderStyle.solid,
                   ),
@@ -1426,8 +1305,10 @@ class _PaymentScreenState extends State<PaymentScreen>
                   height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.04),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.04),
                   ),
                 ),
               );
@@ -1570,7 +1451,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                           ? Theme.of(context)
                                               .colorScheme
                                               .primary
-                                              .withOpacity(0.3)
+                                              .withValues(alpha: 0.3)
                                           : Colors.transparent,
                                     ),
                                     child: Row(
@@ -1644,7 +1525,7 @@ class _PaymentScreenState extends State<PaymentScreen>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),

@@ -88,7 +88,7 @@ class _ContactScreenState extends State<ContactScreen> {
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -103,7 +103,7 @@ class _ContactScreenState extends State<ContactScreen> {
               color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(16.0),
               border: Border.all(
-                color: Theme.of(context).dividerColor.withOpacity(0.1),
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
               ),
             ),
             child: TextField(
@@ -111,7 +111,7 @@ class _ContactScreenState extends State<ContactScreen> {
               decoration: InputDecoration(
                 hintText: 'Cari pesan atau laporan...',
                 hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
                 ),
                 prefixIcon: Icon(
                   Icons.search_rounded,
@@ -121,7 +121,7 @@ class _ContactScreenState extends State<ContactScreen> {
                     ? IconButton(
                         icon: Icon(
                           Icons.clear_rounded,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                         ),
                         onPressed: () {
                           _searchController.clear();
@@ -147,13 +147,13 @@ class _ContactScreenState extends State<ContactScreen> {
                 Icon(
                   Icons.category_outlined,
                   size: 14.0,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 const SizedBox(width: 4.0),
                 Text(
                   'Jenis',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -201,13 +201,13 @@ class _ContactScreenState extends State<ContactScreen> {
                 Icon(
                   Icons.label_outlined,
                   size: 14.0,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 const SizedBox(width: 4.0),
                 Text(
                   'Status',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -254,7 +254,7 @@ class _ContactScreenState extends State<ContactScreen> {
               color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: Theme.of(context).dividerColor.withOpacity(0.1),
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
               ),
             ),
             child: Row(
@@ -272,7 +272,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       isExpanded: true,
                       icon: Icon(
                         Icons.keyboard_arrow_down_rounded,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
@@ -316,7 +316,7 @@ class _ContactScreenState extends State<ContactScreen> {
               ? LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.primary,
-                    Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                    Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -327,13 +327,13 @@ class _ContactScreenState extends State<ContactScreen> {
           border: Border.all(
             color: isSelected
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).dividerColor.withOpacity(0.3),
+                : Theme.of(context).dividerColor.withValues(alpha: 0.3),
             width: isSelected ? 1.5 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -349,7 +349,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 size: 14.0,
                 color: isSelected
                     ? Colors.white
-                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               const SizedBox(width: 4.0),
             ],
@@ -359,7 +359,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 style: TextStyle(
                   color: isSelected
                       ? Colors.white
-                      : Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   fontSize: 11.0,
                   fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
                   letterSpacing: 0.2,
@@ -430,7 +430,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   state.errorMessage,
                   style: TextStyle(
                     fontSize: 14.0,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -494,7 +494,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   Icon(
                     hasActiveFilters ? Icons.search_off_rounded : Icons.inbox_outlined,
                     size: 64.0,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                   const SizedBox(height: 16.0),
                   Text(
@@ -512,7 +512,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         : 'Anda belum mengirim pesan atau laporan apapun.',
                     style: TextStyle(
                       fontSize: 14.0,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -599,7 +599,7 @@ class _ContactScreenState extends State<ContactScreen> {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -646,7 +646,7 @@ class _ContactScreenState extends State<ContactScreen> {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),

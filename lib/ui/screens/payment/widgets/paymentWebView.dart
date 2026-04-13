@@ -1,6 +1,7 @@
 import 'package:eschool/cubits/xenditInvoiceCubit.dart';
 import 'package:eschool/data/models/xenditInvoice.dart';
 import 'package:eschool/ui/screens/payment/widgets/paymentStatusDialogs.dart';
+import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -107,7 +108,7 @@ class _PaymentWebViewState extends State<PaymentWebView> {
         }
       }
     } catch (e) {
-      _showErrorDialog(e.toString());
+      _showErrorDialog(ErrorMessageMapper.getUserFriendlyMessage(e));
     } finally {
       setState(() {
         _isCheckingStatus = false;

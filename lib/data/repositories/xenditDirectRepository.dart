@@ -19,24 +19,26 @@ class XenditDirectRepository {
   /// This bypasses your backend and creates invoice directly with Xendit.
   /// Use this ONLY for testing the payment flow without backend.
   Future<XenditInvoice> createInvoice({
-    required String email,
     required double amount,
+    required double baseAmount,
+    required double feeAmount,
+    required String externalId,
+    required String payerEmail,
     required String description,
+    List<String>? paymentMethods,
   }) async {
     try {
-      // Generate unique external ID
-      final externalId = 'DEMO_${DateTime.now().millisecondsSinceEpoch}';
-
       // Prepare request body
       final body = {
         'external_id': externalId,
         'amount': amount.toInt(),
-        'payer_email': email,
+        'payer_email': payerEmail,
         'description': description,
         'invoice_duration': 86400, // 24 hours
         'currency': 'IDR',
         'success_redirect_url': 'https://checkout.xendit.co/payment/success',
         'failure_redirect_url': 'https://checkout.xendit.co/payment/failed',
+        if (paymentMethods != null) 'payment_methods': paymentMethods,
       };
 
       // Create Basic Auth header
@@ -61,6 +63,8 @@ class XenditDirectRepository {
           externalId: data['external_id'],
           status: data['status'].toString().toLowerCase(),
           amount: double.parse(data['amount'].toString()),
+          baseAmount: baseAmount,
+          feeAmount: feeAmount,
           invoiceUrl: data['invoice_url'],
           expiryDate: DateTime.parse(data['expiry_date']),
           payerEmail: data['payer_email'],
@@ -96,6 +100,9 @@ class XenditDirectRepository {
           externalId: data['external_id'],
           status: data['status'].toString().toLowerCase(),
           amount: double.parse(data['amount'].toString()),
+          baseAmount: double.parse(
+              data['amount'].toString()), // Fallback in status check
+          feeAmount: 0,
           invoiceUrl: data['invoice_url'],
           expiryDate: DateTime.parse(data['expiry_date']),
           payerEmail: data['payer_email'],

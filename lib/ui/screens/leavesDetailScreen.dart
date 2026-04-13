@@ -1,12 +1,7 @@
 import 'package:eschool/data/models/leave.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-// import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:eschool/ui/widgets/svgButton.dart';
-// import 'package:flutter_svg/svg.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -20,80 +15,6 @@ class LeavesDetailScreen extends StatefulWidget {
 }
 
 class _LeavesDetailScreenState extends State<LeavesDetailScreen> {
-  String _formatDateRange(String fromDate) {
-    try {
-      return '${DateFormat('dd MMM yyyy').format(DateTime.parse(fromDate))}';
-    } catch (e) {
-      return 'Invalid date format';
-    }
-  }
-  // String _formatDateRange(String fromDate, String toDate) {
-  //   try {
-  //     return '${DateFormat('dd MMM yyyy').format(DateTime.parse(fromDate))} - '
-  //            '${DateFormat('dd MMM yyyy').format(DateTime.parse(toDate))}';
-  //   } catch (e) {
-  //     return 'Invalid date format';
-  //   }
-  // }
-
-  Widget _buildStatusChip(int status) {
-    String statusText;
-    Color color;
-    switch (status) {
-      case 1:
-        statusText = 'Disetujui';
-        color = Colors.transparent;
-        break;
-      case 2:
-        statusText = 'Ditolak';
-        color = Colors.transparent;
-        break;
-      case 0:
-      default:
-        statusText = 'Menunggu';
-        color = Colors.transparent;
-    }
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        // color: color.withOpacity(0.1),
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        statusText,
-        style: TextStyle(
-          color: color,
-          fontWeight: FontWeight.bold,
-          fontSize: 0,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAppBar(BuildContext context) {
-    return ScreenTopBackgroundContainer(
-      heightPercentage: 0.15,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          CustomBackButton(),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Text(
-              'Detail Izin',
-              style: TextStyle(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                fontSize: Utils.screenTitleFontSize,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildAttachmentItem(LeaveDetail detail) {
     bool isImage = detail.fileExtension != null &&
         ['jpg', 'jpeg', 'png', 'gif']

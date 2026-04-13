@@ -56,13 +56,13 @@ class _ChaptersContainerState extends State<ChaptersContainer> {
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08), // Darker shadow
+                color: Colors.black.withValues(alpha: 0.08), // Darker shadow
                 blurRadius: 20,
                 offset: Offset(0, 8),
               ),
             ],
             border: Border.all(
-              color: Color(0xFFFFDEDE).withOpacity(0.4), // Darker border
+              color: Color(0xFFFFDEDE).withValues(alpha: 0.4), // Darker border
               width: 1.5, // Slightly thicker
             ),
           ),
@@ -244,7 +244,7 @@ class _ChaptersContainerState extends State<ChaptersContainer> {
                 SizedBox(height: 16),
               Divider(
                 color: Color(0xFFD32F2F)
-                    .withOpacity(0.15), // Slightly darker divider
+                    .withValues(alpha: 0.15), // Slightly darker divider
                 height: 1,
                 thickness: 1.5, // Thicker divider
               ),

@@ -14,7 +14,7 @@ class FeeInformationContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final valueTextStyle = TextStyle(
         fontSize: 13.0,
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.9));
+        color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.9));
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12.5),
