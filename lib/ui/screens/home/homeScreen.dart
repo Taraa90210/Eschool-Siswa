@@ -11,7 +11,9 @@ import 'package:eschool/cubits/resultsCubit.dart';
 import 'package:eschool/cubits/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/schoolSessionYearsCubit.dart';
+import 'package:eschool/cubits/pendingPaymentCheckCubit.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
+import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/cubits/studentGuardianDetailsCubit.dart';
 import 'package:eschool/cubits/subjectAttendanceCubit.dart';
 import 'package:eschool/cubits/timeTableCubit.dart';
@@ -91,6 +93,10 @@ class HomeScreen extends StatefulWidget {
         BlocProvider<SchoolGalleryCubit>(
           create: (_) => SchoolGalleryCubit(SchoolRepository()),
         ),
+        // Safety Net Poin 2: Cubit untuk cek status invoice pending
+        BlocProvider<PendingPaymentCheckCubit>(
+          create: (_) => PendingPaymentCheckCubit(XenditRepository()),
+        ),
       ],
       child: HomeScreen(
         key: homeScreenKey,
@@ -165,6 +171,8 @@ class HomeScreenState extends State<HomeScreen>
       context
           .read<SchoolConfigurationCubit>()
           .fetchSchoolConfiguration(useParentApi: false);
+      // Safety Net Poin 2: Cek invoice pending saat halaman pertama dibuka
+      context.read<PendingPaymentCheckCubit>().checkAllPendingPayments();
     });
     debugPrint("HomeScreen initStated exam submit");
     Future.microtask(() => ExamSubmitSyncService.syncIfCached());
@@ -264,6 +272,10 @@ class HomeScreenState extends State<HomeScreen>
 
     if (state == AppLifecycleState.resumed) {
       loadTemporarilyStoredNotifications();
+      // Safety Net Poin 2: Re-cek invoice pending saat app dibuka kembali dari background
+      if (mounted) {
+        context.read<PendingPaymentCheckCubit>().checkAllPendingPayments();
+      }
     }
   }
 
@@ -718,213 +730,231 @@ class HomeScreenState extends State<HomeScreen>
         resizeToAvoidBottomInset: false,
         body: context.read<AppConfigurationCubit>().appUnderMaintenance()
             ? const AppUnderMaintenanceContainer()
-            : BlocConsumer<SchoolConfigurationCubit, SchoolConfigurationState>(
-                listener: (context, state) {
-                  if (state is SchoolConfigurationFetchSuccess ||
-                      state is SchoolConfigurationFetchFailure) {
-                    updateBottomNavItems();
-                    if (state is SchoolConfigurationFetchSuccess) {
-                      if (Utils.isModuleEnabled(
-                          context: context,
-                          moduleId: galleryManagementModuleId.toString())) {
-                        context.read<SchoolGalleryCubit>().fetchSchoolGallery(
-                            useParentApi: false,
-                            sessionYearId:
-                                state.schoolConfiguration.sessionYear.id ?? 0);
+            : MultiBlocListener(
+                listeners: [
+                  BlocListener<SchoolConfigurationCubit,
+                      SchoolConfigurationState>(
+                    listener: (context, state) {
+                      if (state is SchoolConfigurationFetchSuccess ||
+                          state is SchoolConfigurationFetchFailure) {
+                        updateBottomNavItems();
+                        if (state is SchoolConfigurationFetchSuccess) {
+                          if (Utils.isModuleEnabled(
+                              context: context,
+                              moduleId: galleryManagementModuleId.toString())) {
+                            context
+                                .read<SchoolGalleryCubit>()
+                                .fetchSchoolGallery(
+                                    useParentApi: false,
+                                    sessionYearId: state.schoolConfiguration
+                                            .sessionYear.id ??
+                                        0);
+                          }
+                        }
                       }
+                    },
+                  ),
+                  // Safety Net Poin 2: Tampilkan feedback visual saat background check menemukan payment "PAID"
+                  BlocListener<PendingPaymentCheckCubit,
+                      PendingPaymentCheckState>(
+                    listener: (context, state) {
+                      if (state is PendingPaymentFoundPaid) {
+                        Utils.showCustomSnackBar(
+                          context: context,
+                          errorMessage:
+                              "Sip! Sistem mendeteksi pembayaran tagihan Anda berhasil masuk (Lunas).",
+                          backgroundColor: Colors.green,
+                        );
+                        // Refresh data Home jika diperlukan (e.g list tagihan/riwayat)
+                        context
+                            .read<StudentGuardianDetailsCubit>()
+                            .getStudentGuardianDetails();
+                      }
+                    },
+                  ),
+                ],
+                child: BlocBuilder<SchoolConfigurationCubit,
+                    SchoolConfigurationState>(
+                  builder: (context, state) {
+                    if (state is SchoolConfigurationFetchSuccess) {
+                      return Stack(
+                        children: [
+                          IndexedStack(
+                            index: _currentSelectedBottomNavIndex,
+                            children: state.schoolConfiguration
+                                    .isAssignmentModuleEnabled()
+                                ? [
+                                    const HomeContainer(
+                                      isForBottomMenuBackground: false,
+                                    ),
+                                    const AssignmentsContainer(
+                                      isForBottomMenuBackground: false,
+                                    ),
+                                  ]
+                                : [
+                                    const HomeContainer(
+                                      isForBottomMenuBackground: false,
+                                    ),
+                                  ],
+                          ),
 
-                      ///[Setting up the socket connection]
+                          // Show menu item content as full screen when a menu item is opened
+                          if (_currentlyOpenMenuIndex != -1)
+                            Material(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                child: _buildMenuItemContainer(),
+                              ),
+                            ),
 
-                      // if (Utils.isModuleEnabled(
-                      //     context: context,
-                      //     moduleId: chatModuleId.toString())) {
-                      //   context.read<SocketSettingCubit>().init(
-                      //       userId: context
-                      //               .read<AuthCubit>()
-                      //               .getStudentDetails()
-                      //               .id ??
-                      //           0);
-                      // }
-                    }
-                  }
-                },
-                builder: (context, state) {
-                  if (state is SchoolConfigurationFetchSuccess) {
-                    return Stack(
-                      children: [
-                        IndexedStack(
-                          index: _currentSelectedBottomNavIndex,
-                          children: state.schoolConfiguration
-                                  .isAssignmentModuleEnabled()
-                              ? [
-                                  const HomeContainer(
-                                    isForBottomMenuBackground: false,
-                                  ),
-                                  const AssignmentsContainer(
-                                    isForBottomMenuBackground: false,
-                                  ),
-                                ]
-                              : [
-                                  const HomeContainer(
-                                    isForBottomMenuBackground: false,
-                                  ),
-                                ],
-                        ),
-
-                        // Show menu item content as full screen when a menu item is opened
-                        if (_currentlyOpenMenuIndex != -1)
-                          Material(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: _buildMenuItemContainer(),
+                          // Background overlay - tampil hanya saat menu bottom sheet terbuka (harus di atas menu item)
+                          IgnorePointer(
+                            ignoring: !_isMoreMenuOpen,
+                            child: FadeTransition(
+                              opacity:
+                                  _moreMenuBackgroundContainerColorAnimation,
+                              child: _buildMoreMenuBackgroundContainer(),
                             ),
                           ),
 
-                        // Background overlay - tampil hanya saat menu bottom sheet terbuka (harus di atas menu item)
-                        IgnorePointer(
-                          ignoring: !_isMoreMenuOpen,
-                          child: FadeTransition(
-                            opacity: _moreMenuBackgroundContainerColorAnimation,
-                            child: _buildMoreMenuBackgroundContainer(),
-                          ),
-                        ),
+                          //More menu bottom sheet - sembunyikan ketika keyboard muncul
+                          if (!_isKeyboardVisible && _isMoreMenuOpen)
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: SlideTransition(
+                                position: _moreMenuBottomsheetAnimation,
+                                child: MoreMenuBottomsheetContainer(
+                                  closeBottomMenu: _closeBottomMenu,
+                                  onTapMoreMenuItemContainer:
+                                      _onTapMoreMenuItemContainer,
+                                ),
+                              ),
+                            ),
 
-                        //More menu bottom sheet - sembunyikan ketika keyboard muncul
-                        if (!_isKeyboardVisible && _isMoreMenuOpen)
+                          // Bottom navigation - sudah ada kondisi di dalam method
                           Align(
                             alignment: Alignment.bottomCenter,
-                            child: SlideTransition(
-                              position: _moreMenuBottomsheetAnimation,
-                              child: MoreMenuBottomsheetContainer(
-                                closeBottomMenu: _closeBottomMenu,
-                                onTapMoreMenuItemContainer:
-                                    _onTapMoreMenuItemContainer,
+                            child: _buildBottomNavigationContainer(),
+                          ),
+
+                          //Check forece update here
+                          context.read<AppConfigurationCubit>().forceUpdate()
+                              ? FutureBuilder<bool>(
+                                  future: Utils.forceUpdate(
+                                    context
+                                        .read<AppConfigurationCubit>()
+                                        .getAppVersion(),
+                                  ),
+                                  builder: (context, snaphsot) {
+                                    if (snaphsot.hasData) {
+                                      return (snaphsot.data ?? false)
+                                          ? const ForceUpdateDialogContainer()
+                                          : const SizedBox();
+                                    }
+
+                                    return const SizedBox();
+                                  },
+                                )
+                              : const SizedBox(),
+                        ],
+                      );
+                    }
+                    if (state is SchoolConfigurationFetchFailure) {
+                      return Center(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            ErrorContainer(
+                              errorMessageCode: state.errorMessage,
+                              onTapRetry: () {
+                                context
+                                    .read<SchoolConfigurationCubit>()
+                                    .fetchSchoolConfiguration(
+                                        useParentApi: false);
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            CustomRoundedButton(
+                              height: 40,
+                              widthPercentage: 0.355,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onTap: () {
+                                Get.toNamed(Routes.settings);
+                              },
+                              titleColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              buttonTitle:
+                                  Utils.getTranslatedLabel(settingsKey),
+                              showBorder: false,
+                            )
+                          ],
+                        ),
+                      );
+                    }
+
+                    final primaryColor = Theme.of(context).colorScheme.primary;
+                    return Stack(
+                      children: [
+                        // Background gradient with header shimmer (like homeContainer)
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                primaryColor.withValues(alpha: 0.9),
+                                primaryColor.withValues(alpha: 0.8),
+                                primaryColor,
+                              ],
+                              stops: [0.0, 0.5, 1.0],
+                            ),
+                          ),
+                          child: const ProfileHeaderShimmerLoadingContainer(),
+                        ),
+                        // White content card with skeleton loading on top
+                        Positioned(
+                          top: MediaQuery.of(context).size.height * 0.18,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Card(
+                            margin: EdgeInsets.zero,
+                            elevation: 10.0,
+                            shadowColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withValues(alpha: 0.3),
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30.0),
+                                topRight: Radius.circular(30.0),
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(30.0),
+                                topRight: Radius.circular(30.0),
+                              ),
+                              child: HomeScreenDataLoadingContainer(
+                                addTopPadding: false,
                               ),
                             ),
                           ),
-
-                        // Bottom navigation - sudah ada kondisi di dalam method
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: _buildBottomNavigationContainer(),
                         ),
-
-                        //Check forece update here
-                        context.read<AppConfigurationCubit>().forceUpdate()
-                            ? FutureBuilder<bool>(
-                                future: Utils.forceUpdate(
-                                  context
-                                      .read<AppConfigurationCubit>()
-                                      .getAppVersion(),
-                                ),
-                                builder: (context, snaphsot) {
-                                  if (snaphsot.hasData) {
-                                    return (snaphsot.data ?? false)
-                                        ? const ForceUpdateDialogContainer()
-                                        : const SizedBox();
-                                  }
-
-                                  return const SizedBox();
-                                },
-                              )
-                            : const SizedBox(),
                       ],
                     );
-                  }
-                  if (state is SchoolConfigurationFetchFailure) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          ErrorContainer(
-                            errorMessageCode: state.errorMessage,
-                            onTapRetry: () {
-                              context
-                                  .read<SchoolConfigurationCubit>()
-                                  .fetchSchoolConfiguration(
-                                      useParentApi: false);
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          CustomRoundedButton(
-                            height: 40,
-                            widthPercentage: 0.355,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            onTap: () {
-                              Get.toNamed(Routes.settings);
-                            },
-                            titleColor:
-                                Theme.of(context).scaffoldBackgroundColor,
-                            buttonTitle: Utils.getTranslatedLabel(settingsKey),
-                            showBorder: false,
-                          )
-                        ],
-                      ),
-                    );
-                  }
-
-                  final primaryColor = Theme.of(context).colorScheme.primary;
-                  return Stack(
-                    children: [
-                      // Background gradient with header shimmer (like homeContainer)
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              primaryColor.withValues(alpha: 0.9),
-                              primaryColor.withValues(alpha: 0.8),
-                              primaryColor,
-                            ],
-                            stops: [0.0, 0.5, 1.0],
-                          ),
-                        ),
-                        child: const ProfileHeaderShimmerLoadingContainer(),
-                      ),
-                      // White content card with skeleton loading on top
-                      Positioned(
-                        top: MediaQuery.of(context).size.height * 0.18,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: Card(
-                          margin: EdgeInsets.zero,
-                          elevation: 10.0,
-                          shadowColor: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withValues(alpha: 0.3),
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
-                            ),
-                            child: HomeScreenDataLoadingContainer(
-                              addTopPadding: false,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                  },
+                ),
               ),
       ),
     );

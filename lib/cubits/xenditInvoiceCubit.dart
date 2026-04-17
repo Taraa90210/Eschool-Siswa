@@ -1,4 +1,6 @@
+import 'package:eschool/data/local/pendingPaymentLocalDataSource.dart';
 import 'package:eschool/data/models/xenditInvoice.dart';
+import 'package:flutter/foundation.dart';
 import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/data/models/paymentMethod.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
@@ -80,21 +82,70 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
 
       final totalAmount = baseAmount + feeAmount;
 
-      // Create invoice with total amount (base + fee)
-      final invoice = await _repository.createInvoice(
-        schoolId: schoolId,
-        studentId: studentId,
-        amount: totalAmount, // User pays this (base + fee)
-        baseAmount: baseAmount,
-        feeAmount: feeAmount,
-        email: email,
-        description: description,
-        feeIds: feeIds,
-        paymentMethods: paymentMethod?.xenditCode != null
-            ? [paymentMethod!.xenditCode!]
-            : null,
-        paymentMethodId: paymentMethod?.id,
+      // ── Safety Net Poin 3: Auto-Retry untuk Network Error ───────────────────
+      int maxRetries = 2;
+      int retryCount = 0;
+      XenditInvoice? invoice;
+
+      while (retryCount <= maxRetries) {
+        try {
+          // Create invoice with total amount (base + fee)
+          invoice = await _repository.createInvoice(
+            schoolId: schoolId,
+            studentId: studentId,
+            amount: totalAmount, // User pays this (base + fee)
+            baseAmount: baseAmount,
+            feeAmount: feeAmount,
+            email: email,
+            description: description,
+            feeIds: feeIds,
+            paymentMethods: paymentMethod?.xenditCode != null
+                ? [paymentMethod!.xenditCode!]
+                : null,
+            paymentMethodId: paymentMethod?.id,
+          );
+          break; // Success! Keluar dari loop try
+        } catch (e) {
+          final errorMsg = e.toString().toLowerCase();
+          final isNetworkError = errorMsg.contains('socketexception') ||
+              errorMsg.contains('timeoutexception') ||
+              errorMsg.contains('connection') ||
+              errorMsg.contains('handshake') ||
+              errorMsg.contains('network error');
+
+          if (isNetworkError && retryCount < maxRetries) {
+            retryCount++;
+            if (kDebugMode) {
+              debugPrint(
+                  '[XenditInvoice] Network error, retrying ($retryCount/$maxRetries)...');
+            }
+            await Future.delayed(Duration(seconds: 2 * retryCount)); // Backoff
+            continue;
+          }
+
+          rethrow; // Lempar jika bukan error koneksi atau batas retry habis
+        }
+      }
+
+      if (invoice == null) {
+        throw Exception("Unknown error occurred during invoice creation.");
+      }
+      // ────────────────────────────────────────────────────────────────────────
+
+      // ── Safety Net Poin 1: Simpan invoice ke local storage ──────────────────
+      await PendingPaymentLocalDataSource.save(
+        PendingPayment(
+          invoiceId: invoice.id,
+          externalId: invoice.externalId,
+          amount: totalAmount,
+          createdAt: invoice.createdAt,
+        ),
       );
+      if (kDebugMode) {
+        debugPrint(
+            '[PendingPayment] Saved invoice ${invoice.id} to local storage');
+      }
+      // ────────────────────────────────────────────────────────────────────────
 
       emit(XenditInvoiceSuccess(
         invoice,
@@ -117,6 +168,16 @@ class XenditInvoiceCubit extends Cubit<XenditInvoiceState> {
 
     try {
       final invoice = await _repository.getInvoiceStatus(invoiceId);
+
+      // ── Safety Net Poin 1: Hapus dari pending jika sudah selesai ────────────
+      if (invoice.isPaid || invoice.isExpired || invoice.isFailed) {
+        await PendingPaymentLocalDataSource.remove(invoiceId);
+        if (kDebugMode) {
+          debugPrint(
+              '[PendingPayment] Removed invoice $invoiceId (status: ${invoice.status})');
+        }
+      }
+      // ────────────────────────────────────────────────────────────────────────
 
       emit(XenditInvoiceStatusUpdated(invoice));
     } catch (e) {

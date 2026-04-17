@@ -10,7 +10,8 @@ const String schoolCodeKey = "schoolCode";
 const String isStudentLogInKey = "isStudentLogIn";
 const String studentDetailsKey = "studentDetails";
 const String parentDetailsKey = "parentDetails";
-const String childrenDataKey = "childrenData"; // Add key for children persistence
+const String childrenDataKey =
+    "childrenData"; // Add key for children persistence
 
 // Remember Me keys - ⚠️ WARNING: Storing password is security risk!
 const String rememberMeStudentKey = "rememberMeStudent";
@@ -43,3 +44,7 @@ const String notificationsBoxKey = "notifications";
 
 const String temporarilyStoredNotificationsKey =
     "temporarilyStoredNotifications";
+
+// Pending Payment box keys (for Xendit safety net)
+const String pendingPaymentsBoxKey = "pendingPaymentsBox";
+const String pendingPaymentsKey = "pendingPayments";

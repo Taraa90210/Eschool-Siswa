@@ -33,35 +33,35 @@ class Student {
   final List<StudentProfileExtraDetails>? studentProfileExtraDetails;
   final ChildUserDetails? childUserDetails;
 
-  Student(
-      {this.id,
-      this.firstName,
-      this.userId,
-      this.lastName,
-      this.mobile,
-      this.gender,
-      this.image,
-      this.dob,
-      this.currentAddress,
-      this.permanentAddress,
-      this.status,
-      this.fcmId,
-      this.token,
-      this.schoolCode,
-      this.schoolId,
-      this.createdAt,
-      this.updatedAt,
-      this.classSection,
-      this.schoolName,
-      this.guardian,
-      this.school,
-      this.admissionDate,
-      this.admissionNo,
-      this.rollNumber,
-      this.sessionYearId,
-      this.studentProfileExtraDetails,
-      this.childUserDetails,
-      }); // Add token to constructor
+  Student({
+    this.id,
+    this.firstName,
+    this.userId,
+    this.lastName,
+    this.mobile,
+    this.gender,
+    this.image,
+    this.dob,
+    this.currentAddress,
+    this.permanentAddress,
+    this.status,
+    this.fcmId,
+    this.token,
+    this.schoolCode,
+    this.schoolId,
+    this.createdAt,
+    this.updatedAt,
+    this.classSection,
+    this.schoolName,
+    this.guardian,
+    this.school,
+    this.admissionDate,
+    this.admissionNo,
+    this.rollNumber,
+    this.sessionYearId,
+    this.studentProfileExtraDetails,
+    this.childUserDetails,
+  }); // Add token to constructor
 
   Student copyWith(
       {int? id,
@@ -126,29 +126,34 @@ class Student {
         childUserDetails =
             ChildUserDetails.fromJson(Map.from(json['user'] ?? {})),
         userId = json['user_id'] as int?,
-        firstName = json['first_name'] as String?,
-        lastName = json['last_name'] as String?,
-        mobile = json['mobile'] as String?,
-        gender = json['gender'] as String?,
-        image = json['image'] as String?,
+        firstName =
+            (json['first_name'] ?? json['user']?['first_name']) as String?,
+        lastName = (json['last_name'] ?? json['user']?['last_name']) as String?,
+        mobile = (json['mobile'] ?? json['user']?['mobile']) as String?,
+        gender = (json['gender'] ?? json['user']?['gender']) as String?,
+        image = (json['image'] ?? json['user']?['image']) as String?,
         // Extract schoolCode from multiple possible sources in priority order
-        schoolCode = json['school_code'] as String? ?? 
-                    json['user']?['school']?['code'] as String? ??
-                    json['school']?['code'] as String?,
+        schoolCode = json['school_code'] as String? ??
+            json['user']?['school']?['code'] as String? ??
+            json['school']?['code'] as String?,
         token = json['token'] as String?, // Extract token from JSON
-        dob = json['dob'] as String?,
-        currentAddress = json['current_address'] as String?,
-        permanentAddress = json['permanent_address'] as String?,
-        status = int.parse((json['status'] ?? 0).toString()),
-        fcmId = json['fcm_id'] as String?,
-        schoolId = json['school_id'] as int?,
-        createdAt = json['created_at'] as String?,
+        dob = (json['dob'] ?? json['user']?['dob']) as String?,
+        currentAddress = (json['current_address'] ??
+            json['user']?['current_address']) as String?,
+        permanentAddress = (json['permanent_address'] ??
+            json['user']?['permanent_address']) as String?,
+        status = int.parse(
+            (json['status'] ?? json['user']?['status'] ?? 0).toString()),
+        fcmId = (json['fcm_id'] ?? json['user']?['fcm_id']) as String?,
+        schoolId = (json['school_id'] ?? json['user']?['school_id']) as int?,
+        createdAt =
+            (json['created_at'] ?? json['user']?['created_at']) as String?,
         classSection =
             ClassSection.fromJson(Map.from(json['class_section'] ?? {})),
         guardian = Guardian.fromJson(Map.from(json['guardian'] ?? {})),
         school = School.fromJson(Map.from(json['school'] ?? {})),
         schoolName = json['school_name'] as String? ??
-             json['user']?['school']?['name'] as String?,
+            json['user']?['school']?['name'] as String?,
         sessionYearId = json['session_year_id'] as int?,
         rollNumber = json['roll_number'] as int?,
         admissionDate = json['admission_date'] as String?,

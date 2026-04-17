@@ -122,10 +122,10 @@ class AuthRepository {
   String get schoolCode =>
       Hive.box(authBoxKey).get(schoolCodeKey, defaultValue: "") as String;
 
-  set schoolCode(String value) =>
+set schoolCode(String value) =>
       Hive.box(authBoxKey).put(schoolCodeKey, value);
 
-  // Remember Me methods for Student
+// Remember Me methods for Student 
   bool getRememberMeStudent() {
     return Hive.box(authBoxKey).get(rememberMeStudentKey) ?? false;
   }
@@ -201,25 +201,23 @@ class AuthRepository {
       // ✅ 1. Ambil FCM token sebelum dihapus
       final fcmToken = await FirebaseMessaging.instance.getToken();
       debugPrint('🔑 FCM Token saat logout: $fcmToken');
-      
+
       // ✅ 2. Kirim request logout ke backend dengan FCM token
       // Backend akan unregister token ini dari database
       await Api.post(
-        body: {'fcm_id': fcmToken ?? ''}, 
-        url: Api.logout, 
-        useAuthToken: true
-      );
+          body: {'fcm_id': fcmToken ?? ''},
+          url: Api.logout,
+          useAuthToken: true);
       debugPrint('✅ Logout request berhasil dikirim ke backend');
-      
+
       // ✅ 3. Hapus FCM token dari device
       await FirebaseMessaging.instance.deleteToken();
       debugPrint('🗑️ FCM Token berhasil dihapus dari device');
-      
     } catch (e) {
       debugPrint('⚠️ Error saat logout (tetap lanjut clear data lokal): $e');
       // Tetap lanjut clear data lokal meskipun error
     }
-    
+
     // ✅ 4. Clear local data (ini tetap dijalankan meskipun ada error di atas)
     await setIsLogIn(false);
     await setJwtToken("");
@@ -227,17 +225,18 @@ class AuthRepository {
     await setParentDetails(Guardian.fromJson({}));
     await setChildrenData([]); // Clear children data on logout
     schoolCode = ""; // Clear school code on logout
-    
+
     // ✅ 5. Clear pending notification (jika ada)
     final authBox = Hive.box(authBoxKey);
     authBox.delete(pendingNotificationRouteKey);
     authBox.delete(pendingNotificationArgumentsKey);
     debugPrint('🗑️ Pending notification berhasil dihapus');
-    
+
     // ✅ 6. Remember Me credentials TETAP TERSIMPAN
     // Ini memungkinkan user untuk auto-fill credentials saat login lagi
     // TAPI tidak akan auto-login, user tetap harus tap tombol "Sign In"
-    debugPrint('✅ Data lokal berhasil dibersihkan (Remember Me credentials tetap tersimpan)');
+    debugPrint(
+        '✅ Data lokal berhasil dibersihkan (Remember Me credentials tetap tersimpan)');
   }
 
   //RemoteDataSource
@@ -266,13 +265,27 @@ class AuthRepository {
       debugPrint("OK 0");
       final data = result['data'] as Map<String, dynamic>;
       debugPrint("OK 1");
-      final school = data['school'] as Map<String, dynamic>;
-      debugPrint("OK 2");
 
-      final student = Student.fromJson(Map.from(result['data']));
+      // Extrapolate school code if available in response, fallback to the schoolCode used to login
+      String finalSchoolCode = schoolCode;
+      if (data['school'] != null && data['school']['code'] != null) {
+        finalSchoolCode = data['school']['code'];
+      } else if (data['user'] != null &&
+          data['user']['school'] != null &&
+          data['user']['school']['code'] != null) {
+        finalSchoolCode = data['user']['school']['code'];
+      }
+
+      final studentData = data['user'] as Map<String, dynamic>? ?? data;
+      final student = Student.fromJson(studentData);
+
+      // Token might be at the root of the response, or nested under data['user']
+      final tokenResult = result['token'] ??
+          (data['user'] != null ? data['user']['token'] : null);
+
       return {
-        "jwtToken": result['token'],
-        "schoolCode": school['code'],
+        "jwtToken": tokenResult ?? "",
+        "schoolCode": finalSchoolCode,
         "student": student
       };
     } catch (e) {

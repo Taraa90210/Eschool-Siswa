@@ -96,6 +96,8 @@ Future<void> initializeApp() async {
   await Hive.openBox(notificationsBoxKey);
   await Hive.openBox(settingsBoxKey);
   await Hive.openBox(studentSubjectsBoxKey);
+  await Hive.openBox(
+      pendingPaymentsBoxKey); // Safety net: simpan invoice pending
 
   runApp(const MyApp());
 }

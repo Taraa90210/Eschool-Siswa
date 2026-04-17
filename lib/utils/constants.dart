@@ -63,10 +63,10 @@ const bool showDefaultCredentials = true;
 // const String defaultStudentPassword = "14112006";
 
 // default credentials of student - eschool-beta (sekarang)
-const String defaultStudentGRNumber = "2024/202571310";
+const String defaultStudentGRNumber = "2025/20260101549";
 // const String defaultStudentGRNumber = "2025010421";
 // const String defaultStudentPassword = "07122006";
-const String defaultStudentPassword = "eSchool@#12";
+const String defaultStudentPassword = "07032026";
 // const String defaultStudentPassword = "smkn2025";
 // const String defaultStudentGRNumber = "2025/202671768";
 // const String defaultStudentPassword = "30052010";
@@ -92,7 +92,7 @@ const String defaultParentPassword = "2197498792";
 // const String defaultSchoolCode = "";
 
 // Default school code
-const String defaultSchoolCode = "SCH20247";
+const String defaultSchoolCode = "SCH20260002";
 // const String defaultSchoolCode = "SCH20250268";
 // const String defaultSchoolCode = "SCH20243";
 
