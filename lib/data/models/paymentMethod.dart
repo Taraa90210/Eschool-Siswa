@@ -16,6 +16,19 @@ class XenditPaymentMethod extends Equatable {
   final String? adminFeeLabel;
   final String? xenditCode; // Kode untuk Xendit invoice restriction
 
+  /// Get local asset path for payment logo
+  String? get assetLogo {
+    if (xenditCode == null) return null;
+    final code = xenditCode!.toUpperCase();
+
+    // Mapping khusus jika nama file berbeda dengan kode
+    if (code == 'MANDIRI') return 'assets/images/payment/bankmandiri.jpg';
+
+    // Default mapping untuk yang namanya sama (lower case)
+    final fileName = code.toLowerCase();
+    return 'assets/images/payment/$fileName.jpg';
+  }
+
   const XenditPaymentMethod({
     required this.id,
     required this.name,

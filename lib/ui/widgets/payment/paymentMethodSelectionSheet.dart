@@ -8,8 +8,7 @@ import 'package:intl/intl.dart';
 class PaymentMethodSelectionSheet extends StatefulWidget {
   final double baseAmount;
   final Function(XenditPaymentMethod) onSelected;
-  final List<XenditPaymentMethod>?
-      allowedMethods; 
+  final List<XenditPaymentMethod>? allowedMethods;
 
   const PaymentMethodSelectionSheet({
     Key? key,
@@ -65,7 +64,7 @@ class _PaymentMethodSelectionSheetState
           right: 20,
         ),
         decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor, 
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(24),
             topRight: Radius.circular(24),
@@ -201,10 +200,21 @@ class _PaymentMethodSelectionSheetState
                   )
                 ],
               ),
-              child: Text(
-                method.icon,
-                style: const TextStyle(fontSize: 24),
-              ),
+              child: (method.assetLogo != null)
+                  ? Image.asset(
+                      method.assetLogo!,
+                      width: 32,
+                      height: 32,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) => Text(
+                        method.icon,
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                    )
+                  : Text(
+                      method.icon,
+                      style: const TextStyle(fontSize: 24),
+                    ),
             ),
             const SizedBox(width: 16),
             Expanded(
