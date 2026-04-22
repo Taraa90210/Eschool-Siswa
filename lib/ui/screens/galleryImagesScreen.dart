@@ -6,6 +6,7 @@ import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
 import '../widgets/studyMaterialWithDownloadButtonContainer.dart';
@@ -31,6 +32,14 @@ class GalleryImagesScreen extends StatefulWidget {
 class _GalleryImagesScreenState extends State<GalleryImagesScreen> {
   late final PageController _pageController =
       PageController(initialPage: widget.currentImageIndex);
+
+  String _fixUrl(String? url) {
+    if (url == null || url.isEmpty) return '';
+    if (url.startsWith('http://')) {
+      return url.replaceFirst('http://', 'https://');
+    }
+    return url;
+  }
 
   @override
   void dispose() {
@@ -75,9 +84,17 @@ class _GalleryImagesScreenState extends State<GalleryImagesScreen> {
                           child: PinchZoom(
                             maxScale: 5,
                             child: galleryImage.isSvgImage()
-                                ? SvgPicture.network(galleryImage.fileUrl ?? "")
+                                ? SvgPicture.network(
+                                    _fixUrl(galleryImage.fileUrl),
+                                    placeholderBuilder: (context) => Center(
+                                      child: CustomCircularProgressIndicator(
+                                        indicatorColor:
+                                            Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  )
                                 : CachedNetworkImage(
-                                    imageUrl: galleryImage.fileUrl ?? ""),
+                                    imageUrl: _fixUrl(galleryImage.fileUrl)),
                           ),
                         ),
                       ],

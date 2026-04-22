@@ -49,6 +49,7 @@ class XenditRepository {
         body: {
           'school_id': schoolId,
           'student_id': studentId,
+          'child_id': studentId,
           'amount':
               baseAmount.toInt(), // Send base only; backend adds its own fee
           'base_amount': baseAmount.toInt(),

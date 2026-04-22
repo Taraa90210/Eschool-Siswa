@@ -119,6 +119,26 @@ class Bill {
       }
     }
 
+    final rawTotal = json['total_amount'] != null
+        ? double.parse(json['total_amount'].toString())
+        : null;
+    double? rawRemaining = json['remaining_amount'] != null
+        ? double.parse(json['remaining_amount'].toString())
+        : null;
+
+    // Sanity check: jika remaining_amount jauh lebih besar dari total_amount
+    // (lebih dari 10x), kemungkinan backend mengirim satuan yang salah (misal: milli-Rupiah).
+    // Bagi dengan 1000 untuk normalisasi.
+    if (rawRemaining != null && rawTotal != null && rawTotal > 0) {
+      if (rawRemaining > rawTotal * 10) {
+        rawRemaining = rawRemaining / 1000;
+      }
+    } else if (rawRemaining != null && rawRemaining > 500000000) {
+      // Jika total_amount tidak ada tapi remaining_amount > 500 juta (tidak wajar untuk SPP),
+      // coba bagi 1000 sebagai fallback.
+      rawRemaining = rawRemaining / 1000;
+    }
+
     return Bill(
       id: json['id'] as int?,
       name: json['name'] as String?,
@@ -129,15 +149,11 @@ class Bill {
       type: json['type'] as String?, // Ensure this field is parsed correctly
       discount: json['discount'] as Map<String, dynamic>?,
       penalty: json['penalty'] as Map<String, dynamic>?,
-      totalAmount: json['total_amount'] != null
-          ? double.parse(json['total_amount'].toString())
-          : null,
+      totalAmount: rawTotal,
       paidAmount: json['paid_amount'] != null
           ? double.parse(json['paid_amount'].toString())
           : null,
-      remainingAmount: json['remaining_amount'] != null
-          ? double.parse(json['remaining_amount'].toString())
-          : null,
+      remainingAmount: rawRemaining,
       status: json['status'] as String?,
       paymentHistory: historyList,
     );
@@ -218,6 +234,10 @@ class PaymentMethod {
   final String? updatedAt;
   final String? imageUrl;
   final String? description;
+  final double? adminFee;
+  final String? adminFeeType;
+  final String? adminFeeLabel;
+  final String? xenditCode;
 
   PaymentMethod(
       {this.id,
@@ -228,7 +248,11 @@ class PaymentMethod {
       this.createdAt,
       this.updatedAt,
       this.imageUrl,
-      this.description});
+      this.description,
+      this.adminFee,
+      this.adminFeeType,
+      this.adminFeeLabel,
+      this.xenditCode});
 
   PaymentMethod.fromJson(Map<String, dynamic> json)
       : id = json['id'] as int?,
@@ -239,7 +263,17 @@ class PaymentMethod {
         description = json['description'] as String?,
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?,
-        imageUrl = json['image_url'] as String?;
+        imageUrl = json['image_url'] as String?,
+        adminFee = json['admin_fee'] != null
+            ? double.parse(json['admin_fee'].toString())
+            : null,
+        adminFeeType = json['admin_fee_type'] as String?,
+        adminFeeLabel = json['admin_fee_label'] as String?,
+        xenditCode = json['gateway_code'] as String? ??
+            json['code'] as String? ??
+            json['payment_method'] as String? ??
+            json['xendit_code'] as String? ??
+            json['slug'] as String?;
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -251,6 +285,10 @@ class PaymentMethod {
         'created_at': createdAt,
         'updated_at': updatedAt,
         'image_url': imageUrl,
+        'admin_fee': adminFee,
+        'admin_fee_type': adminFeeType,
+        'admin_fee_label': adminFeeLabel,
+        'gateway_code': xenditCode,
       };
 
   // Helper method to get the full image URL

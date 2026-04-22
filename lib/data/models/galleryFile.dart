@@ -100,5 +100,11 @@ class GalleryFile {
         'embed_youtube_url': embedYoutubeUrl
       };
 
-  bool isSvgImage() => fileExtension?.toLowerCase() == "svg";
+  bool isSvgImage() {
+    final url = fileUrl?.toLowerCase() ?? "";
+    if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png")) {
+      return false;
+    }
+    return (fileExtension?.toLowerCase() == "svg") || url.endsWith(".svg");
+  }
 }

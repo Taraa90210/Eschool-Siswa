@@ -65,7 +65,9 @@ class _SchoolGalleryWithSessionYearFilterContainerState
     if (url == null || url.isEmpty) {
       return '';
     }
-    if (url.startsWith('http://') && url.contains('esbeta.deanry.my.id')) {
+    // Konversi http:// → https:// untuk semua domain agar foto baru
+    // yang diupload backend tidak gagal karena mixed-content.
+    if (url.startsWith('http://')) {
       return url.replaceFirst('http://', 'https://');
     }
     return url;
@@ -524,7 +526,8 @@ class _SearchAndFilterWidgetState extends State<_SearchAndFilterWidget> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
-                                        color: primaryColor.withValues(alpha: 0.9),
+                                        color:
+                                            primaryColor.withValues(alpha: 0.9),
                                       ),
                                     ),
                                   ),

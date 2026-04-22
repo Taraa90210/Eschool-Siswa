@@ -71,8 +71,18 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
   }
 
   double _parseAmount(String value) {
-    final cleanValue = value.replaceAll(RegExp(r'[^\d]'), '');
-    return double.tryParse(cleanValue) ?? 0;
+    // Di locale Indonesia, titik (.) adalah pemisah ribuan dan koma (,) adalah desimal.
+    // Langkah 1: Hapus semua titik (pemisah ribuan).
+    // Langkah 2: Ganti koma desimal dengan titik standar.
+    // Langkah 3: Ambil bagian integer saja (tanpa desimal).
+    final cleanValue = value
+        .replaceAll('.', '') // hapus titik ribuan
+        .replaceAll(',', '.') // ubah koma desimal ke titik
+        .replaceAll(
+            RegExp(r'[^\d.]'), ''); // hapus karakter lain selain digit & titik
+    final parsed = double.tryParse(cleanValue) ?? 0;
+    // Kembalikan sebagai nilai integer (IDR tidak pakai sen)
+    return parsed.floorToDouble();
   }
 
   void _validateAmount(String value) {
@@ -113,15 +123,17 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
         widget.selectedFees.first.paymentMethods!.isNotEmpty) {
       dynamicAllowedMethods =
           widget.selectedFees.first.paymentMethods!.map((pm) {
-        return XenditPaymentMethod(
-          id: pm.id!,
-          name: pm.name ?? 'Metode ${pm.id}',
-          description: pm.description ?? '',
-          icon: '💳',
-          iconUrl: pm.fullImageUrl ?? pm.image,
-          type: XenditPaymentMethodType.virtualAccount, // Default fallback
-          adminFee: 0,
-        );
+        return XenditPaymentMethod.fromJson({
+          'id': pm.id,
+          'name': pm.name,
+          'description': pm.description,
+          'image_url': pm.fullImageUrl ?? pm.image,
+          'admin_fee': pm.adminFee,
+          'admin_fee_type': pm.adminFeeType,
+          'admin_fee_label': pm.adminFeeLabel,
+          'gateway_code':
+              pm.xenditCode ?? XenditPaymentMethod.getById(pm.id)?.xenditCode,
+        });
       }).toList();
     }
 
@@ -163,8 +175,18 @@ class _XenditOnlyPaymentScreenState extends State<XenditOnlyPaymentScreen>
       final feeIds = widget.selectedFees.map((fee) => fee.id!).toList();
 
       // Create Xendit invoice with selected payment method
+      final schoolId = widget.child.schoolId ??
+          widget.child.school?.id ??
+          (widget.selectedFees.isNotEmpty
+              ? widget.selectedFees.first.schoolId
+              : null) ??
+          1;
+
+      debugPrint(
+          "DEBUG: Selected payment method xenditCode = ${method.xenditCode}");
+
       await context.read<XenditInvoiceCubit>().createInvoice(
-            schoolId: 1, // Note: Get from school data
+            schoolId: schoolId,
             studentId: widget.child.id!,
             amount: amount,
             email: email,

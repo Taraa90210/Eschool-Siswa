@@ -103,32 +103,32 @@ class XenditPaymentMethod extends Equatable {
 
   /// Format deskripsi biaya untuk UI
   String getFeeDescription(double baseAmount) {
+    final fee = calculateFee(baseAmount);
+    final formattedNominal = fee.toStringAsFixed(0).replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]}.');
+
+    // Case 1: Backend provides a pre-formatted label
     if (adminFeeLabel != null && adminFeeLabel!.isNotEmpty) {
       if (adminFeeLabel == 'Rp 0' || adminFeeLabel == '0%') {
         return 'Tanpa Biaya Admin';
       }
+      // If label shows percentage, append calculated nominal for clarity
+      if (adminFeeLabel!.contains('%')) {
+        return 'Biaya Admin: $adminFeeLabel ($formattedNominal)';
+      }
       return 'Biaya Admin: $adminFeeLabel';
     }
 
-    final fee = calculateFee(baseAmount);
+    // Case 2: Manual calculation based on adminFee value
     if (fee <= 0) return 'Tanpa Biaya Admin';
 
-    final formatted = _formatCurrency(fee);
     if (adminFeeType == 'percentage' ||
         (adminFeeType == null && adminFee > 0 && adminFee < 1.0)) {
       final pct = (adminFee * 100)
           .toStringAsFixed(adminFee == adminFee.roundToDouble() ? 0 : 1);
-      return 'Biaya Admin ($pct%): $formatted';
+      return 'Biaya Admin: $pct% ($formattedNominal)';
     }
-    return 'Biaya Admin: $formatted';
-  }
-
-  String _formatCurrency(double amount) {
-    final formatted = amount.toStringAsFixed(0).replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]}.',
-        );
-    return 'Rp $formatted';
+    return 'Biaya Admin: Rp $formattedNominal';
   }
 
   /// Daftar metode pembayaran fallback (dipakai jika API tidak mengembalikan allowed_methods).

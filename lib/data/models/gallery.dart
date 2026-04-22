@@ -88,5 +88,12 @@ class Gallery {
     return (files ?? []).where((element) => element.type == "1").toList();
   }
 
-  bool isThumbnailSvg() => thumbnailFileExtension?.toLowerCase() == "svg";
+  bool isThumbnailSvg() {
+    final url = thumbnail?.toLowerCase() ?? "";
+    if (url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".png")) {
+      return false;
+    }
+    return (thumbnailFileExtension?.toLowerCase() == "svg") ||
+        url.endsWith(".svg");
+  }
 }

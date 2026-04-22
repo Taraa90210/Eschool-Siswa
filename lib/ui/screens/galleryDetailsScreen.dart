@@ -39,6 +39,21 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
   String selectedTabTitleKey = photosKey;
   Duration tabChangeAnimationDuration = const Duration(milliseconds: 400);
 
+  /// Sanitasi URL gambar: konversi http:// → https:// agar gambar baru
+  /// yang diupload backend tidak gagal dimuat karena mixed-content.
+  String _fixUrl(String? url) {
+    if (url == null || url.isEmpty) return '';
+    if (url.startsWith('http://')) {
+      return url.replaceFirst('http://', 'https://');
+    }
+    return url;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     // ✅ Reset orientation ke portrait saat keluar dari screen gallery
@@ -191,11 +206,19 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                                     tag: "gallery_image_${galleryFile.id}",
                                     child: galleryFile.isSvgImage()
                                         ? SvgPicture.network(
-                                            galleryFile.fileUrl ?? "",
+                                            _fixUrl(galleryFile.fileUrl),
                                             fit: BoxFit.contain,
+                                            placeholderBuilder: (context) =>
+                                                Center(
+                                              child:
+                                                  CustomCircularProgressIndicator(
+                                                indicatorColor: Colors.white,
+                                              ),
+                                            ),
                                           )
                                         : CachedNetworkImage(
-                                            imageUrl: galleryFile.fileUrl ?? "",
+                                            imageUrl:
+                                                _fixUrl(galleryFile.fileUrl),
                                             placeholder: (context, url) =>
                                                 Center(
                                               child:
@@ -558,13 +581,29 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                       borderRadius: BorderRadius.circular(12),
                       child: galleryFile.isSvgImage()
                           ? SvgPicture.network(
-                              galleryFile.fileUrl ?? "",
+                              _fixUrl(galleryFile.fileUrl),
                               fit: BoxFit.cover,
                               width: boxConstraints.maxWidth * 0.48,
                               height: boxConstraints.maxWidth * 0.48,
+                              placeholderBuilder: (context) => Container(
+                                color: Colors.grey[200],
+                                child: Center(
+                                  child: SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             )
                           : CachedNetworkImage(
-                              imageUrl: galleryFile.fileUrl ?? "",
+                              imageUrl: _fixUrl(galleryFile.fileUrl),
                               fit: BoxFit.cover,
                               width: boxConstraints.maxWidth * 0.48,
                               height: boxConstraints.maxWidth * 0.48,
@@ -725,7 +764,7 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: CachedNetworkImage(
-                      imageUrl: widget.gallery.thumbnail ?? "",
+                      imageUrl: _fixUrl(widget.gallery.thumbnail),
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Container(
                         color: Colors.grey[200],
@@ -800,7 +839,10 @@ class _GalleryDetailsScreenState extends State<GalleryDetailsScreen> {
               ],
             ),
           ),
-          _buildAppBar(widget.sessionYear.name ?? "")
+          Align(
+            alignment: Alignment.topCenter,
+            child: _buildAppBar(widget.sessionYear.name ?? ""),
+          )
         ],
       ),
     );
