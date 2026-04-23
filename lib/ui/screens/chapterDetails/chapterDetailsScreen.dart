@@ -1,5 +1,5 @@
-import 'package:eschool/data/models/lesson.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/lesson.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customTabBarContainer.dart';
 import 'package:eschool/ui/widgets/filesContainer.dart';

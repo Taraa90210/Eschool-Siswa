@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/exam/examTabSelectionCubit.dart';
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/ui/widgets/examOfflineListContainer.dart';
 import 'package:eschool/ui/widgets/examOnlineListContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';

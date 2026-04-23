@@ -1,5 +1,5 @@
-import 'package:eschool/data/models/chatUserRole.dart';
-import 'package:eschool/data/models/userChatHistory.dart';
+import 'package:eschool/data/models/chat/chatUserRole.dart';
+import 'package:eschool/data/models/chat/userChatHistory.dart';
 import 'package:eschool/data/repositories/chatRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

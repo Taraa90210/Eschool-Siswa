@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:eschool/data/models/leave.dart';
+import 'package:eschool/data/models/student/leave.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/foundation.dart';

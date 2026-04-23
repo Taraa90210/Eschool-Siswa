@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/payment/childFeeDetailsCubit.dart';
 // import 'package:eschool/data/repositories/paymentRepository.dart';
-import 'package:eschool/data/models/childFeeDetails.dart';
-import 'package:eschool/data/models/student.dart';
+import 'package:eschool/data/models/payment/childFeeDetails.dart';
+import 'package:eschool/data/models/auth/student.dart';
 // import 'package:eschool/data/models/studyMaterial.dart';
 // import 'package:eschool/ui/screens/PaymentHistoryTabScreen.dart';
 import 'package:eschool/ui/screens/payment/paymentHistoryScreen.dart';

@@ -1,7 +1,7 @@
-import 'package:eschool/data/models/coreSubject.dart';
-import 'package:eschool/data/models/electiveSubject.dart';
-import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/subjectTeacher.dart';
+import 'package:eschool/data/models/academics/coreSubject.dart';
+import 'package:eschool/data/models/academics/electiveSubject.dart';
+import 'package:eschool/data/models/auth/student.dart';
+import 'package:eschool/data/models/academics/subjectTeacher.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:flutter/foundation.dart';
 

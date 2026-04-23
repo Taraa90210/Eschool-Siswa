@@ -2,7 +2,7 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/data/repositories/subjectRepository.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 

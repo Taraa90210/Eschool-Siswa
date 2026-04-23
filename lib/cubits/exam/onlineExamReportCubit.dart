@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/examList.dart';
+import 'package:eschool/data/models/exam/examList.dart';
 import 'package:eschool/data/repositories/reportRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

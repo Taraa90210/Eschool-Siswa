@@ -1,5 +1,5 @@
 import 'package:eschool/cubits/payment/paymentTransactionsCubit.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/data/repositories/paymentRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:eschool/utils/utils.dart';
-import 'package:eschool/data/models/student.dart';
+import 'package:eschool/data/models/auth/student.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 

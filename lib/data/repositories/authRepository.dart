@@ -1,5 +1,5 @@
-import 'package:eschool/data/models/guardian.dart';
-import 'package:eschool/data/models/student.dart';
+import 'package:eschool/data/models/auth/guardian.dart';
+import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/hiveBoxKeys.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

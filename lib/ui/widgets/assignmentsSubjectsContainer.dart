@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/academic/assignmentsCubit.dart';
 import 'package:eschool/cubits/exam/examsOnlineCubit.dart';
 import 'package:eschool/cubits/exam/resultsCubit.dart';
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

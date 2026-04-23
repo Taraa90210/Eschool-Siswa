@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:eschool/data/models/holiday.dart';
+import 'package:eschool/data/models/system/holiday.dart';
 import 'package:eschool/utils/api.dart';
 
 class SystemRepository {

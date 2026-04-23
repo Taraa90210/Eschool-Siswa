@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 // Import sesuai struktur project kamu
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/ui/widgets/downloadFileButton.dart';
 import 'package:eschool/utils/utils.dart';
 

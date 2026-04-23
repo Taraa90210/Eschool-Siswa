@@ -3,8 +3,8 @@ import 'package:eschool/cubits/academic/classElectiveSubjectsCubit.dart';
 import 'package:eschool/cubits/academic/selectElectiveSubjectsCubit.dart';
 import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 
-import 'package:eschool/data/models/electiveSubject.dart';
-import 'package:eschool/data/models/electiveSubjectGroup.dart';
+import 'package:eschool/data/models/academics/electiveSubject.dart';
+import 'package:eschool/data/models/academics/electiveSubjectGroup.dart';
 import 'package:eschool/data/repositories/classRepository.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/customAppbar.dart';

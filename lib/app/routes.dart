@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/student.dart';
+import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/ui/screens/payment/paymentHistoryTabScreen.dart';
 import 'package:eschool/utils/hiveBoxKeys.dart';
 import 'package:hive_flutter/hive_flutter.dart';

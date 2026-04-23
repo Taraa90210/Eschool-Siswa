@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/academic/topicStudyMaterialCubit.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
-import 'package:eschool/data/models/topic.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
+import 'package:eschool/data/models/academics/topic.dart';
 import 'package:eschool/data/repositories/subjectRepository.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

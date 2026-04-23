@@ -17,7 +17,7 @@ import 'package:eschool/data/repositories/xenditRepository.dart';
 import 'package:eschool/cubits/student/studentGuardianDetailsCubit.dart';
 import 'package:eschool/cubits/student/subjectAttendanceCubit.dart';
 import 'package:eschool/cubits/academic/timeTableCubit.dart';
-import 'package:eschool/data/models/notificationDetails.dart';
+import 'package:eschool/data/models/system/notificationDetails.dart';
 import 'package:eschool/data/repositories/extracurricularRepository.dart';
 import 'package:eschool/data/repositories/notificationRepository.dart';
 import 'package:eschool/data/repositories/schoolRepository.dart';

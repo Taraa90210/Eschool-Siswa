@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/models/contact.dart';
-import 'package:eschool/data/models/contactResponse.dart';
-import 'package:eschool/data/models/contactStats.dart';
+import 'package:eschool/data/models/system/contact.dart';
+import 'package:eschool/data/models/system/contactResponse.dart';
+import 'package:eschool/data/models/system/contactStats.dart';
 import 'package:eschool/data/repositories/contactRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

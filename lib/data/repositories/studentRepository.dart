@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:eschool/data/models/guardian.dart';
-import 'package:eschool/data/models/sessionYear.dart';
-import 'package:eschool/data/models/attendanceDay.dart';
-import 'package:eschool/data/models/coreSubject.dart';
-import 'package:eschool/data/models/electiveSubject.dart';
-import 'package:eschool/data/models/exam.dart';
-import 'package:eschool/data/models/result.dart';
-import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/subjectAttendanceModel.dart';
-import 'package:eschool/data/models/timeTableSlot.dart';
+import 'package:eschool/data/models/auth/guardian.dart';
+import 'package:eschool/data/models/academics/sessionYear.dart';
+import 'package:eschool/data/models/student/attendanceDay.dart';
+import 'package:eschool/data/models/academics/coreSubject.dart';
+import 'package:eschool/data/models/academics/electiveSubject.dart';
+import 'package:eschool/data/models/exam/exam.dart';
+import 'package:eschool/data/models/exam/result.dart';
+import 'package:eschool/data/models/auth/student.dart';
+import 'package:eschool/data/models/student/subjectAttendanceModel.dart';
+import 'package:eschool/data/models/academics/timeTableSlot.dart';
 import 'package:eschool/utils/stripeService.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';

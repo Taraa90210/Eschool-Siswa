@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:eschool/data/models/contact.dart';
-import 'package:eschool/data/models/contactResponse.dart';
-import 'package:eschool/data/models/contactStats.dart';
+import 'package:eschool/data/models/system/contact.dart';
+import 'package:eschool/data/models/system/contactResponse.dart';
+import 'package:eschool/data/models/system/contactStats.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:flutter/foundation.dart';
 

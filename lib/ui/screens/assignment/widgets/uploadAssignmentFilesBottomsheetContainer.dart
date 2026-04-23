@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:eschool/cubits/academic/uploadAssignmentCubit.dart';
-import 'package:eschool/data/models/assignment.dart';
+import 'package:eschool/data/models/academics/assignment.dart';
 import 'package:eschool/ui/widgets/bottomsheetTopTitleAndCloseButton.dart';
 import 'package:eschool/ui/widgets/customRoundedButton.dart';
 import 'package:eschool/utils/labelKeys.dart';

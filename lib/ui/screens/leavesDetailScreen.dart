@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/leave.dart';
+import 'package:eschool/data/models/student/leave.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:eschool/ui/widgets/svgButton.dart';

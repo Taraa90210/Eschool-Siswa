@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/data/models/studentExtracurricular.dart';
+import 'package:eschool/data/models/extracurricular/studentExtracurricular.dart';
 import 'package:eschool/data/repositories/extracurricularRepository.dart';
 
 abstract class AllMyExtracurricularStatusState {}

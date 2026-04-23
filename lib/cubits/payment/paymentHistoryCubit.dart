@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/data/models/paymentHistory.dart';
+import 'package:eschool/data/models/payment/paymentHistory.dart';
 import 'dart:convert';
 
 abstract class PaymentHistoryState {}

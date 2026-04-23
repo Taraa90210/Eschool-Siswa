@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/models/timeTableSlot.dart';
+import 'package:eschool/data/models/academics/timeTableSlot.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

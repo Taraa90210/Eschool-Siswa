@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/schoolConfiguration.dart';
+import 'package:eschool/data/models/system/schoolConfiguration.dart';
 import 'package:eschool/data/repositories/schoolRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

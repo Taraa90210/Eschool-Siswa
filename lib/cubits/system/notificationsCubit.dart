@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/notificationDetails.dart';
+import 'package:eschool/data/models/system/notificationDetails.dart';
 import 'package:eschool/data/repositories/notificationRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

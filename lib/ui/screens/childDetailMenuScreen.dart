@@ -1,7 +1,7 @@
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
-import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/auth/student.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/labelKeys.dart';

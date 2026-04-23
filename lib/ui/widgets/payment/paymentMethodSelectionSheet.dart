@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/paymentMethod.dart';
+import 'package:eschool/data/models/payment/paymentMethod.dart';
 import 'package:eschool/ui/widgets/customRoundedButton.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

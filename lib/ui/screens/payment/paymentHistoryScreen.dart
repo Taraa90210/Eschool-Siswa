@@ -8,8 +8,8 @@ import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/imageUtils.dart';
-import 'package:eschool/data/models/childFeeDetails.dart';
-import 'package:eschool/data/models/paymentMethod.dart';
+import 'package:eschool/data/models/payment/childFeeDetails.dart';
+import 'package:eschool/data/models/payment/paymentMethod.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
   final Bill bill;

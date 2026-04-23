@@ -1,5 +1,5 @@
-import 'package:eschool/data/models/paymentGateway.dart';
-import 'package:eschool/data/models/paymentTransaction.dart';
+import 'package:eschool/data/models/payment/paymentGateway.dart';
+import 'package:eschool/data/models/payment/paymentTransaction.dart';
 import 'package:eschool/data/repositories/feeRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

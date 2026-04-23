@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:eschool/data/models/announcement.dart';
+import 'package:eschool/data/models/academics/announcement.dart';
 import 'package:eschool/ui/widgets/StudyMaterial_part2.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

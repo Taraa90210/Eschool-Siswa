@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:eschool/app/routes.dart';
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/ui/widgets/subjectImageContainer.dart';
 import 'package:eschool/utils/systemModules.dart';
 import 'package:eschool/utils/utils.dart';

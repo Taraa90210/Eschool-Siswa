@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/student/leavesCubit.dart';
-import 'package:eschool/data/models/leave.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/student/leave.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/ui/widgets/applyLeavesContainer.dart';
-import 'package:eschool/data/models/student.dart';
+import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/ui/widgets/expandableText.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:eschool/cubits/student/applyLeavesCubit.dart';
-import 'package:eschool/data/models/leave.dart';
+import 'package:eschool/data/models/student/leave.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/optimized_file_compression_mixin.dart';

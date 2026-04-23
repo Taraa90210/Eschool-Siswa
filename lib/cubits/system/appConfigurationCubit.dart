@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:eschool/data/models/appConfiguration.dart';
+import 'package:eschool/data/models/system/appConfiguration.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';

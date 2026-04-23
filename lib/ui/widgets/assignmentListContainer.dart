@@ -1,7 +1,7 @@
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/academic/assignmentsCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
-import 'package:eschool/data/models/assignment.dart';
+import 'package:eschool/data/models/academics/assignment.dart';
 import 'package:eschool/ui/widgets/assignmentsContainer.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';

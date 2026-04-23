@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:eschool/data/models/chatMessage.dart';
+import 'package:eschool/data/models/chat/chatMessage.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

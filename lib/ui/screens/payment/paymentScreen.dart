@@ -7,8 +7,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:eschool/cubits/payment/paymentSubmissionCubit.dart';
-import 'package:eschool/data/models/childFeeDetails.dart';
-import 'package:eschool/data/models/student.dart';
+import 'package:eschool/data/models/payment/childFeeDetails.dart';
+import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';

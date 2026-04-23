@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/xenditInvoice.dart';
+import 'package:eschool/data/models/payment/xenditInvoice.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/data/repositories/xenditDirectRepository.dart';
 

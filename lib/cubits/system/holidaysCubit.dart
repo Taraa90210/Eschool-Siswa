@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/models/holiday.dart';
+import 'package:eschool/data/models/system/holiday.dart';
 import 'package:eschool/data/repositories/systemInfoRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

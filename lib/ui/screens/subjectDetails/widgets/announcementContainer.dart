@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/academic/subjectAnnouncementsCubit.dart';
-import 'package:eschool/data/models/announcement.dart';
+import 'package:eschool/data/models/academics/announcement.dart';
 import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';

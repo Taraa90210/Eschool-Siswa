@@ -1,8 +1,8 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/exam/downloadStudentResultCubit.dart';
-import 'package:eschool/data/models/result.dart';
-import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/subjectMark.dart';
+import 'package:eschool/data/models/exam/result.dart';
+import 'package:eschool/data/models/auth/student.dart';
+import 'package:eschool/data/models/exam/subjectMark.dart';
 import 'package:eschool/data/repositories/resultRepository.dart';
 import 'package:eschool/ui/styles/colors.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

@@ -1,9 +1,9 @@
 ﻿import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/models/subjectAttendanceModel.dart';
+import 'package:eschool/data/models/student/subjectAttendanceModel.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/data/models/sessionYear.dart';
+import 'package:eschool/data/models/academics/sessionYear.dart';
 
 abstract class SubjectAttendanceState extends Equatable {
   @override

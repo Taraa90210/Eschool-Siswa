@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/contact.dart';
+import 'package:eschool/data/models/system/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

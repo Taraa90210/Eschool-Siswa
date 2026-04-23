@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/academic/subjectAnnouncementsCubit.dart';
 import 'package:eschool/cubits/academic/subjectLessonsCubit.dart';
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/data/repositories/announcementRepository.dart';
 import 'package:eschool/data/repositories/subjectRepository.dart';
 import 'package:eschool/ui/screens/subjectDetails/widgets/announcementContainer.dart';

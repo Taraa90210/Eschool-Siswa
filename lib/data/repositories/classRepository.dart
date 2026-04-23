@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/electiveSubjectGroup.dart';
+import 'package:eschool/data/models/academics/electiveSubjectGroup.dart';
 import 'package:eschool/utils/api.dart';
 
 class ClassRepository {

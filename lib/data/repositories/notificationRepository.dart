@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:eschool/data/models/notificationDetails.dart';
+import 'package:eschool/data/models/system/notificationDetails.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';

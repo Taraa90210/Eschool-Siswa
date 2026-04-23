@@ -1,5 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/ui/widgets/downloadFileButton.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:eschool/cubits/system/appLocalizationCubit.dart';
-import 'package:eschool/data/models/appLanguage.dart';
+import 'package:eschool/data/models/system/appLanguage.dart';
 import 'package:eschool/utils/appLanguages.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

@@ -1,6 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:eschool/data/models/exam.dart';
+import 'package:eschool/data/models/exam/exam.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 
 abstract class ExamDetailsState {}

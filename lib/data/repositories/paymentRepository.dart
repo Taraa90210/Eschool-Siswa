@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/paymentTransaction.dart';
+import 'package:eschool/data/models/payment/paymentTransaction.dart';
 import 'package:eschool/utils/api.dart';
 import 'dart:convert';
 

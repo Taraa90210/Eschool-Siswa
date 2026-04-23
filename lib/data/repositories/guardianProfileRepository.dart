@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:eschool/data/models/guardian.dart';
+import 'package:eschool/data/models/auth/guardian.dart';
 import 'package:eschool/utils/imageCompress.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';

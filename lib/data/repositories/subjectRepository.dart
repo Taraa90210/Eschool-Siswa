@@ -1,7 +1,7 @@
 
 import 'package:dio/dio.dart';
-import 'package:eschool/data/models/lesson.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/lesson.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/utils/api.dart';
 
 class SubjectRepository {

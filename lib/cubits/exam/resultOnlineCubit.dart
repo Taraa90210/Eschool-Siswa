@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/data/models/resultOnlineDetails.dart';
+import 'package:eschool/data/models/exam/resultOnlineDetails.dart';
 import 'package:eschool/data/repositories/resultRepository.dart';
 
 abstract class ResultOnlineState {}

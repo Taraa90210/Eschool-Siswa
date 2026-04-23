@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:eschool/data/models/sliderDetails.dart';
+import 'package:eschool/data/models/system/sliderDetails.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

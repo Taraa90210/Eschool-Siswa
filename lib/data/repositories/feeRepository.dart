@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:eschool/data/models/childFeeDetails.dart';
-import 'package:eschool/data/models/paymentTransaction.dart';
+import 'package:eschool/data/models/payment/childFeeDetails.dart';
+import 'package:eschool/data/models/payment/paymentTransaction.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:flutter/foundation.dart';
 

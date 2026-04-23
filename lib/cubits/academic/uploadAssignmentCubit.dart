@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/models/assignment.dart';
+import 'package:eschool/data/models/academics/assignment.dart';
 import 'package:eschool/data/repositories/assignmentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

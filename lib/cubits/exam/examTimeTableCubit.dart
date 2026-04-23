@@ -1,6 +1,6 @@
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/data/models/exam.dart';
+import 'package:eschool/data/models/exam/exam.dart';
 abstract class ExamTimeTableState {}
 
 class ExamTimeTableInitial extends ExamTimeTableState {}

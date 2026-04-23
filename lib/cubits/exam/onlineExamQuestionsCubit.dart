@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/foundation.dart';
-import 'package:eschool/data/models/examOnline.dart';
-import 'package:eschool/data/models/question.dart';
+import 'package:eschool/data/models/exam/examOnline.dart';
+import 'package:eschool/data/models/exam/question.dart';
 import 'package:eschool/data/repositories/onlineExamRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

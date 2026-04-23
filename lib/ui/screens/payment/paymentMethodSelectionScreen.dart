@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/paymentMethod.dart';
+import 'package:eschool/data/models/payment/paymentMethod.dart';
 import 'package:flutter/material.dart';
 
 /// Payment Method Selection Screen

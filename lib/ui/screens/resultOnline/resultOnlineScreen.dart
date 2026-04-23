@@ -7,7 +7,7 @@ import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/cubits/exam/resultOnlineCubit.dart';
-import 'package:eschool/data/models/resultOnlineDetails.dart';
+import 'package:eschool/data/models/exam/resultOnlineDetails.dart';
 import 'package:eschool/data/repositories/resultRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/utils/labelKeys.dart';

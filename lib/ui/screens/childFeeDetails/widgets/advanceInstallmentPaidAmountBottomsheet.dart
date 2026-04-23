@@ -1,5 +1,5 @@
 import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
-import 'package:eschool/data/models/advanceFee.dart';
+import 'package:eschool/data/models/payment/advanceFee.dart';
 import 'package:eschool/ui/widgets/bottomsheetTopTitleAndCloseButton.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';

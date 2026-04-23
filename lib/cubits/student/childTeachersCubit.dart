@@ -1,6 +1,6 @@
-import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/subject.dart';
-import 'package:eschool/data/models/subjectTeacher.dart';
+import 'package:eschool/data/models/auth/student.dart';
+import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academics/subjectTeacher.dart';
 import 'package:eschool/data/repositories/parentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

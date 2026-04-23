@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/chatMessage.dart';
+import 'package:eschool/data/models/chat/chatMessage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TempMessage {

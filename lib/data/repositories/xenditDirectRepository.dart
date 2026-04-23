@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:eschool/data/models/xenditInvoice.dart';
+import 'package:eschool/data/models/payment/xenditInvoice.dart';
 
 /// Direct Xendit API Repository (for testing without backend)
 ///

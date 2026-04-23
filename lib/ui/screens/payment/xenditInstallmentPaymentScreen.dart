@@ -1,10 +1,10 @@
 import 'package:eschool/cubits/payment/xenditInvoiceCubit.dart';
 import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/payment/childFeeDetailsCubit.dart';
-import 'package:eschool/data/models/childFeeDetails.dart';
+import 'package:eschool/data/models/payment/childFeeDetails.dart';
 import 'package:flutter/foundation.dart';
-import 'package:eschool/data/models/student.dart';
-import 'package:eschool/data/models/xenditInvoice.dart';
+import 'package:eschool/data/models/auth/student.dart';
+import 'package:eschool/data/models/payment/xenditInvoice.dart';
 import 'package:eschool/ui/screens/payment/xenditPaymentScreen.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
@@ -13,7 +13,7 @@ import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/ui/widgets/payment/paymentMethodSelectionSheet.dart';
-import 'package:eschool/data/models/paymentMethod.dart';
+import 'package:eschool/data/models/payment/paymentMethod.dart';
 import 'package:intl/intl.dart';
 
 class XenditInstallmentPaymentScreen extends StatefulWidget {

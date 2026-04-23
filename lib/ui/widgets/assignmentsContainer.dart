@@ -2,7 +2,7 @@ import 'package:eschool/cubits/academic/assignmentsCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/ui/screens/home/cubits/assignmentsTabSelectionCubit.dart';
 import 'package:eschool/ui/widgets/assignmentFilterBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/assignmentListContainer.dart';

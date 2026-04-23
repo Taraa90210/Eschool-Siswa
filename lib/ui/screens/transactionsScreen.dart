@@ -10,7 +10,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/data/models/studyMaterial.dart';
+import 'package:eschool/data/models/academics/studyMaterial.dart';
 import 'package:eschool/utils/api.dart';
 
 class TransactionsScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:eschool/data/models/assignmentList.dart';
-import 'package:eschool/data/models/examList.dart';
+import 'package:eschool/data/models/academics/assignmentList.dart';
+import 'package:eschool/data/models/exam/examList.dart';
 
 import 'package:eschool/utils/api.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';

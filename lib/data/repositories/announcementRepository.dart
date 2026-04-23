@@ -1,5 +1,5 @@
 
-import 'package:eschool/data/models/announcement.dart';
+import 'package:eschool/data/models/academics/announcement.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:flutter/foundation.dart';
 

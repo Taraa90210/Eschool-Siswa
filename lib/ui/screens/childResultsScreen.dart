@@ -1,5 +1,5 @@
 import 'package:eschool/cubits/exam/resultsCubit.dart';
-import 'package:eschool/data/models/subject.dart';
+import 'package:eschool/data/models/academics/subject.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:eschool/ui/widgets/resultsContainer.dart';
 

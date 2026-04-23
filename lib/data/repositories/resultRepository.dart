@@ -1,5 +1,5 @@
-import 'package:eschool/data/models/resultOnline.dart';
-import 'package:eschool/data/models/resultOnlineDetails.dart';
+import 'package:eschool/data/models/exam/resultOnline.dart';
+import 'package:eschool/data/models/exam/resultOnlineDetails.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:flutter/foundation.dart';
 

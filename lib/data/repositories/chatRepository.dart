@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:eschool/data/models/chatMessage.dart';
-import 'package:eschool/data/models/chatMessagesResponse.dart';
-import 'package:eschool/data/models/chatUserRole.dart';
-import 'package:eschool/data/models/chatUsersResponse.dart';
-import 'package:eschool/data/models/userChatHistory.dart';
+import 'package:eschool/data/models/chat/chatMessage.dart';
+import 'package:eschool/data/models/chat/chatMessagesResponse.dart';
+import 'package:eschool/data/models/chat/chatUserRole.dart';
+import 'package:eschool/data/models/chat/chatUsersResponse.dart';
+import 'package:eschool/data/models/chat/userChatHistory.dart';
 import 'package:eschool/data/repositories/authRepository.dart';
 import 'package:eschool/utils/api.dart';
 import 'package:image_picker/image_picker.dart';
