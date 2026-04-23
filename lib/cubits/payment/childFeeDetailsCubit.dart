@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/payment/childFeeDetails.dart';
-import 'package:eschool/data/repositories/feeRepository.dart';
+import 'package:eschool/data/repositories/payment/feeRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class ChildFeeDetailsState {}

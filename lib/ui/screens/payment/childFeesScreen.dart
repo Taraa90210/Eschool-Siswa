@@ -15,7 +15,7 @@ import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/payment/payment/xenditOnlyPaymentScreen.dart';
 
 import 'package:eschool/cubits/payment/xenditInvoiceCubit.dart';
-import 'package:eschool/data/repositories/xenditRepository.dart';
+import 'package:eschool/data/repositories/payment/xenditRepository.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

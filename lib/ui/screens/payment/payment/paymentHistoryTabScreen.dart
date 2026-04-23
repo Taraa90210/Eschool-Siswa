@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/payment/paymentTransactionsCubit.dart';
 import 'package:eschool/data/models/academic/studyMaterial.dart';
-import 'package:eschool/data/repositories/paymentRepository.dart';
+import 'package:eschool/data/repositories/payment/paymentRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/noDataContainer.dart';

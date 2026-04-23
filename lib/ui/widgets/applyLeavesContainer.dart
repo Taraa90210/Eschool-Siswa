@@ -10,7 +10,7 @@ import 'package:eschool/utils/utils.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/data/repositories/leavesRepository.dart';
+import 'package:eschool/data/repositories/student/leavesRepository.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';

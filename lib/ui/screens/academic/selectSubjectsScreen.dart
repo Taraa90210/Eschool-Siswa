@@ -5,8 +5,8 @@ import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 
 import 'package:eschool/data/models/academic/electiveSubject.dart';
 import 'package:eschool/data/models/academic/electiveSubjectGroup.dart';
-import 'package:eschool/data/repositories/classRepository.dart';
-import 'package:eschool/data/repositories/studentRepository.dart';
+import 'package:eschool/data/repositories/academic/classRepository.dart';
+import 'package:eschool/data/repositories/student/studentRepository.dart';
 import 'package:eschool/ui/widgets/customAppbar.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

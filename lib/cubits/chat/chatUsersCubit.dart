@@ -1,6 +1,6 @@
 import 'package:eschool/data/models/chat/chatUserRole.dart';
 import 'package:eschool/data/models/chat/chatUsersResponse.dart';
-import 'package:eschool/data/repositories/chatRepository.dart';
+import 'package:eschool/data/repositories/chat/chatRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum ChatUsersFetchStatus { initial, loading, success, failure }

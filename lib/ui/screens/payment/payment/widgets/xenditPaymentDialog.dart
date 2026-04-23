@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/payment/paymentConfirmationCubit.dart';
 import 'package:eschool/data/models/payment/xenditInvoice.dart';
-import 'package:eschool/data/repositories/paymentConfirmationRepository.dart';
+import 'package:eschool/data/repositories/payment/paymentConfirmationRepository.dart';
 import 'package:eschool/ui/screens/payment/payment/widgets/paymentWebView.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

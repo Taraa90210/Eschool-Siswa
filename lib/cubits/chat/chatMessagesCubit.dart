@@ -1,6 +1,6 @@
 import 'package:eschool/data/models/chat/chatMessage.dart';
 import 'package:eschool/data/models/chat/chatMessagesResponse.dart';
-import 'package:eschool/data/repositories/chatRepository.dart';
+import 'package:eschool/data/repositories/chat/chatRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 sealed class ChatMessagesState {}

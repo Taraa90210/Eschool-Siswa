@@ -2,9 +2,9 @@
 import 'package:eschool/data/models/academic/electiveSubject.dart';
 import 'package:eschool/data/models/system/sliderDetails.dart';
 import 'package:eschool/data/models/academic/subject.dart';
-import 'package:eschool/data/repositories/parentRepository.dart';
-import 'package:eschool/data/repositories/schoolRepository.dart';
-import 'package:eschool/data/repositories/studentRepository.dart';
+import 'package:eschool/data/repositories/auth/parentRepository.dart';
+import 'package:eschool/data/repositories/system/schoolRepository.dart';
+import 'package:eschool/data/repositories/student/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class StudentSubjectsAndSlidersState {}

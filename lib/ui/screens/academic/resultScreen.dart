@@ -3,7 +3,7 @@ import 'package:eschool/cubits/exam/downloadStudentResultCubit.dart';
 import 'package:eschool/data/models/exam/result.dart';
 import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/data/models/exam/subjectMark.dart';
-import 'package:eschool/data/repositories/resultRepository.dart';
+import 'package:eschool/data/repositories/exam/resultRepository.dart';
 import 'package:eschool/ui/styles/colors.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';

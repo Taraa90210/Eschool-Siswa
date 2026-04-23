@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/student/studentAllProfileDetailsCubit.dart';
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/data/repositories/studentRepository.dart';
+import 'package:eschool/data/repositories/student/studentRepository.dart';
 import 'package:eschool/ui/styles/colors.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customUserProfileImageWidget.dart';

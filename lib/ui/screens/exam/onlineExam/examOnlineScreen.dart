@@ -7,7 +7,7 @@ import 'package:eschool/cubits/exam/examsOnlineCubit.dart';
 import 'package:eschool/cubits/exam/submitOnlineExamAnswersCubit.dart';
 import 'package:eschool/data/models/exam/answerOption.dart';
 import 'package:eschool/data/models/exam/question.dart';
-import 'package:eschool/data/repositories/onlineExamRepository.dart';
+import 'package:eschool/data/repositories/exam/onlineExamRepository.dart';
 import 'package:eschool/ui/screens/home/homeScreen.dart';
 import 'package:eschool/ui/widgets/customRoundedButton.dart';
 import 'package:eschool/utils/secureScreen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/data/models/exam/resultOnline.dart';
-import 'package:eschool/data/repositories/resultRepository.dart';
+import 'package:eschool/data/repositories/exam/resultRepository.dart';
 
 abstract class ResultsOnlineState {}
 

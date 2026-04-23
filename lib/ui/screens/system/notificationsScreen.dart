@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/cubits/system/notificationsCubit.dart';
-import 'package:eschool/data/repositories/notificationRepository.dart';
+import 'package:eschool/data/repositories/system/notificationRepository.dart';
 
 import 'package:eschool/ui/widgets/customAppbarNoRadius.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

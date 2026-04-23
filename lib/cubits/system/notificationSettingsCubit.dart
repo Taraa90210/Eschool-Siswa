@@ -1,4 +1,4 @@
-import 'package:eschool/data/repositories/settingsRepository.dart';
+import 'package:eschool/data/repositories/system/settingsRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationSettingsState {

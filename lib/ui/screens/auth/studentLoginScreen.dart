@@ -4,7 +4,7 @@ import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/auth/resetPasswordRequestCubit.dart';
 import 'package:eschool/cubits/auth/signInCubit.dart';
-import 'package:eschool/data/repositories/authRepository.dart';
+import 'package:eschool/data/repositories/auth/authRepository.dart';
 import 'package:eschool/ui/screens/auth/widgets/requestResetPasswordBottomsheet.dart';
 import 'package:eschool/ui/screens/auth/widgets/termsAndConditionAndPrivacyPolicyContainer.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';

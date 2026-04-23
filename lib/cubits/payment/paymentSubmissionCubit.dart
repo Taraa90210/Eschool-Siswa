@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/data/repositories/paymentSubmissionRepository.dart';
+import 'package:eschool/data/repositories/payment/paymentSubmissionRepository.dart';
 
 // Payment Submission States
 abstract class PaymentSubmissionState {}

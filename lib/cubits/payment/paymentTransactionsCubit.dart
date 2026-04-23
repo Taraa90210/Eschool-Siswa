@@ -1,4 +1,4 @@
-import 'package:eschool/data/repositories/paymentRepository.dart';
+import 'package:eschool/data/repositories/payment/paymentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class PaymentTransactionsState {}

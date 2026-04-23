@@ -4,7 +4,7 @@ import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
 import 'package:eschool/cubits/system/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/data/repositories/schoolRepository.dart';
+import 'package:eschool/data/repositories/system/schoolRepository.dart';
 import 'package:eschool/ui/widgets/borderedProfilePictureContainer.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

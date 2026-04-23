@@ -54,7 +54,7 @@ import 'package:eschool/ui/screens/system/termsAndConditionScreen.dart';
 import 'package:eschool/ui/screens/academic/topicDetailsScreen.dart';
 import 'package:eschool/ui/screens/payment/transactionsScreen.dart';
 import 'package:eschool/cubits/auth/changePasswordCubit.dart';
-import 'package:eschool/data/repositories/authRepository.dart';
+import 'package:eschool/data/repositories/auth/authRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/ui/screens/system/contactScreen.dart';
 import 'package:eschool/ui/screens/system/contactDetailScreen.dart';

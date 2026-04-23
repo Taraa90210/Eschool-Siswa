@@ -2,7 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/models/auth/guardian.dart';
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/data/repositories/authRepository.dart';
+import 'package:eschool/data/repositories/auth/authRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class AuthState extends Equatable {}

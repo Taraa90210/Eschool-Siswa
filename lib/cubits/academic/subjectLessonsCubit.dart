@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/models/academic/lesson.dart';
-import 'package:eschool/data/repositories/subjectRepository.dart';
+import 'package:eschool/data/repositories/academic/subjectRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class SubjectLessonsState extends Equatable {}

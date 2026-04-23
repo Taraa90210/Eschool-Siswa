@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/student/childTeachersCubit.dart';
 import 'package:eschool/data/models/academic/subjectTeacher.dart';
-import 'package:eschool/data/repositories/parentRepository.dart';
+import 'package:eschool/data/repositories/auth/parentRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customUserProfileImageWidget.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

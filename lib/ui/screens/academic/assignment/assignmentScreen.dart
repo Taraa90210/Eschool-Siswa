@@ -3,7 +3,7 @@ import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/academic/undoAssignmentSubmissionCubit.dart';
 import 'package:eschool/cubits/academic/uploadAssignmentCubit.dart';
 import 'package:eschool/data/models/academic/assignment.dart';
-import 'package:eschool/data/repositories/assignmentRepository.dart';
+import 'package:eschool/data/repositories/academic/assignmentRepository.dart';
 import 'package:eschool/ui/screens/academic/assignment/widgets/undoAssignmentBottomsheetContainer.dart';
 import 'package:eschool/ui/screens/academic/assignment/widgets/uploadAssignmentFilesBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/StudyMaterial_part2.dart';

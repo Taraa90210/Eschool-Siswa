@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/auth/guardian.dart';
-import 'package:eschool/data/repositories/studentRepository.dart';
+import 'package:eschool/data/repositories/student/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class StudentGuardianDetailsState {}

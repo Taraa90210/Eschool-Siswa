@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/academic/assignmentsCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/models/academic/subject.dart';
-import 'package:eschool/data/repositories/assignmentRepository.dart';
+import 'package:eschool/data/repositories/academic/assignmentRepository.dart';
 import 'package:eschool/ui/widgets/assignmentFilterBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/assignmentsContainer.dart';
 import 'package:eschool/ui/widgets/assignmentListContainer.dart';

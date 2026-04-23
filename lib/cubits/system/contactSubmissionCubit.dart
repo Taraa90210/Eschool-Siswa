@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:eschool/data/models/system/contact.dart';
-import 'package:eschool/data/repositories/contactRepository.dart';
+import 'package:eschool/data/repositories/system/contactRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Contact Submission States

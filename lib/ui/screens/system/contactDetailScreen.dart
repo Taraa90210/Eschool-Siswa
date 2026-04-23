@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/system/contactCubit.dart';
 import 'package:eschool/data/models/system/contact.dart';
-import 'package:eschool/data/repositories/contactRepository.dart';
+import 'package:eschool/data/repositories/system/contactRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
 import 'package:eschool/utils/utils.dart';

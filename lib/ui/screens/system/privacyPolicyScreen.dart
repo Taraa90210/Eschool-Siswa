@@ -1,5 +1,5 @@
 import 'package:eschool/cubits/system/appSettingsCubit.dart';
-import 'package:eschool/data/repositories/systemInfoRepository.dart';
+import 'package:eschool/data/repositories/system/systemInfoRepository.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';

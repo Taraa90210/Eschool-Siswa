@@ -1,4 +1,4 @@
-import 'package:eschool/data/repositories/leavesRepository.dart';
+import 'package:eschool/data/repositories/student/leavesRepository.dart';
 // import 'package:eschool/data/models/leave.dart';
 import 'package:eschool/cubits/student/leavesCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';

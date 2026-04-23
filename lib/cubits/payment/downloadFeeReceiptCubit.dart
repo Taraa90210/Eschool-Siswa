@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:eschool/data/repositories/feeRepository.dart';
+import 'package:eschool/data/repositories/payment/feeRepository.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';

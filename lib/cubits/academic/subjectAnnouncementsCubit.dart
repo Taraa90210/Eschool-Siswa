@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/academic/announcement.dart';
-import 'package:eschool/data/repositories/announcementRepository.dart';
+import 'package:eschool/data/repositories/academic/announcementRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class SubjectAnnouncementState {}

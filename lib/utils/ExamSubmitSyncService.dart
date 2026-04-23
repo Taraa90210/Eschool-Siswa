@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:eschool/data/repositories/onlineExamRepository.dart';
+import 'package:eschool/data/repositories/exam/onlineExamRepository.dart';
 import 'package:eschool/cubits/exam/submitOnlineExamAnswersCubit.dart';
 
 class ExamSubmitSyncService {

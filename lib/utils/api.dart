@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:eschool/data/repositories/authRepository.dart';
+import 'package:eschool/data/repositories/auth/authRepository.dart';
 import 'package:eschool/utils/constants.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:flutter/foundation.dart';

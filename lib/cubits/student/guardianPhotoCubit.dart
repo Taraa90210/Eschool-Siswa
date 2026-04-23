@@ -3,7 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:eschool/data/models/auth/guardian.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:eschool/data/repositories/guardianProfileRepository.dart';
+import 'package:eschool/data/repositories/auth/guardianProfileRepository.dart';
 
 /// State
 abstract class GuardianPhotoState {}

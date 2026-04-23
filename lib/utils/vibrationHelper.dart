@@ -1,4 +1,4 @@
-import 'package:eschool/data/repositories/settingsRepository.dart';
+import 'package:eschool/data/repositories/system/settingsRepository.dart';
 import 'package:vibration/vibration.dart';
 
 /// Helper class for managing vibrations throughout the app

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:eschool/data/repositories/authRepository.dart';
+import 'package:eschool/data/repositories/auth/authRepository.dart';
 import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
 import 'package:eschool/utils/api.dart'; // For ApiException
 import 'package:flutter/foundation.dart';

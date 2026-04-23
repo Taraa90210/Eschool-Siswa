@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/repositories/assignmentRepository.dart';
+import 'package:eschool/data/repositories/academic/assignmentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class UndoAssignmentSubmissionState extends Equatable {}

@@ -2,7 +2,7 @@ import 'package:eschool/cubits/system/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/system/schoolSessionYearsCubit.dart';
 
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/data/repositories/schoolRepository.dart';
+import 'package:eschool/data/repositories/system/schoolRepository.dart';
 
 import 'package:eschool/ui/widgets/schoolGalleryWithSessionYearFilterContainer.dart';
 

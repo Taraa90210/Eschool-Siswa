@@ -1,5 +1,5 @@
 import 'package:eschool/cubits/academic/timeTableCubit.dart';
-import 'package:eschool/data/repositories/studentRepository.dart';
+import 'package:eschool/data/repositories/student/studentRepository.dart';
 import 'package:eschool/ui/widgets/timetableContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
