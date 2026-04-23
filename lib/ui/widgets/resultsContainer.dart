@@ -11,7 +11,7 @@ import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 
 import 'package:eschool/data/models/exam/result.dart';
 import 'package:eschool/data/models/exam/resultOnline.dart';
-import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academic/subject.dart';
 
 import 'package:eschool/ui/widgets/assignmentsSubjectsContainer.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

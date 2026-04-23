@@ -7,7 +7,7 @@ import 'package:eschool/cubits/exam/examTabSelectionCubit.dart';
 import 'package:eschool/cubits/exam/examsOnlineCubit.dart';
 import 'package:eschool/cubits/academic/studentSubjectAndSlidersCubit.dart';
 import 'package:eschool/data/models/exam/examOnline.dart';
-import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academic/subject.dart';
 import 'package:eschool/ui/widgets/assignmentsSubjectsContainer.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';
 import 'package:eschool/ui/widgets/customShimmerContainer.dart';

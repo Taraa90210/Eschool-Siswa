@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/academics/assignmentList.dart';
+import 'package:eschool/data/models/academic/assignmentList.dart';
 import 'package:eschool/data/repositories/reportRepository.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';

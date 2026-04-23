@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/auth/childUserDetails.dart';
-import 'package:eschool/data/models/academics/classSection.dart';
+import 'package:eschool/data/models/academic/classSection.dart';
 import 'package:eschool/data/models/auth/guardian.dart';
 import 'package:eschool/data/models/system/school.dart';
 import 'package:eschool/data/models/student/studentProfileExtraDetails.dart';

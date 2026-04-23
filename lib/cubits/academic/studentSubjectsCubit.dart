@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academic/subject.dart';
 import 'package:eschool/data/repositories/parentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

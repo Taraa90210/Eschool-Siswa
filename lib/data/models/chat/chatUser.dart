@@ -1,6 +1,6 @@
 import 'package:eschool/data/models/chat/chatUserRole.dart';
-import 'package:eschool/data/models/academics/classSection.dart';
-import 'package:eschool/data/models/academics/subjectTeacher.dart';
+import 'package:eschool/data/models/academic/classSection.dart';
+import 'package:eschool/data/models/academic/subjectTeacher.dart';
 
 class ChatUser {
   const ChatUser({

@@ -1,9 +1,9 @@
 import 'package:eschool/data/models/payment/classFeeType.dart';
 import 'package:eschool/data/models/payment/advanceFee.dart';
-import 'package:eschool/data/models/academics/classDetails.dart';
+import 'package:eschool/data/models/academic/classDetails.dart';
 import 'package:eschool/data/models/payment/installment.dart';
 import 'package:eschool/data/models/payment/paidFeeDetails.dart';
-import 'package:eschool/data/models/academics/sessionYear.dart';
+import 'package:eschool/data/models/academic/sessionYear.dart';
 import 'package:eschool/utils/labelKeys.dart';
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

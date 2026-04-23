@@ -4,10 +4,10 @@ import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:eschool/data/models/academics/studyMaterial.dart';
+import 'package:eschool/data/models/academic/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
-import 'package:eschool/ui/screens/playVideo/widgets/videoControlsContainer.dart';
-import 'package:eschool/ui/screens/playVideo/widgets/playPauseButton.dart';
+import 'package:eschool/ui/screens/system/playVideo/widgets/videoControlsContainer.dart';
+import 'package:eschool/ui/screens/system/playVideo/widgets/playPauseButton.dart';
 
 // Fitur tambahan Eschool 1.3.3 - Galang
 class DirectVideoPlayerDialog extends StatefulWidget {

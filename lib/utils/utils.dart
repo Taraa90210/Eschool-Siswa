@@ -5,7 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:eschool/cubits/system/appLocalizationCubit.dart';
 import 'package:eschool/cubits/system/downloadFileCubit.dart';
 import 'package:eschool/cubits/system/schoolConfigurationCubit.dart';
-import 'package:eschool/data/models/academics/studyMaterial.dart';
+import 'package:eschool/data/models/academic/studyMaterial.dart';
 import 'package:eschool/data/repositories/subjectRepository.dart';
 import 'package:eschool/ui/widgets/downloadFileBottomsheetContainer.dart';
 import 'package:eschool/ui/widgets/errorMessageOverlayContainer.dart';

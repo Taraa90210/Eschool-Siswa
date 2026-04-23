@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/student/leavesCubit.dart';
 import 'package:eschool/data/models/student/leave.dart';
-import 'package:eschool/data/models/academics/studyMaterial.dart';
+import 'package:eschool/data/models/academic/studyMaterial.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/errorContainer.dart';
 import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';

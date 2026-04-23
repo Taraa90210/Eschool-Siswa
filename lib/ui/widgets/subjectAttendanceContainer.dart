@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/student/subjectAttendanceCubit.dart';
-import 'package:eschool/data/models/academics/studyMaterial.dart';
+import 'package:eschool/data/models/academic/studyMaterial.dart';
 import 'package:eschool/data/models/student/subjectAttendanceModel.dart';
 import 'package:eschool/ui/widgets/changeCalendarMonthButton.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';

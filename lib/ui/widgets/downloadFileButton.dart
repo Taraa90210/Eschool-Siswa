@@ -1,4 +1,4 @@
-import 'package:eschool/data/models/academics/studyMaterial.dart';
+import 'package:eschool/data/models/academic/studyMaterial.dart';
 
 import 'package:eschool/utils/utils.dart';
 import 'package:flutter/material.dart';

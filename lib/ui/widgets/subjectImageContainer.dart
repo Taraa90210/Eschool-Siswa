@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academic/subject.dart';
 import 'package:eschool/ui/widgets/subjectFirstLetterContainer.dart';
 import 'package:eschool/utils/animationConfiguration.dart';
 import 'package:flutter/material.dart';

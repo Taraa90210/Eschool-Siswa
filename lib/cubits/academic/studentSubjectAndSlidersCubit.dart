@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/foundation.dart';
-import 'package:eschool/data/models/academics/electiveSubject.dart';
+import 'package:eschool/data/models/academic/electiveSubject.dart';
 import 'package:eschool/data/models/system/sliderDetails.dart';
-import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academic/subject.dart';
 import 'package:eschool/data/repositories/parentRepository.dart';
 import 'package:eschool/data/repositories/schoolRepository.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';

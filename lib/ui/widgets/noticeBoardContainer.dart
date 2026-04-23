@@ -1,6 +1,6 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/system/noticeBoardCubit.dart';
-import 'package:eschool/data/models/academics/announcement.dart';
+import 'package:eschool/data/models/academic/announcement.dart';
 import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/customRefreshIndicator.dart';

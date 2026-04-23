@@ -1,5 +1,5 @@
-import 'package:eschool/data/models/academics/announcement.dart';
-import 'package:eschool/data/models/academics/subject.dart';
+import 'package:eschool/data/models/academic/announcement.dart';
+import 'package:eschool/data/models/academic/subject.dart';
 import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
 import 'package:eschool/ui/widgets/studentSubjectsContainer.dart';
 import 'package:eschool/utils/utils.dart';

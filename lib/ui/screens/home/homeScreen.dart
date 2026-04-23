@@ -32,7 +32,7 @@ import 'package:eschool/ui/screens/home/widgets/homeScreenDataLoadingContainer.d
 import 'package:eschool/ui/widgets/shimmerLoaders/profileHeaderShimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/moreMenuBottomsheetContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/parentProfileContainer.dart';
-import 'package:eschool/ui/screens/reports/reportSubjectsContainer.dart';
+import 'package:eschool/ui/screens/academic/reports/reportSubjectsContainer.dart';
 import 'package:eschool/ui/widgets/NotificationHistoryContainer.dart';
 import 'package:eschool/ui/widgets/appUnderMaintenanceContainer.dart';
 import 'package:eschool/ui/widgets/assignmentsContainer.dart';

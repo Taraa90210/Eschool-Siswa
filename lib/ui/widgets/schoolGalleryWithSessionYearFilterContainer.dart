@@ -3,7 +3,7 @@ import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/system/schoolGalleryCubit.dart';
 import 'package:eschool/cubits/system/schoolSessionYearsCubit.dart';
-import 'package:eschool/data/models/academics/sessionYear.dart';
+import 'package:eschool/data/models/academic/sessionYear.dart';
 import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/ui/widgets/customBackButton.dart';
 import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';

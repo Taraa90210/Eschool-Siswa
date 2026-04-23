@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:eschool/data/models/academics/sessionYear.dart';
+import 'package:eschool/data/models/academic/sessionYear.dart';
 import 'package:eschool/data/models/student/attendanceDay.dart';
 import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

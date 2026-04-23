@@ -1,8 +1,8 @@
 import 'package:eschool/data/models/payment/paymentGateway.dart';
 import 'package:eschool/data/models/payment/paymentMethod.dart';
 import 'package:eschool/data/models/system/schoolSettings.dart';
-import 'package:eschool/data/models/academics/semesterDetails.dart';
-import 'package:eschool/data/models/academics/sessionYear.dart';
+import 'package:eschool/data/models/academic/semesterDetails.dart';
+import 'package:eschool/data/models/academic/sessionYear.dart';
 import 'package:eschool/utils/systemModules.dart';
 
 class SchoolConfiguration {
