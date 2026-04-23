@@ -1,8 +1,8 @@
 import 'package:eschool/data/models/student/leave.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:eschool/ui/widgets/svgButton.dart';
-import 'package:eschool/utils/labelKeys.dart';
+import 'package:eschool/ui/widgets/system/svgButton.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class LeavesDetailScreen extends StatefulWidget {

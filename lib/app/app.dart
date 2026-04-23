@@ -26,9 +26,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:eschool/app/routes.dart';
 
-import 'package:eschool/ui/widgets/globalEnvFab.dart';
+import 'package:eschool/ui/widgets/system/globalEnvFab.dart';
 
-import 'package:eschool/utils/app_config.dart';
+import 'package:eschool/utils/system/app_config.dart';
 import 'package:eschool/cubits/system/appConfigurationCubit.dart';
 import 'package:eschool/cubits/system/appLocalizationCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
@@ -53,8 +53,8 @@ import 'package:eschool/cubits/exam/onlineExamQuestionsCubit.dart';
 import 'package:eschool/data/repositories/academic/reportRepository.dart';
 import 'package:eschool/ui/styles/colors.dart';
 
-import 'package:eschool/utils/hiveBoxKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 
 //to avoid handshake error on some devices
 class MyHttpOverrides extends HttpOverrides {

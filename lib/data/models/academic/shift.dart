@@ -1,4 +1,4 @@
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/utils.dart';
 
 class Shift {
   final int? id;

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:eschool/data/models/academic/assignmentList.dart';
 import 'package:eschool/data/models/exam/examList.dart';
 
-import 'package:eschool/utils/api.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/api.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
 import 'package:flutter/foundation.dart';
 
 class ReportRepository {

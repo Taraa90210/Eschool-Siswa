@@ -1,6 +1,6 @@
 import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/ui/screens/payment/payment/paymentHistoryTabScreen.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:eschool/ui/screens/system/aboutUsScreen.dart';
 import 'package:eschool/ui/screens/academic/assignment/assignmentScreen.dart';

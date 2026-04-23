@@ -4,7 +4,7 @@ import 'package:eschool/cubits/system/schoolSessionYearsCubit.dart';
 import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/data/repositories/system/schoolRepository.dart';
 
-import 'package:eschool/ui/widgets/schoolGalleryWithSessionYearFilterContainer.dart';
+import 'package:eschool/ui/widgets/system/schoolGalleryWithSessionYearFilterContainer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -3,7 +3,7 @@ import 'package:eschool/data/models/payment/xenditInvoice.dart';
 import 'package:flutter/foundation.dart';
 import 'package:eschool/data/repositories/payment/xenditRepository.dart';
 import 'package:eschool/data/models/payment/paymentMethod.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // States

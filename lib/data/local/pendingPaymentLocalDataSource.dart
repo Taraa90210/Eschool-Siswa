@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:eschool/utils/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// Model sederhana untuk menyimpan informasi invoice Xendit yang tertunda.

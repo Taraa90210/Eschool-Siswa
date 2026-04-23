@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/exam/resultsCubit.dart';
 import 'package:eschool/data/models/academic/subject.dart';
 import 'package:eschool/data/repositories/student/studentRepository.dart';
-import 'package:eschool/ui/widgets/resultsContainer.dart';
+import 'package:eschool/ui/widgets/academic/resultsContainer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,6 +1,6 @@
 import 'package:eschool/data/models/academic/assignment.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';

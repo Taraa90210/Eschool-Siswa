@@ -1,4 +1,4 @@
-import 'package:eschool/ui/widgets/noticeBoardContainer.dart';
+import 'package:eschool/ui/widgets/academic/noticeBoardContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

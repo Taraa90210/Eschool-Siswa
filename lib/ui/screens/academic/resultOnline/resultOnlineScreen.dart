@@ -1,17 +1,17 @@
 import 'dart:math';
 
 import 'package:eschool/cubits/auth/authCubit.dart';
-import 'package:eschool/ui/widgets/errorContainer.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/shimmerLoadingContainer.dart';
+import 'package:eschool/ui/widgets/system/errorContainer.dart';
+import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
+import 'package:eschool/ui/widgets/system/shimmerLoaders/shimmerLoadingContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/cubits/exam/resultOnlineCubit.dart';
 import 'package:eschool/data/models/exam/resultOnlineDetails.dart';
 import 'package:eschool/data/repositories/exam/resultRepository.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/customBackButton.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:get/get.dart';
 
 class ResultOnlineScreen extends StatefulWidget {

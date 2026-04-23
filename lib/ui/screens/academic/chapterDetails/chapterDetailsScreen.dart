@@ -1,15 +1,15 @@
 import 'package:eschool/data/models/academic/lesson.dart';
 import 'package:eschool/data/models/academic/studyMaterial.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/customTabBarContainer.dart';
-import 'package:eschool/ui/widgets/filesContainer.dart';
+import 'package:eschool/ui/widgets/system/customBackButton.dart';
+import 'package:eschool/ui/widgets/system/customTabBarContainer.dart';
+import 'package:eschool/ui/widgets/system/filesContainer.dart';
 import 'package:eschool/ui/screens/academic/chapterDetails/widgets/topicsContainer.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/tabBarBackgroundContainer.dart';
-import 'package:eschool/ui/widgets/videosContainer.dart';
-import 'package:eschool/ui/widgets/noDataContainer.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
+import 'package:eschool/ui/widgets/system/tabBarBackgroundContainer.dart';
+import 'package:eschool/ui/widgets/system/videosContainer.dart';
+import 'package:eschool/ui/widgets/system/noDataContainer.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

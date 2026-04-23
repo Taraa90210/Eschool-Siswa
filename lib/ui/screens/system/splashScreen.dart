@@ -1,9 +1,9 @@
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/system/appConfigurationCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
-import 'package:eschool/ui/widgets/errorContainer.dart';
-import 'package:eschool/utils/animationConfiguration.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/errorContainer.dart';
+import 'package:eschool/utils/system/animationConfiguration.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

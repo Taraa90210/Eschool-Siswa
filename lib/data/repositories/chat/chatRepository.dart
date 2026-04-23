@@ -5,7 +5,7 @@ import 'package:eschool/data/models/chat/chatUserRole.dart';
 import 'package:eschool/data/models/chat/chatUsersResponse.dart';
 import 'package:eschool/data/models/chat/userChatHistory.dart';
 import 'package:eschool/data/repositories/auth/authRepository.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatRepository {

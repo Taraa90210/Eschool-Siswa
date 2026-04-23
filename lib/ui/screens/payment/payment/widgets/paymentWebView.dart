@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/payment/xenditInvoiceCubit.dart';
 import 'package:eschool/data/models/payment/xenditInvoice.dart';
 import 'package:eschool/ui/screens/payment/payment/widgets/paymentStatusDialogs.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webview_flutter/webview_flutter.dart';

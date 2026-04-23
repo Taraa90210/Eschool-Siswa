@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eschool/data/repositories/extracurricular/extracurricularRepository.dart';
 import 'package:eschool/data/models/extracurricular/joinExtracurricularResponse.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 
 abstract class JoinExtracurricularState {}
 

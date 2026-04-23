@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:eschool/utils/CurencyFormater.dart';
-import 'package:eschool/utils/labelKeys.dart';
+import 'package:eschool/utils/payment/CurencyFormater.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,11 +12,11 @@ import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/cubits/payment/paymentSubmissionCubit.dart';
 import 'package:eschool/cubits/payment/paymentMethodCubit.dart';
 import 'package:eschool/data/models/payment/paymentMethodModel.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/customBackButton.dart';
+import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
 
 class InstallmentPaymentScreen extends StatefulWidget {
   final ChildFeeDetails feeDetails;

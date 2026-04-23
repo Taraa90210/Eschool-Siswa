@@ -1,12 +1,12 @@
 import 'package:eschool/cubits/exam/submitOnlineExamAnswersCubit.dart';
-import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
+import 'package:eschool/ui/widgets/system/customCircularProgressIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:eschool/cubits/exam/onlineExamQuestionsCubit.dart';
 
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 

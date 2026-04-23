@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/academic/subject.dart';
-import 'package:eschool/utils/constants.dart';
+import 'package:eschool/utils/system/constants.dart';
 
 class SubjectAttendance {
   SubjectAttendance({

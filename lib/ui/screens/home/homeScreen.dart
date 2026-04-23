@@ -29,37 +29,37 @@ import 'package:eschool/ui/screens/home/widgets/bottomNavigationItemContainer.da
 import 'package:eschool/ui/screens/home/widgets/examContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/homeScreenDataLoadingContainer.dart';
-import 'package:eschool/ui/widgets/shimmerLoaders/profileHeaderShimmerLoadingContainer.dart';
+import 'package:eschool/ui/widgets/system/shimmerLoaders/profileHeaderShimmerLoadingContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/moreMenuBottomsheetContainer.dart';
 import 'package:eschool/ui/screens/home/widgets/parentProfileContainer.dart';
 import 'package:eschool/ui/screens/academic/reports/reportSubjectsContainer.dart';
-import 'package:eschool/ui/widgets/NotificationHistoryContainer.dart';
-import 'package:eschool/ui/widgets/appUnderMaintenanceContainer.dart';
-import 'package:eschool/ui/widgets/assignmentsContainer.dart';
-import 'package:eschool/ui/widgets/attendanceContainer.dart';
-import 'package:eschool/ui/widgets/customRoundedButton.dart';
-import 'package:eschool/ui/widgets/errorContainer.dart';
-import 'package:eschool/ui/widgets/extracurricularContainer.dart';
-import 'package:eschool/ui/widgets/forceUpdateDialogContainer.dart';
-import 'package:eschool/ui/widgets/holidaysContainer.dart';
-import 'package:eschool/ui/widgets/noticeBoardContainer.dart';
-import 'package:eschool/ui/widgets/schoolGalleryWithSessionYearFilterContainer.dart';
-import 'package:eschool/ui/widgets/settingsContainer.dart';
-import 'package:eschool/ui/widgets/subjectAttendanceContainer.dart';
-import 'package:eschool/ui/widgets/timetableContainer.dart';
-import 'package:eschool/utils/ExamSubmitSyncService.dart';
-import 'package:eschool/utils/constants.dart';
-import 'package:eschool/utils/homeBottomsheetMenu.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/systemModules.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/NotificationHistoryContainer.dart';
+import 'package:eschool/ui/widgets/system/appUnderMaintenanceContainer.dart';
+import 'package:eschool/ui/widgets/academic/assignmentsContainer.dart';
+import 'package:eschool/ui/widgets/student/attendanceContainer.dart';
+import 'package:eschool/ui/widgets/system/customRoundedButton.dart';
+import 'package:eschool/ui/widgets/system/errorContainer.dart';
+import 'package:eschool/ui/widgets/extracurricular/extracurricularContainer.dart';
+import 'package:eschool/ui/widgets/system/forceUpdateDialogContainer.dart';
+import 'package:eschool/ui/widgets/system/holidaysContainer.dart';
+import 'package:eschool/ui/widgets/academic/noticeBoardContainer.dart';
+import 'package:eschool/ui/widgets/system/schoolGalleryWithSessionYearFilterContainer.dart';
+import 'package:eschool/ui/widgets/system/settingsContainer.dart';
+import 'package:eschool/ui/widgets/academic/subjectAttendanceContainer.dart';
+import 'package:eschool/ui/widgets/academic/timetableContainer.dart';
+import 'package:eschool/utils/academic/ExamSubmitSyncService.dart';
+import 'package:eschool/utils/system/constants.dart';
+import 'package:eschool/utils/system/homeBottomsheetMenu.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/systemModules.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 // Tambahan import untuk redesain
 
-import '../../widgets/resultsContainer.dart';
+import '../../widgets/academic/resultsContainer.dart';
 
 class HomeScreen extends StatefulWidget {
   static GlobalKey<HomeScreenState> homeScreenKey =

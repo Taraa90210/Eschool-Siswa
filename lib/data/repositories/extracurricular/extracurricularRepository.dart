@@ -1,7 +1,7 @@
 import 'package:eschool/data/models/extracurricular/extracurricular.dart';
 import 'package:eschool/data/models/extracurricular/joinExtracurricularResponse.dart';
 import 'package:eschool/data/models/extracurricular/studentExtracurricular.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 import 'package:flutter/foundation.dart';
 
 class ExtracurricularRepository {

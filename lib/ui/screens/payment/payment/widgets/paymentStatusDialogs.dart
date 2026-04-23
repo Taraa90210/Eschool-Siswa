@@ -1,4 +1,4 @@
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 
 /// Dialog shown when payment is still pending

@@ -1,7 +1,7 @@
 import 'package:eschool/cubits/student/attendanceCubit.dart';
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/data/repositories/student/studentRepository.dart';
-import 'package:eschool/ui/widgets/attendanceContainer.dart';
+import 'package:eschool/ui/widgets/student/attendanceContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';

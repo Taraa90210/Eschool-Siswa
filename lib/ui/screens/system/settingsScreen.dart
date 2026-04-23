@@ -1,4 +1,4 @@
-import 'package:eschool/ui/widgets/settingsContainer.dart';
+import 'package:eschool/ui/widgets/system/settingsContainer.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {

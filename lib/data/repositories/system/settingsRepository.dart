@@ -1,5 +1,5 @@
-import 'package:eschool/utils/appLanguages.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/appLanguages.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
 import 'package:hive/hive.dart';
 
 class SettingsRepository {

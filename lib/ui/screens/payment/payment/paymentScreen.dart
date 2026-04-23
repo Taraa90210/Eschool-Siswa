@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:eschool/utils/labelKeys.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,12 +9,12 @@ import 'package:lottie/lottie.dart';
 import 'package:eschool/cubits/payment/paymentSubmissionCubit.dart';
 import 'package:eschool/data/models/payment/childFeeDetails.dart';
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/customBackButton.dart';
+import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
 
 // Payment type enum
 enum PaymentType { manual, xendit }

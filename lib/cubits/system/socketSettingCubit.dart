@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:eschool/data/models/chat/chatMessage.dart';
-import 'package:eschool/utils/constants.dart';
+import 'package:eschool/utils/system/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:web_socket_channel/io.dart';

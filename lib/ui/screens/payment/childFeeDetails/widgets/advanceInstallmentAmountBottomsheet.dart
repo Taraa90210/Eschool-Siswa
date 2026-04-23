@@ -1,8 +1,8 @@
-import 'package:eschool/ui/widgets/bottomsheetTopTitleAndCloseButton.dart';
-import 'package:eschool/ui/widgets/customRoundedButton.dart';
-import 'package:eschool/ui/widgets/customTextFieldContainer.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/bottomsheetTopTitleAndCloseButton.dart';
+import 'package:eschool/ui/widgets/system/customRoundedButton.dart';
+import 'package:eschool/ui/widgets/system/customTextFieldContainer.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 

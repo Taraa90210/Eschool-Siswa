@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/data/models/system/galleryFile.dart';
 import 'package:eschool/data/models/academic/studyMaterial.dart';
-import 'package:eschool/ui/widgets/customAppbar.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/customAppbar.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:eschool/ui/widgets/customCircularProgressIndicator.dart';
+import 'package:eschool/ui/widgets/system/customCircularProgressIndicator.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
-import '../../widgets/studyMaterialWithDownloadButtonContainer.dart';
+import '../../widgets/academic/studyMaterialWithDownloadButtonContainer.dart';
 
 class GalleryImagesScreen extends StatefulWidget {
   final List<GalleryFile> images;

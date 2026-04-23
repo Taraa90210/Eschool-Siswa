@@ -1,5 +1,5 @@
 import 'package:eschool/data/models/academic/electiveSubjectGroup.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 
 class ClassRepository {
   Future<List<ElectiveSubjectGroup>> getElectiveSubjects() async {

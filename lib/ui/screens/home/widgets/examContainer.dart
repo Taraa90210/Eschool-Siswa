@@ -1,15 +1,15 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/exam/examTabSelectionCubit.dart';
 import 'package:eschool/data/models/academic/subject.dart';
-import 'package:eschool/ui/widgets/examOfflineListContainer.dart';
-import 'package:eschool/ui/widgets/examOnlineListContainer.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/exam/examOfflineListContainer.dart';
+import 'package:eschool/ui/widgets/exam/examOnlineListContainer.dart';
+import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../widgets/customBackButton.dart';
+import '../../../widgets/system/customBackButton.dart';
 
 class ExamContainer extends StatelessWidget {
   final int? childId;
@@ -22,7 +22,8 @@ class ExamContainer extends StatelessWidget {
     ExamTabSelectionState currentState,
   ) {
     return ScreenTopBackgroundContainer(
-      heightPercentage: Utils.appBarBiggerHeightPercentage - (Utils.appBarBiggerHeightPercentage * 0.1),
+      heightPercentage: Utils.appBarBiggerHeightPercentage -
+          (Utils.appBarBiggerHeightPercentage * 0.1),
       child: LayoutBuilder(
         builder: (context, boxConstraints) {
           return Stack(
@@ -31,7 +32,7 @@ class ExamContainer extends StatelessWidget {
               context.read<AuthCubit>().isParent()
                   ? const CustomBackButton()
                   : const SizedBox(),
-              
+
               // Screen title
               Align(
                 alignment: Alignment.topCenter,
@@ -47,7 +48,7 @@ class ExamContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               // Tab selector container
               Align(
                 alignment: Alignment(0.0, 0.3),
@@ -74,27 +75,30 @@ class ExamContainer extends StatelessWidget {
                               vertical: 5.0,
                             ),
                             decoration: BoxDecoration(
-                              color: currentState.examFilterTabTitle == offlineKey
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.transparent,
+                              color:
+                                  currentState.examFilterTabTitle == offlineKey
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Colors.transparent,
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             alignment: Alignment.center,
                             child: Text(
                               Utils.getTranslatedLabel(offlineKey),
                               style: TextStyle(
-                                color: currentState.examFilterTabTitle == offlineKey
+                                color: currentState.examFilterTabTitle ==
+                                        offlineKey
                                     ? Colors.white
                                     : Theme.of(context).scaffoldBackgroundColor,
-                                fontWeight: currentState.examFilterTabTitle == offlineKey 
-                                    ? FontWeight.bold 
+                                fontWeight: currentState.examFilterTabTitle ==
+                                        offlineKey
+                                    ? FontWeight.bold
                                     : FontWeight.normal,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      
+
                       // Online Tab
                       Expanded(
                         child: GestureDetector(
@@ -109,21 +113,24 @@ class ExamContainer extends StatelessWidget {
                               vertical: 5.0,
                             ),
                             decoration: BoxDecoration(
-                              color: currentState.examFilterTabTitle == onlineKey
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Colors.transparent,
+                              color:
+                                  currentState.examFilterTabTitle == onlineKey
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Colors.transparent,
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             alignment: Alignment.center,
                             child: Text(
                               Utils.getTranslatedLabel(onlineKey),
                               style: TextStyle(
-                                color: currentState.examFilterTabTitle == onlineKey
+                                color: currentState.examFilterTabTitle ==
+                                        onlineKey
                                     ? Colors.white
                                     : Theme.of(context).scaffoldBackgroundColor,
-                                fontWeight: currentState.examFilterTabTitle == onlineKey 
-                                    ? FontWeight.bold 
-                                    : FontWeight.normal,
+                                fontWeight:
+                                    currentState.examFilterTabTitle == onlineKey
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                               ),
                             ),
                           ),

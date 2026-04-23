@@ -1,14 +1,14 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/academic/subjectAnnouncementsCubit.dart';
 import 'package:eschool/data/models/academic/announcement.dart';
-import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
-import 'package:eschool/ui/widgets/errorContainer.dart';
-import 'package:eschool/ui/widgets/noDataContainer.dart';
-import 'package:eschool/ui/widgets/shimmerLoaders/announcementShimmerLoadingContainer.dart';
-import 'package:eschool/utils/animationConfiguration.dart';
+import 'package:eschool/ui/widgets/academic/announcementDetailsContainer.dart';
+import 'package:eschool/ui/widgets/system/errorContainer.dart';
+import 'package:eschool/ui/widgets/system/noDataContainer.dart';
+import 'package:eschool/ui/widgets/system/shimmerLoaders/announcementShimmerLoadingContainer.dart';
+import 'package:eschool/utils/system/animationConfiguration.dart';
 
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

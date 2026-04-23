@@ -1,6 +1,6 @@
-import 'package:eschool/ui/widgets/customAppbar.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/customAppbar.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 
 class FaqsScreen extends StatelessWidget {

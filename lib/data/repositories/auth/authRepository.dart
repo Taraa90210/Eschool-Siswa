@@ -1,7 +1,7 @@
 import 'package:eschool/data/models/auth/guardian.dart';
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/utils/api.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/api.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';

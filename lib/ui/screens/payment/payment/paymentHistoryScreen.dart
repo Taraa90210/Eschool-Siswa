@@ -3,11 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eschool/ui/widgets/customBackButton.dart';
-import 'package:eschool/ui/widgets/screenTopBackgroundContainer.dart';
-import 'package:eschool/utils/utils.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/imageUtils.dart';
+import 'package:eschool/ui/widgets/system/customBackButton.dart';
+import 'package:eschool/ui/widgets/system/screenTopBackgroundContainer.dart';
+import 'package:eschool/utils/system/utils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/imageUtils.dart';
 import 'package:eschool/data/models/payment/childFeeDetails.dart';
 import 'package:eschool/data/models/payment/paymentMethod.dart';
 

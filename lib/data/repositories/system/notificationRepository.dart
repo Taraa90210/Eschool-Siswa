@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:eschool/data/models/system/notificationDetails.dart';
 import 'package:eschool/data/repositories/auth/authRepository.dart';
-import 'package:eschool/utils/api.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/api.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';

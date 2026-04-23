@@ -1,17 +1,17 @@
 import 'package:eschool/cubits/payment/paymentTransactionsCubit.dart';
 import 'package:eschool/data/repositories/payment/paymentRepository.dart';
-import 'package:eschool/ui/widgets/errorContainer.dart';
-import 'package:eschool/ui/widgets/noDataContainer.dart';
-import 'package:eschool/utils/constants.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/errorContainer.dart';
+import 'package:eschool/ui/widgets/system/noDataContainer.dart';
+import 'package:eschool/utils/system/constants.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eschool/data/models/academic/studyMaterial.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({Key? key}) : super(key: key);

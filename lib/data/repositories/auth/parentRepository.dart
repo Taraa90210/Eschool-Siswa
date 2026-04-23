@@ -2,7 +2,7 @@ import 'package:eschool/data/models/academic/coreSubject.dart';
 import 'package:eschool/data/models/academic/electiveSubject.dart';
 import 'package:eschool/data/models/auth/student.dart';
 import 'package:eschool/data/models/academic/subjectTeacher.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 import 'package:flutter/foundation.dart';
 
 class ParentRepository {

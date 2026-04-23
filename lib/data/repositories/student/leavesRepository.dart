@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:eschool/data/models/student/leave.dart';
-import 'package:eschool/utils/api.dart';
-import 'package:eschool/utils/errorMessageKeysAndCodes.dart';
+import 'package:eschool/utils/system/api.dart';
+import 'package:eschool/utils/system/errorMessageKeysAndCodes.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;

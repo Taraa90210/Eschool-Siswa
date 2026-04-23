@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:eschool/data/models/academic/assignment.dart';
-import 'package:eschool/utils/api.dart';
-import 'package:eschool/utils/imageCompress.dart'; // <-- util kompres (DartImagePreprocessor)
+import 'package:eschool/utils/system/api.dart';
+import 'package:eschool/utils/system/imageCompress.dart'; // <-- util kompres (DartImagePreprocessor)
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart' as p;

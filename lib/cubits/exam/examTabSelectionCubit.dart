@@ -1,4 +1,4 @@
-import 'package:eschool/utils/labelKeys.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExamTabSelectionState {

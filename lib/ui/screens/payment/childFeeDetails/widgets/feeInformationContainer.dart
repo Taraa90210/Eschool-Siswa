@@ -1,7 +1,7 @@
 import 'package:eschool/data/models/payment/childFeeDetails.dart';
 import 'package:eschool/data/models/auth/student.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 
 class FeeInformationContainer extends StatelessWidget {

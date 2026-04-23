@@ -3,7 +3,7 @@ import 'package:eschool/data/models/payment/paymentMethod.dart';
 import 'package:eschool/data/models/system/schoolSettings.dart';
 import 'package:eschool/data/models/academic/semesterDetails.dart';
 import 'package:eschool/data/models/academic/sessionYear.dart';
-import 'package:eschool/utils/systemModules.dart';
+import 'package:eschool/utils/system/systemModules.dart';
 
 class SchoolConfiguration {
   final SessionYear sessionYear;

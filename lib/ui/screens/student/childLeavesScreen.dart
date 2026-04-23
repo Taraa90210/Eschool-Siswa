@@ -5,7 +5,7 @@ import 'package:eschool/cubits/auth/authCubit.dart';
 // import 'package:eschool/data/repositories/studentRepository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:eschool/ui/widgets/leavesListContainer.dart';
+import 'package:eschool/ui/widgets/student/leavesListContainer.dart';
 import 'package:eschool/data/models/auth/student.dart';
 
 class ChildLeavesScreen extends StatelessWidget {

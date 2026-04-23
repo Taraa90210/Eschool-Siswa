@@ -4,7 +4,7 @@ import 'package:eschool/data/models/system/gallery.dart';
 import 'package:eschool/data/models/system/schoolConfiguration.dart';
 import 'package:eschool/data/models/academic/sessionYear.dart';
 import 'package:eschool/data/models/system/sliderDetails.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 
 class SchoolRepository {
   Future<SchoolConfiguration> getSchoolSchoolSettingDetails(

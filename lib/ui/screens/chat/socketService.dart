@@ -1,4 +1,4 @@
-import 'package:eschool/utils/constants.dart';
+import 'package:eschool/utils/system/constants.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketService {

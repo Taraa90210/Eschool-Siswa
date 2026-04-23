@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:eschool/utils/appLanguages.dart';
+import 'package:eschool/utils/system/appLanguages.dart';
 import 'package:flutter/services.dart';
 
 abstract class AppTranslation {

@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:eschool/app/routes.dart';
 import 'package:eschool/cubits/system/appConfigurationCubit.dart';
 
-import 'package:eschool/utils/env_switcher_util.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/envSwitcherUtils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';

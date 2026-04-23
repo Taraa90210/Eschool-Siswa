@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:eschool/app/GlobalAppLifecycleObserver.dart';
 import 'package:eschool/app/app.dart';
-import 'package:eschool/utils/ExamSubmitSyncService.dart';
-import 'package:eschool/utils/in_appbanner.dart';
-import 'package:eschool/utils/logHelper.dart';
-import 'package:eschool/utils/hiveBoxKeys.dart';
-import 'package:eschool/utils/vibrationHelper.dart';
+import 'package:eschool/utils/academic/ExamSubmitSyncService.dart';
+import 'package:eschool/utils/system/inAppBanner.dart';
+import 'package:eschool/utils/system/logHelper.dart';
+import 'package:eschool/utils/system/hiveBoxKeys.dart';
+import 'package:eschool/utils/system/vibrationHelper.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:timeago/timeago.dart' as timeago;

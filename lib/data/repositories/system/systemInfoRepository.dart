@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:eschool/data/models/system/holiday.dart';
-import 'package:eschool/utils/api.dart';
+import 'package:eschool/utils/system/api.dart';
 
 class SystemRepository {
   Future<dynamic> fetchSettings({required String type}) async {

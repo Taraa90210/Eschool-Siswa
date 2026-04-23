@@ -4,8 +4,8 @@ import 'package:eschool/data/models/academic/classDetails.dart';
 import 'package:eschool/data/models/payment/installment.dart';
 import 'package:eschool/data/models/payment/paidFeeDetails.dart';
 import 'package:eschool/data/models/academic/sessionYear.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 
 // New models for the new API format

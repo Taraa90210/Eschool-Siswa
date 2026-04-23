@@ -1,8 +1,8 @@
 import 'package:eschool/data/models/academic/announcement.dart';
 import 'package:eschool/data/models/academic/subject.dart';
-import 'package:eschool/ui/widgets/announcementDetailsContainer.dart';
-import 'package:eschool/ui/widgets/studentSubjectsContainer.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/academic/announcementDetailsContainer.dart';
+import 'package:eschool/ui/widgets/academic/studentSubjectsContainer.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

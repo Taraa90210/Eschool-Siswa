@@ -1,10 +1,10 @@
 import 'package:eschool/cubits/auth/authCubit.dart';
 import 'package:eschool/cubits/student/guardianPhotoCubit.dart';
 import 'package:eschool/data/repositories/auth/guardianProfileRepository.dart';
-import 'package:eschool/ui/widgets/customAppbar.dart';
-import 'package:eschool/ui/widgets/guardianDetailsContainer.dart';
-import 'package:eschool/utils/labelKeys.dart';
-import 'package:eschool/utils/utils.dart';
+import 'package:eschool/ui/widgets/system/customAppbar.dart';
+import 'package:eschool/ui/widgets/student/guardianDetailsContainer.dart';
+import 'package:eschool/utils/system/labelKeys.dart';
+import 'package:eschool/utils/system/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
